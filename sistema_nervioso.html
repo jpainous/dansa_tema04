@@ -7,7 +7,7 @@
   :root{
     --bg:#0f1226;--card:#1a1f3c;--accent:#ff5c8a;--accent2:#4fd1c5;
     --text:#f5f7ff;--muted:#b8c0e0;--practica:#2b3a67;--actividad:#3a2b5c;--notas:#ffd166;
-    --ok:#4ade80;--warn:#fbbf24;
+    --ok:#4ade80;--warn:#fbbf24;--bad:#f87171;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);height:100vh;overflow:hidden;}
@@ -30,6 +30,7 @@
   .tag.practica{background:var(--accent2);color:#0f1226;}
   .tag.actividad{background:#b07cff;color:#fff;}
   .tag.nueva{background:var(--ok);color:#0f1226;}
+  .tag.autoeval{background:var(--warn);color:#0f1226;}
 
   .box{background:var(--card);border-radius:12px;padding:16px 20px;margin:10px 0;border-left:5px solid var(--accent2);}
   .box.practica{background:var(--practica);border-left-color:var(--accent2);}
@@ -43,7 +44,6 @@
   .practica-item b{color:var(--accent2);}
 
   .actividad-item{background:#2f2350;border-radius:10px;padding:11px 15px;margin-bottom:9px;border-left:4px solid #b07cff;font-size:.95rem;}
-  .actividad-item b{color:#d3b6ff;}
 
   .nav{position:fixed;bottom:18px;right:30px;display:flex;gap:10px;z-index:99;}
   .nav button{background:var(--accent);color:#0f1226;border:none;padding:9px 16px;border-radius:8px;font-weight:700;cursor:pointer;font-size:.95rem;}
@@ -70,7 +70,6 @@
   th{background:#252b52;color:var(--accent2);}
 
   .illus{background:#151a33;border-radius:12px;padding:14px;display:flex;align-items:center;justify-content:center;border:1px solid #2d3560;}
-  .illus svg{max-width:100%;height:auto;}
   .img-real{width:100%;height:auto;border-radius:10px;display:block;}
   .caption{font-size:.8rem;color:var(--muted);text-align:center;margin-top:8px;font-style:italic;}
 
@@ -85,7 +84,6 @@
   .img-card svg,.img-card img{max-width:100%;height:90px;object-fit:contain;}
   .img-card p{font-size:.85rem;margin-top:6px;color:var(--accent2);font-weight:600;}
 
-  /* NOTAS DEL PROFESOR */
   .notas{display:none;margin-top:14px;padding:14px 18px;background:#3a2f10;
     border-left:5px solid var(--notas);border-radius:10px;font-size:.9rem;color:#ffe9b0;}
   .notas::before{content:"📝 " attr(data-label) ": ";font-weight:800;color:var(--notas);}
@@ -97,90 +95,101 @@
   .hint b{color:var(--accent2);}
 
   /* ===================== ACTIVIDADES INTERACTIVAS ===================== */
-  .actividad-block{
-    background:#2f2350;border-radius:12px;padding:16px 18px;margin-bottom:14px;
-    border-left:4px solid #b07cff;
-  }
-  .actividad-block h4{
-    font-size:1rem;color:#e0d0ff;margin-bottom:8px;display:flex;align-items:center;gap:8px;
-  }
-  .actividad-block h4 .num{
-    background:#b07cff;color:#0f1226;border-radius:50%;
+  .actividad-block{background:#2f2350;border-radius:12px;padding:16px 18px;margin-bottom:14px;border-left:4px solid #b07cff;}
+  .actividad-block h4{font-size:1rem;color:#e0d0ff;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+  .actividad-block h4 .num{background:#b07cff;color:#0f1226;border-radius:50%;
     width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;
-    font-weight:800;font-size:.85rem;
-  }
+    font-weight:800;font-size:.85rem;}
   .actividad-block .enunciado{font-size:.95rem;color:var(--text);margin-bottom:10px;}
 
-  /* Esquema esperado */
-  .esquema{
-    background:#1a2a1a;border-left:4px solid var(--ok);border-radius:8px;
-    padding:10px 14px;margin:10px 0;font-size:.88rem;color:#c8f0c8;
-  }
+  .esquema{background:#1a2a1a;border-left:4px solid var(--ok);border-radius:8px;
+    padding:10px 14px;margin:10px 0;font-size:.88rem;color:#c8f0c8;}
   .esquema::before{content:"✅ " attr(data-label) ": ";font-weight:800;color:var(--ok);}
   .esquema ul{margin:6px 0 0 20px;}
   .esquema li{margin-bottom:3px;font-size:.85rem;}
+  .esquema{display:none;}
+  .esquema.visible{display:block;}
 
-  /* Referencia a diapositiva */
-  .ref-slide{
-    display:inline-flex;align-items:center;gap:6px;
+  .ref-slide{display:inline-flex;align-items:center;gap:6px;
     background:#1a2540;border:1px solid var(--accent2);color:var(--accent2);
     padding:4px 10px;border-radius:20px;font-size:.8rem;font-weight:700;
-    text-decoration:none;cursor:pointer;margin-top:8px;
-  }
+    text-decoration:none;cursor:pointer;margin-top:8px;}
   .ref-slide:hover{background:var(--accent2);color:#0f1226;}
   .ref-slide::before{content:"📖 ";}
 
-  /* Cuadro de texto del alumno */
   .respuesta-wrap{margin-top:10px;}
-  .respuesta-wrap label{
-    font-size:.82rem;color:var(--muted);font-weight:700;
-    display:block;margin-bottom:4px;
-  }
-  textarea.respuesta{
-    width:100%;min-height:100px;padding:10px 12px;
+  .respuesta-wrap label{font-size:.82rem;color:var(--muted);font-weight:700;display:block;margin-bottom:4px;}
+  textarea.respuesta{width:100%;min-height:100px;padding:10px 12px;
     background:#0f1226;color:var(--text);border:1px solid #3a4170;
     border-radius:8px;font-family:inherit;font-size:.92rem;line-height:1.5;
-    resize:vertical;transition:border .2s;
-  }
+    resize:vertical;transition:border .2s;}
   textarea.respuesta:focus{outline:none;border-color:var(--accent2);box-shadow:0 0 0 2px rgba(79,209,197,.2);}
   textarea.respuesta::placeholder{color:#5a6488;font-style:italic;}
 
-  .respuesta-footer{
-    display:flex;justify-content:space-between;align-items:center;
-    margin-top:6px;font-size:.78rem;color:var(--muted);
-  }
+  .respuesta-footer{display:flex;justify-content:space-between;align-items:center;
+    margin-top:6px;font-size:.78rem;color:var(--muted);}
   .respuesta-footer .estado{font-weight:700;}
   .respuesta-footer .estado.guardado{color:var(--ok);}
   .respuesta-footer .estado.escribiendo{color:var(--warn);}
 
-  .btn-toggle-esquema{
-    background:#1a2a1a;color:var(--ok);border:1px solid var(--ok);
-    padding:5px 12px;border-radius:8px;cursor:pointer;font-size:.78rem;font-weight:700;
-    margin-top:8px;
-  }
+  .btn-toggle-esquema{background:#1a2a1a;color:var(--ok);border:1px solid var(--ok);
+    padding:5px 12px;border-radius:8px;cursor:pointer;font-size:.78rem;font-weight:700;margin-top:8px;}
   .btn-toggle-esquema:hover{background:var(--ok);color:#0f1226;}
-  .esquema{display:none;}
-  .esquema.visible{display:block;}
 
-  /* Barra de progreso de actividades */
-  .actividad-progress{
-    position:sticky;top:0;background:#1a1f3c;border-radius:10px;
+  .actividad-progress{position:sticky;top:0;background:#1a1f3c;border-radius:10px;
     padding:10px 16px;margin-bottom:14px;border:1px solid #2d3560;
-    display:flex;justify-content:space-between;align-items:center;
-    font-size:.85rem;z-index:10;
-  }
+    display:flex;justify-content:space-between;align-items:center;font-size:.85rem;z-index:10;}
   .actividad-progress b{color:var(--accent2);}
-  .actividad-progress .bar{
-    flex:1;height:8px;background:#0f1226;border-radius:4px;margin:0 14px;overflow:hidden;
-  }
+  .actividad-progress .bar{flex:1;height:8px;background:#0f1226;border-radius:4px;margin:0 14px;overflow:hidden;}
   .actividad-progress .bar-fill{height:100%;background:var(--ok);transition:width .3s;}
 
-  /* Botón exportar respuestas */
-  .btn-export{
-    background:var(--accent2);color:#0f1226;border:none;
-    padding:9px 16px;border-radius:8px;cursor:pointer;font-weight:700;font-size:.85rem;
-  }
-  .btn-export:hover{background:var(--accent);}
+  /* ===================== VALORACIÓN AUTOMÁTICA ===================== */
+  .valoracion{background:#1a2540;border:1px solid var(--accent2);border-radius:10px;
+    padding:12px 16px;margin-top:10px;font-size:.88rem;}
+  .valoracion .puntos{
+    display:flex;align-items:center;gap:10px;margin-bottom:8px;
+    font-weight:800;color:var(--accent2);font-size:1rem;}
+  .valoracion .puntos .nota{
+    background:var(--accent2);color:#0f1226;border-radius:50%;
+    width:38px;height:38px;display:flex;align-items:center;justify-content:center;
+    font-size:1rem;font-weight:900;}
+  .valoracion .barra{height:10px;background:#0f1226;border-radius:5px;overflow:hidden;margin-bottom:8px;}
+  .valoracion .barra-fill{height:100%;transition:width .3s;background:var(--ok);}
+  .valoracion .barra-fill.medio{background:var(--warn);}
+  .valoracion .barra-fill.bajo{background:var(--bad);}
+  .valoracion .detalle{font-size:.82rem;color:var(--muted);line-height:1.5;}
+  .valoracion .detalle .ok{color:var(--ok);font-weight:700;}
+  .valoracion .detalle .falta{color:var(--bad);font-weight:700;}
+  .btn-valorar{background:var(--accent2);color:#0f1226;border:none;
+    padding:7px 14px;border-radius:8px;font-weight:700;cursor:pointer;font-size:.82rem;margin-top:8px;}
+  .btn-valorar:hover{background:var(--accent);}
+
+  /* ===================== AUTOEVALUACIÓN ===================== */
+  .autoeval-box{background:#3a2f10;border-left:5px solid var(--warn);border-radius:12px;
+    padding:18px 22px;margin:14px 0;}
+  .autoeval-box h4{color:var(--warn);margin-bottom:10px;font-size:1.05rem;}
+  .autoeval-box p{font-size:.92rem;margin-bottom:10px;}
+  .escala{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0;}
+  .escala label{background:#1a1f3c;border:2px solid #2d3560;border-radius:8px;
+    padding:8px 14px;cursor:pointer;font-weight:700;font-size:.9rem;
+    display:flex;align-items:center;gap:6px;transition:all .15s;}
+  .escala label:hover{border-color:var(--warn);}
+  .escala input[type=radio]{accent-color:var(--warn);}
+  .escala input[type=radio]:checked + span{color:var(--warn);}
+  .autoeval-box textarea{width:100%;min-height:80px;padding:10px;
+    background:#0f1226;color:var(--text);border:1px solid #3a4170;
+    border-radius:8px;font-family:inherit;font-size:.9rem;resize:vertical;}
+  .autoeval-box .nota-propia{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:.9rem;}
+  .autoeval-box .nota-propia input{width:70px;padding:6px 10px;background:#0f1226;
+    color:var(--text);border:1px solid #3a4170;border-radius:6px;font-size:1rem;font-weight:800;text-align:center;}
+  .autoeval-box .nota-propia span{color:var(--warn);font-weight:700;}
+
+  /* ===================== RESUMEN FINAL ===================== */
+  .resumen-final{background:#1a2540;border:2px solid var(--accent);border-radius:12px;
+    padding:22px 26px;margin:20px 0;}
+  .resumen-final h3{color:var(--accent);margin-bottom:14px;font-size:1.3rem;}
+  .resumen-final table{margin-top:10px;}
+  .resumen-final .total{font-size:1.6rem;font-weight:900;color:var(--accent2);text-align:center;margin-top:14px;}
 
   /* ============ MODO IMPRESIÓN / PDF ============ */
   @media print{
@@ -194,8 +203,8 @@
     h1,h2,h3{color:#000 !important;}
     h2{border-bottom:2px solid #000 !important;}
     p,li,td,th,span{color:#000 !important;}
-    .box,.practica-item,.actividad-item,.illus,.img-card,.video-ph,.actividad-block,.esquema{
-      background:#f4f4f4 !important;border:1px solid #999 !important;color:#000 !important;}
+    .box,.practica-item,.actividad-item,.illus,.img-card,.video-ph,.actividad-block,.esquema,
+    .valoracion,.autoeval-box,.resumen-final{background:#f4f4f4 !important;border:1px solid #999 !important;color:#000 !important;}
     .tag{background:#ddd !important;color:#000 !important;border:1px solid #666;}
     table{border:1px solid #000;}
     th{background:#ddd !important;color:#000 !important;}
@@ -205,7 +214,7 @@
     .portada .sub{color:#333 !important;}
     textarea.respuesta{border:1px solid #000 !important;background:#fff !important;color:#000 !important;min-height:140px;}
     .esquema{display:block !important;}
-    .btn-toggle-esquema,.btn-export{display:none !important;}
+    .btn-toggle-esquema,.btn-export,.btn-valorar{display:none !important;}
   }
 </style>
 </head>
@@ -223,7 +232,7 @@
   <button class="btn-top" onclick="exportarRespuestas()" title="Descargar mis respuestas">💾 Exportar</button>
 </div>
 
-<div class="hint" id="hint">Pulsa <b>N</b> notas profesor · <b>← →</b> navegar · <b>R</b> abrir/cerrar esquemas</div>
+<div class="hint" id="hint">Pulsa <b>N</b> notas · <b>← →</b> navegar · <b>R</b> esquemas</div>
 
 <div class="deck" id="deck">
 
@@ -239,24 +248,21 @@
         alt="Neurona multipolar"
         onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
       <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="display:none;">
-        <circle cx="90" cy="100" r="28" fill="#4fd1c5" stroke="#4fd1c5" stroke-width="2"/>
+        <circle cx="90" cy="100" r="28" fill="#4fd1c5"/>
         <circle cx="90" cy="100" r="10" fill="#ff5c8a"/>
         <line x1="118" y1="100" x2="230" y2="100" stroke="#4fd1c5" stroke-width="4"/>
-        <rect x="135" y="90" width="20" height="20" rx="4" fill="#b8c0e0"/>
-        <rect x="165" y="90" width="20" height="20" rx="4" fill="#b8c0e0"/>
-        <rect x="195" y="90" width="20" height="20" rx="4" fill="#b8c0e0"/>
       </svg>
     </div>
     <p class="caption" data-i18n="portada.cap">Neurona multipolar (Wikimedia Commons)</p>
     <p class="sub" style="margin-top:18px;" data-i18n="portada.sesiones">2 sesiones · 3 horas cada una</p>
-    <div class="big" data-i18n="portada.resumen">Explicación + 10 prácticas + actividades interactivas</div>
+    <div class="big" data-i18n="portada.resumen">Explicación + 10 prácticas + actividades interactivas + autoevaluación</div>
     <div class="notas" data-label="Notas del profesor" data-i18n="notas.portada">
       Presenta la unidad como un viaje del impulso al movimiento. Pregunta inicial: "¿Qué creéis que ocurre en vuestro cuerpo cuando aprendéis un paso nuevo?"
     </div>
   </div>
 </section>
 
-<!-- ============ NUEVA DIAPOSITIVA: PRESENTACIÓN DE LA UNIDAD ============ -->
+<!-- ============ PRESENTACIÓN DE LA UNIDAD ============ -->
 <section class="slide">
   <span class="tag nueva" data-i18n="tag.nueva">Nueva diapositiva</span>
   <h2 data-i18n="indice.titulo">Presentación de la unidad y hoja de ruta</h2>
@@ -269,7 +275,7 @@
         <li data-i18n="indice.s1.3">Organización funcional de la sensibilidad</li>
         <li data-i18n="indice.s1.4">Procesamiento e integración central</li>
         <li data-i18n="indice.s1.5">10 prácticas cortas</li>
-        <li data-i18n="indice.s1.6">5 actividades interactivas</li>
+        <li data-i18n="indice.s1.6">5 actividades interactivas + autoevaluación</li>
       </ol>
     </div>
     <div>
@@ -280,7 +286,7 @@
         <li data-i18n="indice.s2.3">Sistema nervioso autónomo</li>
         <li data-i18n="indice.s2.4">Integración y adaptación</li>
         <li data-i18n="indice.s2.5">10 prácticas cortas</li>
-        <li data-i18n="indice.s2.6">5 actividades interactivas</li>
+        <li data-i18n="indice.s2.6">5 actividades interactivas + autoevaluación</li>
       </ol>
     </div>
   </div>
@@ -290,10 +296,10 @@
   </div>
   <div class="box">
     <span class="emoji">📝</span>
-    <span data-i18n="indice.evaluacion"><b>Evaluación:</b> respuestas escritas en las actividades interactivas + portfolio + reflexión final integradora.</span>
+    <span data-i18n="indice.evaluacion"><b>Evaluación:</b> valoración automática por actividad + autoevaluación reflexiva + portfolio + exportación final.</span>
   </div>
   <div class="notas" data-label="Notas del profesor" data-i18n="notas.indice">
-    Diapositiva nueva añadida: sirve de índice y contrato didáctico. Explica al grupo que las actividades son escribibles, que se guardan automáticamente en su navegador y que pueden exportarlas al final de la unidad. Recuerda que los esquemas esperados se abren con el botón "Ver esquema esperado" o con la tecla R.
+    Diapositiva nueva: sirve de índice y contrato didáctico. Explica que las actividades son escribibles, se valoran automáticamente, se autoevalúan y se pueden exportar.
   </div>
 </section>
 
@@ -397,10 +403,6 @@
         </svg>
       </div>
       <p class="caption" data-i18n="s1.b2.cap">Perfil del potencial de acción (Wikimedia Commons)</p>
-      <div class="video-ph" style="margin-top:10px;">
-        <div class="play">▶</div>
-        <div data-i18n="s1.b2.video">Vídeo: sinapsis y neurotransmisores (2 min)</div>
-      </div>
     </div>
   </div>
   <div class="box danza">
@@ -412,18 +414,15 @@
   </div>
 </section>
 
-<!-- ================= S1 - PRÁCTICAS 1-5 ================= -->
+<!-- ================= S1 - PRÁCTICAS ================= -->
 <section class="slide">
   <span class="tag practica" data-i18n="tag.practica12">Práctica · 10 ejercicios cortos (1/2)</span>
   <h2 data-i18n="s1.p1.titulo">Prácticas 1–5: neurona y sensación</h2>
-  <div class="practica-item" data-i18n="s1.p1.e1"><b>P1 · Reflejo rotuliano (2 min).</b> En parejas, golpear suavemente bajo la rótula.</div>
-  <div class="practica-item" data-i18n="s1.p1.e2"><b>P2 · Tiempo de reacción (3 min).</b> Un compañero suelta una regla entre los dedos del otro.</div>
-  <div class="practica-item" data-i18n="s1.p1.e3"><b>P3 · Discriminación de dos puntos (3 min).</b> Con dos palillos, tocar la piel del antebrazo y de la espalda.</div>
-  <div class="practica-item" data-i18n="s1.p1.e4"><b>P4 · Propiocepción con ojos cerrados (3 min).</b> De pie, ojos cerrados, mantener equilibrio 20 s.</div>
-  <div class="practica-item" data-i18n="s1.p1.e5"><b>P5 · Adaptación sensorial (2 min).</b> Colocar una goma suave en la muñeca.</div>
-  <div class="notas" data-label="Notas del profesor" data-i18n="notas.s1.p1">
-    Cronometra las prácticas (2-4 min) y deja 30 s entre ellas para comentar qué han notado.
-  </div>
+  <div class="practica-item" data-i18n="s1.p1.e1"><b>P1 · Reflejo rotuliano (2 min).</b></div>
+  <div class="practica-item" data-i18n="s1.p1.e2"><b>P2 · Tiempo de reacción (3 min).</b></div>
+  <div class="practica-item" data-i18n="s1.p1.e3"><b>P3 · Discriminación de dos puntos (3 min).</b></div>
+  <div class="practica-item" data-i18n="s1.p1.e4"><b>P4 · Propiocepción con ojos cerrados (3 min).</b></div>
+  <div class="practica-item" data-i18n="s1.p1.e5"><b>P5 · Adaptación sensorial (2 min).</b></div>
 </section>
 
 <!-- ================= S1 - BLOQUE 3 ================= -->
@@ -443,10 +442,6 @@
         <li data-i18n="s1.b3.l4">Órganos de Golgi (tensión).</li>
         <li data-i18n="s1.b3.l5">Receptores articulares.</li>
       </ul>
-      <h3 data-i18n="s1.b3.h3">Integración sensorial</h3>
-      <ul>
-        <li data-i18n="s1.b3.l6">Adaptación, inhibición lateral, filtrado.</li>
-      </ul>
     </div>
     <div>
       <div class="illus">
@@ -456,7 +451,6 @@
           onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
         <svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg" style="display:none;">
           <ellipse cx="160" cy="120" rx="90" ry="30" fill="none" stroke="#4fd1c5" stroke-width="3"/>
-          <path d="M 100 120 Q 160 80 220 120" stroke="#ff5c8a" stroke-width="2" fill="none"/>
         </svg>
       </div>
       <p class="caption" data-i18n="s1.b3.cap">Huso muscular: detector de longitud (Wikimedia Commons)</p>
@@ -465,9 +459,6 @@
   <div class="box danza">
     <span class="emoji">💃</span>
     <span data-i18n="s1.b3.danza"><b>Conexión danza:</b> el equilibrio y la conciencia corporal dependen de la propiocepción. Un mal procesamiento = lesión.</span>
-  </div>
-  <div class="notas" data-label="Notas del profesor" data-i18n="notas.s1.b3">
-    Analogía: el huso muscular es como un sensor de goma elástica que avisa cuando el músculo se estira.
   </div>
 </section>
 
@@ -489,30 +480,6 @@
     <tr><td data-i18n="s1.b4.r6a">Corteza motora</td><td data-i18n="s1.b4.r6b">Planificación y ejecución</td><td data-i18n="s1.b4.r6c">Decidir un movimiento</td></tr>
     <tr><td data-i18n="s1.b4.r7a">Sistema límbico</td><td data-i18n="s1.b4.r7b">Emoción y movimiento</td><td data-i18n="s1.b4.r7c">Expresividad</td></tr>
   </table>
-  <div class="img-row">
-    <div class="img-card">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Cerebellum.svg/240px-Cerebellum.svg.png" alt="Cerebelo"
-        onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
-      <svg viewBox="0 0 120 90" style="display:none;"><path d="M 20 60 Q 60 20 100 60" fill="none" stroke="#4fd1c5" stroke-width="3"/></svg>
-      <p data-i18n="img.cerebelo">Cerebelo</p>
-    </div>
-    <div class="img-card">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Basal_ganglia.svg/240px-Basal_ganglia.svg.png" alt="Ganglios basales"
-        onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
-      <svg viewBox="0 0 120 90" style="display:none;"><circle cx="60" cy="45" r="30" fill="none" stroke="#b07cff" stroke-width="3"/></svg>
-      <p data-i18n="img.ganglios">Ganglios basales</p>
-    </div>
-    <div class="img-card">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Motor_cortex.svg/240px-Motor_cortex.svg.png" alt="Corteza motora"
-        onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
-      <svg viewBox="0 0 120 90" style="display:none;"><path d="M 15 70 Q 30 20 60 45 T 105 20" stroke="#ff5c8a" stroke-width="3" fill="none"/></svg>
-      <p data-i18n="img.corteza">Corteza motora</p>
-    </div>
-  </div>
-  <div class="box danza">
-    <span class="emoji">💃</span>
-    <span data-i18n="s1.b4.danza"><b>Conexión danza:</b> automatización vs. control consciente; memoria procedural; interpretación emocional.</span>
-  </div>
   <div class="notas" data-label="Notas del profesor" data-i18n="notas.s1.b4">
     Evita caer en la anatomía pura. Para cada estructura, lanza una pregunta: "¿Qué pasaría en un giro si el cerebelo no funcionara?".
   </div>
@@ -522,29 +489,26 @@
 <section class="slide">
   <span class="tag practica" data-i18n="tag.practica34">Práctica · 10 ejercicios cortos (2/2)</span>
   <h2 data-i18n="s1.p2.titulo">Prácticas 6–10: integración y control</h2>
-  <div class="practica-item" data-i18n="s1.p2.e6"><b>P6 · Reflejo miotático en pareja (3 min).</b> Estirar pasivamente el bíceps del compañero.</div>
-  <div class="practica-item" data-i18n="s1.p2.e7"><b>P7 · Equilibrio con perturbación (3 min).</b> El compañero empuja suavemente el hombro.</div>
-  <div class="practica-item" data-i18n="s1.p2.e8"><b>P8 · Cambio de dirección con/sin señal visual (3 min).</b> Caminar y cambiar de dirección al oír una palmada.</div>
-  <div class="practica-item" data-i18n="s1.p2.e9"><b>P9 · Secuencia de 4 pasos (4 min).</b> Aprender una secuencia corta. Repetir 5 veces.</div>
-  <div class="practica-item" data-i18n="s1.p2.e10"><b>P10 · Visualización motora (3 min).</b> Imaginar vívidamente un movimiento conocido sin ejecutarlo.</div>
-  <div class="notas" data-label="Notas del profesor" data-i18n="notas.s1.p2">
-    La P6 requiere control: el estiramiento debe ser lento y suave. La P9 es clave para enlazar con la sesión 2.
-  </div>
+  <div class="practica-item" data-i18n="s1.p2.e6"><b>P6 · Reflejo miotático en pareja (3 min).</b></div>
+  <div class="practica-item" data-i18n="s1.p2.e7"><b>P7 · Equilibrio con perturbación (3 min).</b></div>
+  <div class="practica-item" data-i18n="s1.p2.e8"><b>P8 · Cambio de dirección con/sin señal visual (3 min).</b></div>
+  <div class="practica-item" data-i18n="s1.p2.e9"><b>P9 · Secuencia de 4 pasos (4 min).</b></div>
+  <div class="practica-item" data-i18n="s1.p2.e10"><b>P10 · Visualización motora (3 min).</b></div>
 </section>
 
 <!-- ================= S1 - ACTIVIDADES INTERACTIVAS ================= -->
 <section class="slide">
   <span class="tag actividad" data-i18n="tag.actividad1">Actividades interactivas · Sesión 1</span>
-  <h2 data-i18n="s1.act.titulo">Actividades por apartados (escribibles)</h2>
+  <h2 data-i18n="s1.act.titulo">Actividades por apartados (escribibles + valoración)</h2>
 
   <div class="actividad-progress">
     <span><b id="prog-s1">0</b>/5 <span data-i18n="prog.completadas">respondidas</span></span>
     <div class="bar"><div class="bar-fill" id="bar-s1" style="width:0%"></div></div>
-    <span style="color:var(--muted);" data-i18n="prog.auto">Se guarda automáticamente</span>
+    <span style="color:var(--muted);" data-i18n="prog.auto">Autoguardado</span>
   </div>
 
   <!-- A1 -->
-  <div class="actividad-block">
+  <div class="actividad-block" data-act="s1-a1">
     <h4><span class="num">A1</span><span data-i18n="s1.act.a1.titulo">Mapa funcional de la neurona</span></h4>
     <p class="enunciado" data-i18n="s1.act.a1.enun">Dibuja o describe una neurona y señala con flechas el recorrido del impulso nervioso. Explica qué ocurre en cada zona (dendritas, soma, axón, mielina, terminal sináptico).</p>
     <div class="respuesta-wrap">
@@ -565,11 +529,12 @@
         <li data-i18n="s1.act.a1.esq.5">Dirección del impulso: dendritas → soma → axón → terminal.</li>
       </ul>
     </div>
-    <a class="ref-slide" data-i18n="ref.ir" data-ref="1">Ver diapositiva 2 (neurona)</a>
+    <a class="ref-slide" data-i18n="ref.ir" data-ref="3">Ver diapositiva 4 (neurona)</a>
+    <div class="valoracion" data-val="s1-a1"></div>
   </div>
 
   <!-- A2 -->
-  <div class="actividad-block">
+  <div class="actividad-block" data-act="s1-a2">
     <h4><span class="num">A2</span><span data-i18n="s1.act.a2.titulo">Cuadro comparativo: sinapsis excitadora vs. inhibidora</span></h4>
     <p class="enunciado" data-i18n="s1.act.a2.enun">Compara los dos tipos de sinapsis indicando: neurotransmisor implicado, efecto sobre la neurona postsináptica y un ejemplo en danza.</p>
     <div class="respuesta-wrap">
@@ -585,14 +550,15 @@
       <ul>
         <li data-i18n="s1.act.a2.esq.1">Excitadora: neurotransmisor como el glutamato; favorece la despolarización; facilita el movimiento.</li>
         <li data-i18n="s1.act.a2.esq.2">Inhibidora: neurotransmisor como el GABA; hiperpolariza; frena o modula el movimiento.</li>
-        <li data-i18n="s1.act.a2.esq.3">Ejemplo danza: la excitación permite iniciar el paso; la inhibición permite el control fino y detener el movimiento.</li>
+        <li data-i18n="s1.act.a2.esq.3">Ejemplo danza: la excitación permite iniciar el paso; la inhibición permite el control fino.</li>
       </ul>
     </div>
-    <a class="ref-slide" data-i18n="ref.ir" data-ref="2">Ver diapositiva 3 (sinapsis)</a>
+    <a class="ref-slide" data-i18n="ref.ir" data-ref="3">Ver diapositiva 4 (sinapsis)</a>
+    <div class="valoracion" data-val="s1-a2"></div>
   </div>
 
   <!-- A3 -->
-  <div class="actividad-block">
+  <div class="actividad-block" data-act="s1-a3">
     <h4><span class="num">A3</span><span data-i18n="s1.act.a3.titulo">Análisis de caso: lesión de tobillo y propiocepción</span></h4>
     <p class="enunciado" data-i18n="s1.act.a3.enun">Un bailarín se lesiona los ligamentos del tobillo. Explica qué receptores propioceptivos se ven afectados, cómo afecta al equilibrio y propón 3 ejercicios de reeducación.</p>
     <div class="respuesta-wrap">
@@ -606,17 +572,18 @@
     <button class="btn-toggle-esquema" data-target="esq-s1-a3" data-i18n="btn.ver">Ver esquema esperado</button>
     <div class="esquema" id="esq-s1-a3" data-label="Esquema esperado" data-i18n="s1.act.a3.esq">
       <ul>
-        <li data-i18n="s1.act.a3.esq.1">Receptores afectados: receptores articulares del tobillo, husos musculares y órganos de Golgi de la zona.</li>
-        <li data-i18n="s1.act.a3.esq.2">Consecuencia: menor información sobre la posición del pie → peor equilibrio, más riesgo de recaída.</li>
-        <li data-i18n="s1.act.a3.esq.3">Ejercicios: equilibrio a una pierna, ojos cerrados, superficies inestables, trabajo con bandas elásticas.</li>
+        <li data-i18n="s1.act.a3.esq.1">Receptores afectados: receptores articulares del tobillo, husos musculares y órganos de Golgi.</li>
+        <li data-i18n="s1.act.a3.esq.2">Consecuencia: menor información sobre la posición del pie → peor equilibrio.</li>
+        <li data-i18n="s1.act.a3.esq.3">Ejercicios: equilibrio a una pierna, ojos cerrados, superficies inestables, bandas elásticas.</li>
         <li data-i18n="s1.act.a3.esq.4">Relación con la lesión: la reeducación busca restaurar la información sensorial y la respuesta motora.</li>
       </ul>
     </div>
-    <a class="ref-slide" data-i18n="ref.ir" data-ref="3">Ver diapositiva 4 (propiocepción)</a>
+    <a class="ref-slide" data-i18n="ref.ir" data-ref="5">Ver diapositiva 6 (propiocepción)</a>
+    <div class="valoracion" data-val="s1-a3"></div>
   </div>
 
   <!-- A4 -->
-  <div class="actividad-block">
+  <div class="actividad-block" data-act="s1-a4">
     <h4><span class="num">A4</span><span data-i18n="s1.act.a4.titulo">Tabla de estructuras y funciones</span></h4>
     <p class="enunciado" data-i18n="s1.act.a4.enun">Completa una tabla con al menos 4 estructuras del sistema nervioso central: nombre, función principal, ejemplo dancístico y consecuencia si falla.</p>
     <div class="respuesta-wrap">
@@ -632,15 +599,16 @@
       <ul>
         <li data-i18n="s1.act.a4.esq.1">Médula espinal: reflejos; ejemplo, reflejo miotático; si falla, pérdida de reflejos y tono.</li>
         <li data-i18n="s1.act.a4.esq.2">Cerebelo: coordinación y timing; ejemplo, ajustar un giro; si falla, movimientos descoordinados.</li>
-        <li data-i18n="s1.act.a4.esq.3">Ganglios basales: inicio y secuenciación; ejemplo, encadenar pasos; si fallan, dificultad para iniciar el movimiento.</li>
-        <li data-i18n="s1.act.a4.esq.4">Corteza motora: planificación y ejecución; ejemplo, decidir un movimiento; si falla, pérdida de control voluntario.</li>
+        <li data-i18n="s1.act.a4.esq.3">Ganglios basales: inicio y secuenciación; ejemplo, encadenar pasos; si fallan, dificultad para iniciar.</li>
+        <li data-i18n="s1.act.a4.esq.4">Corteza motora: planificación y ejecución; ejemplo, decidir un movimiento; si falla, pérdida de control.</li>
       </ul>
     </div>
-    <a class="ref-slide" data-i18n="ref.ir" data-ref="4">Ver diapositiva 5 (integración central)</a>
+    <a class="ref-slide" data-i18n="ref.ir" data-ref="6">Ver diapositiva 7 (integración central)</a>
+    <div class="valoracion" data-val="s1-a4"></div>
   </div>
 
   <!-- A5 -->
-  <div class="actividad-block">
+  <div class="actividad-block" data-act="s1-a5">
     <h4><span class="num">A5</span><span data-i18n="s1.act.a5.titulo">Reflexión: repetición y aprendizaje motor</span></h4>
     <p class="enunciado" data-i18n="s1.act.a5.enun">Explica por qué un movimiento mejora con la repetición. Menciona el papel de la mielina, la sinapsis y la plasticidad sináptica.</p>
     <div class="respuesta-wrap">
@@ -660,11 +628,30 @@
         <li data-i18n="s1.act.a5.esq.4">Consecuencia en danza: el paso se automatiza y libera atención para la expresión.</li>
       </ul>
     </div>
-    <a class="ref-slide" data-i18n="ref.ir" data-ref="2">Ver diapositiva 3 (plasticidad sináptica)</a>
+    <a class="ref-slide" data-i18n="ref.ir" data-ref="3">Ver diapositiva 4 (plasticidad)</a>
+    <div class="valoracion" data-val="s1-a5"></div>
+  </div>
+
+  <!-- AUTOEVALUACIÓN S1 -->
+  <div class="autoeval-box">
+    <h4>🤔 <span data-i18n="autoeval.titulo">Autoevaluación de la Sesión 1</span></h4>
+    <p data-i18n="autoeval.p1">Después de ver el esquema esperado y la valoración, ¿qué nota te pondrías? Reflexiona honestamente sobre tu comprensión.</p>
+    <div class="escala">
+      <label><input type="radio" name="autoeval-s1" value="0-4"><span data-i18n="autoeval.insuf">Insuficiente (0-4)</span></label>
+      <label><input type="radio" name="autoeval-s1" value="5-6"><span data-i18n="autoeval.suf">Suficiente (5-6)</span></label>
+      <label><input type="radio" name="autoeval-s1" value="7-8"><span data-i18n="autoeval.not">Notable (7-8)</span></label>
+      <label><input type="radio" name="autoeval-s1" value="9-10"><span data-i18n="autoeval.exc">Excelente (9-10)</span></label>
+    </div>
+    <div class="nota-propia">
+      <span data-i18n="autoeval.nota">Nota concreta (0-10):</span>
+      <input type="number" min="0" max="10" step="0.5" data-autoeval-nota="s1">
+    </div>
+    <p style="margin-top:12px;font-size:.9rem;" data-i18n="autoeval.justif">Justifica tu nota (qué has entendido bien, qué te falta):</p>
+    <textarea data-autoeval-text="s1" placeholder="Escribe aquí tu reflexión..."></textarea>
   </div>
 
   <div class="notas" data-label="Notas del profesor" data-i18n="notas.s1.act">
-    Las respuestas se guardan automáticamente en el navegador (localStorage). Cada actividad incluye un esquema esperado que se abre con el botón o con la tecla R. La referencia a la diapositiva permite al alumnado volver a la explicación. A1 y A2 en clase; A3-A5 como portfolio.
+    Cada actividad tiene valoración automática por palabras clave + autoevaluación reflexiva. Recuerda al alumnado que pueden exportar todo al final.
   </div>
 </section>
 
@@ -683,9 +670,6 @@
       <b data-i18n="s1.cierre.prox">Para la próxima sesión:</b>
       <span data-i18n="s1.cierre.prox2"> repasar prácticas 1–10 y traer dudas.</span>
     </div>
-    <div class="notas" data-label="Notas del profesor" data-i18n="notas.s1.cierre">
-      Cierra con una pregunta abierta: "¿Qué os ha sorprendido más de vuestro propio cuerpo hoy?"
-    </div>
   </div>
 </section>
 
@@ -702,7 +686,6 @@
     <div class="video-ph" style="margin-top:20px;max-width:520px;">
       <div class="play">▶</div>
       <div data-i18n="s2.video">Vídeo: control motor en bailarines (3 min)</div>
-      <small data-i18n="video.placeholder2">[Insertar enlace al vídeo]</small>
     </div>
     <div class="notas" data-label="Notas del profesor" data-i18n="notas.s2.portada">
       Recupera brevemente lo aprendido en la sesión 1 con 3 preguntas rápidas.
@@ -741,32 +724,9 @@
       </ul>
     </div>
   </div>
-  <div class="img-row">
-    <div class="img-card">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Motor_unit.svg/240px-Motor_unit.svg.png" alt="Unidad motora"
-        onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
-      <svg viewBox="0 0 120 90" style="display:none;"><circle cx="30" cy="45" r="12" fill="#ff5c8a"/><line x1="42" y1="45" x2="90" y2="45" stroke="#4fd1c5" stroke-width="3"/></svg>
-      <p data-i18n="img.motora">Unidad motora</p>
-    </div>
-    <div class="img-card">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Corticospinal_tract.svg/240px-Corticospinal_tract.svg.png" alt="Vía piramidal"
-        onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
-      <svg viewBox="0 0 120 90" style="display:none;"><path d="M 60 10 L 60 80" stroke="#b07cff" stroke-width="3"/></svg>
-      <p data-i18n="img.piramidal">Vía piramidal</p>
-    </div>
-    <div class="img-card">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Feedback_loop.svg/240px-Feedback_loop.svg.png" alt="Feedback"
-        onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
-      <svg viewBox="0 0 120 90" style="display:none;"><circle cx="60" cy="45" r="25" fill="none" stroke="#4fd1c5" stroke-width="3"/></svg>
-      <p data-i18n="img.feedback">Feedback</p>
-    </div>
-  </div>
   <div class="box danza">
     <span class="emoji">💃</span>
     <span data-i18n="s2.b5.danza"><b>Conexión danza:</b> el novato usa control consciente; el experto automatiza y libera atención para la expresión.</span>
-  </div>
-  <div class="notas" data-label="Notas del profesor" data-i18n="notas.s2.b5">
-    Concepto clave: la unidad motora es la "letra" con la que el sistema nervioso escribe el movimiento.
   </div>
 </section>
 
@@ -784,38 +744,21 @@
     <tr><td data-i18n="s2.b6.r2a">Asociativa</td><td data-i18n="s2.b6.r2b">Menos errores, mejora la coordinación</td><td data-i18n="s2.b6.r2c">Repetir la coreografía</td></tr>
     <tr><td data-i18n="s2.b6.r3a">Autónoma</td><td data-i18n="s2.b6.r3b">Movimiento fluido y automático</td><td data-i18n="s2.b6.r3c">Interpretar sin pensar en los pasos</td></tr>
   </table>
-  <div class="illus" style="margin-top:14px;">
-    <svg viewBox="0 0 500 130" xmlns="http://www.w3.org/2000/svg">
-      <rect x="20" y="40" width="140" height="50" rx="10" fill="#2d6cdf"/>
-      <text x="90" y="70" fill="#fff" font-size="13" text-anchor="middle" data-i18n="s2.b6.f1">Cognitiva</text>
-      <rect x="180" y="40" width="140" height="50" rx="10" fill="#4fd1c5"/>
-      <text x="250" y="70" fill="#0f1226" font-size="13" text-anchor="middle" data-i18n="s2.b6.f2">Asociativa</text>
-      <rect x="340" y="40" width="140" height="50" rx="10" fill="#ff5c8a"/>
-      <text x="410" y="70" fill="#0f1226" font-size="13" text-anchor="middle" data-i18n="s2.b6.f3">Autónoma</text>
-    </svg>
-  </div>
-  <p class="caption" data-i18n="s2.b6.cap">Fases del aprendizaje motor</p>
   <div class="box danza">
     <span class="emoji">💃</span>
     <span data-i18n="s2.b6.danza"><b>Conexión danza:</b> la práctica distribuida y la visualización aceleran el paso a la fase autónoma.</span>
   </div>
-  <div class="notas" data-label="Notas del profesor" data-i18n="notas.s2.b6">
-    Pregunta al grupo: "¿En qué fase estáis con vuestro paso más difícil?"
-  </div>
 </section>
 
-<!-- ================= S2 - PRÁCTICAS 1-5 ================= -->
+<!-- ================= S2 - PRÁCTICAS ================= -->
 <section class="slide">
   <span class="tag practica" data-i18n="tag.practica56">Práctica · 10 ejercicios cortos (1/2)</span>
   <h2 data-i18n="s2.p1.titulo">Prácticas 1–5: control motor</h2>
-  <div class="practica-item" data-i18n="s2.p1.e1"><b>P1 · Reclutamiento de unidades motoras (3 min).</b> Sostener un objeto ligero y luego uno pesado.</div>
-  <div class="practica-item" data-i18n="s2.p1.e2"><b>P2 · Movimiento lento vs. rápido (3 min).</b> Realizar un mismo gesto muy lento y muy rápido.</div>
-  <div class="practica-item" data-i18n="s2.p1.e3"><b>P3 · Feedback visual (3 min).</b> Realizar un equilibrio con ojos abiertos y luego cerrados.</div>
-  <div class="practica-item" data-i18n="s2.p1.e4"><b>P4 · Feedforward (3 min).</b> Antes de saltar, anticipar la postura.</div>
-  <div class="practica-item" data-i18n="s2.p1.e5"><b>P5 · Automatización progresiva (4 min).</b> Repetir una secuencia de 4 pasos 10 veces.</div>
-  <div class="notas" data-label="Notas del profesor" data-i18n="notas.s2.p1">
-    La P1 puede hacerse con un libro y luego con una mochila cargada.
-  </div>
+  <div class="practica-item" data-i18n="s2.p1.e1"><b>P1 · Reclutamiento de unidades motoras (3 min).</b></div>
+  <div class="practica-item" data-i18n="s2.p1.e2"><b>P2 · Movimiento lento vs. rápido (3 min).</b></div>
+  <div class="practica-item" data-i18n="s2.p1.e3"><b>P3 · Feedback visual (3 min).</b></div>
+  <div class="practica-item" data-i18n="s2.p1.e4"><b>P4 · Feedforward (3 min).</b></div>
+  <div class="practica-item" data-i18n="s2.p1.e5"><b>P5 · Automatización progresiva (4 min).</b></div>
 </section>
 
 <!-- ================= S2 - BLOQUE 7 ================= -->
@@ -840,22 +783,9 @@
       </ul>
     </div>
   </div>
-  <div class="illus" style="margin-top:10px;">
-    <svg viewBox="0 0 500 140" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="250" cy="70" r="45" fill="none" stroke="#b8c0e0" stroke-width="2"/>
-      <text x="250" y="75" fill="#fff" font-size="12" text-anchor="middle" data-i18n="s2.b7.center">SNA</text>
-      <path d="M 205 70 Q 150 30 90 60" stroke="#ff5c8a" stroke-width="3" fill="none"/>
-      <text x="60" y="45" fill="#ff5c8a" font-size="12" text-anchor="middle" data-i18n="s2.b7.simp">Simpático</text>
-      <path d="M 295 70 Q 350 30 410 60" stroke="#4fd1c5" stroke-width="3" fill="none"/>
-      <text x="440" y="45" fill="#4fd1c5" font-size="12" text-anchor="middle" data-i18n="s2.b7.para">Parasimpático</text>
-    </svg>
-  </div>
   <div class="box danza">
     <span class="emoji">💃</span>
     <span data-i18n="s2.b7.danza"><b>Conexión danza:</b> control de la ansiedad escénica, activación óptima antes de actuar, recuperación post-esfuerzo.</span>
-  </div>
-  <div class="notas" data-label="Notas del profesor" data-i18n="notas.s2.b7">
-    Introduce el concepto de "activación óptima": ni poca (desmotivación) ni excesiva (bloqueo).
   </div>
 </section>
 
@@ -870,17 +800,9 @@
     <li data-i18n="s2.b8.l4"><b>Adaptaciones al entrenamiento dancístico</b>: mejora de la propiocepción, mayor eficiencia sináptica, cambios en la representación cortical.</li>
     <li data-i18n="s2.b8.l5"><b>Nociones de lesiones neurológicas</b>: dolor, alteraciones del equilibrio.</li>
   </ul>
-  <div class="video-ph" style="margin-top:14px;max-width:600px;">
-    <div class="play">▶</div>
-    <div data-i18n="s2.b8.video">Vídeo: plasticidad cerebral en bailarines (4 min)</div>
-    <small data-i18n="video.placeholder3">[Insertar enlace al vídeo]</small>
-  </div>
   <div class="box danza">
     <span class="emoji">💃</span>
     <span data-i18n="s2.b8.danza"><b>Conexión danza:</b> el cerebro del bailarín se reorganiza con la práctica: más eficiencia, menos esfuerzo aparente.</span>
-  </div>
-  <div class="notas" data-label="Notas del profesor" data-i18n="notas.s2.b8">
-    Cierre conceptual de la unidad. Vuelve al hilo conductor.
   </div>
 </section>
 
@@ -888,29 +810,26 @@
 <section class="slide">
   <span class="tag practica" data-i18n="tag.practica78">Práctica · 10 ejercicios cortos (2/2)</span>
   <h2 data-i18n="s2.p2.titulo">Prácticas 6–10: autonomía y adaptación</h2>
-  <div class="practica-item" data-i18n="s2.p2.e6"><b>P6 · Activación simpática (3 min).</b> Medir FC y respiración en reposo. Realizar 30 s de saltos.</div>
-  <div class="practica-item" data-i18n="s2.p2.e7"><b>P7 · Respiración parasimpática (3 min).</b> Respiración diafragmática lenta (4 s inspiración, 6 s espiración).</div>
-  <div class="practica-item" data-i18n="s2.p2.e8"><b>P8 · Visualización antes de actuar (3 min).</b> Imaginar una actuación completa.</div>
-  <div class="practica-item" data-i18n="s2.p2.e9"><b>P9 · Fatiga central vs. periférica (3 min).</b> Mantener una contracción isométrica hasta el fallo.</div>
-  <div class="practica-item" data-i18n="s2.p2.e10"><b>P10 · Efecto del entrenamiento (4 min).</b> Comparar equilibrio en una pierna antes y después de 5 min de práctica.</div>
-  <div class="notas" data-label="Notas del profesor" data-i18n="notas.s2.p2">
-    La P6 y P7 son complementarias: una activa, la otra relaja.
-  </div>
+  <div class="practica-item" data-i18n="s2.p2.e6"><b>P6 · Activación simpática (3 min).</b></div>
+  <div class="practica-item" data-i18n="s2.p2.e7"><b>P7 · Respiración parasimpática (3 min).</b></div>
+  <div class="practica-item" data-i18n="s2.p2.e8"><b>P8 · Visualización antes de actuar (3 min).</b></div>
+  <div class="practica-item" data-i18n="s2.p2.e9"><b>P9 · Fatiga central vs. periférica (3 min).</b></div>
+  <div class="practica-item" data-i18n="s2.p2.e10"><b>P10 · Efecto del entrenamiento (4 min).</b></div>
 </section>
 
 <!-- ================= S2 - ACTIVIDADES INTERACTIVAS ================= -->
 <section class="slide">
   <span class="tag actividad" data-i18n="tag.actividad2">Actividades interactivas · Sesión 2</span>
-  <h2 data-i18n="s2.act.titulo">Actividades por apartados (escribibles)</h2>
+  <h2 data-i18n="s2.act.titulo">Actividades por apartados (escribibles + valoración)</h2>
 
   <div class="actividad-progress">
     <span><b id="prog-s2">0</b>/5 <span data-i18n="prog.completadas">respondidas</span></span>
     <div class="bar"><div class="bar-fill" id="bar-s2" style="width:0%"></div></div>
-    <span style="color:var(--muted);" data-i18n="prog.auto">Se guarda automáticamente</span>
+    <span style="color:var(--muted);" data-i18n="prog.auto">Autoguardado</span>
   </div>
 
   <!-- B1 -->
-  <div class="actividad-block">
+  <div class="actividad-block" data-act="s2-a1">
     <h4><span class="num">B1</span><span data-i18n="s2.act.a1.titulo">Análisis de una coreografía</span></h4>
     <p class="enunciado" data-i18n="s2.act.a1.enun">Elige un fragmento de una coreografía que conozcas. Identifica qué estructuras nerviosas participan en cada fase: planificación, ejecución, corrección y expresión emocional.</p>
     <div class="respuesta-wrap">
@@ -931,11 +850,12 @@
         <li data-i18n="s2.act.a1.esq.5">Integración sensorial: propiocepción + visión + audición.</li>
       </ul>
     </div>
-    <a class="ref-slide" data-i18n="ref.ir" data-ref="7">Ver diapositiva 8 (control motor)</a>
+    <a class="ref-slide" data-i18n="ref.ir" data-ref="11">Ver diapositiva 12 (control motor)</a>
+    <div class="valoracion" data-val="s2-a1"></div>
   </div>
 
   <!-- B2 -->
-  <div class="actividad-block">
+  <div class="actividad-block" data-act="s2-a2">
     <h4><span class="num">B2</span><span data-i18n="s2.act.a2.titulo">Diario de aprendizaje motor</span></h4>
     <p class="enunciado" data-i18n="s2.act.a2.enun">Registra durante una semana la evolución de un paso nuevo. Describe en qué fase (cognitiva, asociativa, autónoma) estabas cada día y qué cambió.</p>
     <div class="respuesta-wrap">
@@ -952,14 +872,15 @@
         <li data-i18n="s2.act.a2.esq.1">Día 1-2: fase cognitiva; mucha atención, errores frecuentes.</li>
         <li data-i18n="s2.act.a2.esq.2">Día 3-4: fase asociativa; menos errores, mejor coordinación.</li>
         <li data-i18n="s2.act.a2.esq.3">Día 5-7: fase autónoma; movimiento fluido, atención liberada.</li>
-        <li data-i18n="s2.act.a2.esq.4">Reflexión: ¿qué facilitó el paso de una fase a otra? (repetición, sueño, visualización...).</li>
+        <li data-i18n="s2.act.a2.esq.4">Reflexión: ¿qué facilitó el paso de una fase a otra?</li>
       </ul>
     </div>
-    <a class="ref-slide" data-i18n="ref.ir" data-ref="8">Ver diapositiva 9 (aprendizaje motor)</a>
+    <a class="ref-slide" data-i18n="ref.ir" data-ref="12">Ver diapositiva 13 (aprendizaje motor)</a>
+    <div class="valoracion" data-val="s2-a2"></div>
   </div>
 
   <!-- B3 -->
-  <div class="actividad-block">
+  <div class="actividad-block" data-act="s2-a3">
     <h4><span class="num">B3</span><span data-i18n="s2.act.a3.titulo">Caso de ansiedad escénica</span></h4>
     <p class="enunciado" data-i18n="s2.act.a3.enun">Describe qué ocurre en el cuerpo de un bailarín antes de salir a escena: respuestas simpáticas y parasimpáticas. Propón 3 estrategias fisiológicas para regularlo.</p>
     <div class="respuesta-wrap">
@@ -974,16 +895,17 @@
     <div class="esquema" id="esq-s2-a3" data-label="Esquema esperado" data-i18n="s2.act.a3.esq">
       <ul>
         <li data-i18n="s2.act.a3.esq.1">Simpático: aumento de FC, respiración rápida, sudoración, tensión muscular.</li>
-        <li data-i18n="s2.act.a3.esq.2">Parasimpático: si se activa en exceso, sensación de calma; si no, prevalece el simpático.</li>
+        <li data-i18n="s2.act.a3.esq.2">Parasimpático: si se activa, sensación de calma; si no, prevalece el simpático.</li>
         <li data-i18n="s2.act.a3.esq.3">Estrategias: respiración diafragmática lenta, visualización positiva, calentamiento progresivo.</li>
         <li data-i18n="s2.act.a3.esq.4">Concepto clave: activación óptima (ni poca ni excesiva).</li>
       </ul>
     </div>
-    <a class="ref-slide" data-i18n="ref.ir" data-ref="10">Ver diapositiva 11 (sistema autónomo)</a>
+    <a class="ref-slide" data-i18n="ref.ir" data-ref="14">Ver diapositiva 15 (sistema autónomo)</a>
+    <div class="valoracion" data-val="s2-a3"></div>
   </div>
 
   <!-- B4 -->
-  <div class="actividad-block">
+  <div class="actividad-block" data-act="s2-a4">
     <h4><span class="num">B4</span><span data-i18n="s2.act.a4.titulo">Cuadro de adaptaciones: novel vs. experto</span></h4>
     <p class="enunciado" data-i18n="s2.act.a4.enun">Compara el sistema nervioso de un bailarín novel y uno experto en: propiocepción, eficiencia sináptica y representación cortical.</p>
     <div class="respuesta-wrap">
@@ -1003,11 +925,12 @@
         <li data-i18n="s2.act.a4.esq.4">Consecuencia: aparente facilidad, menos fatiga, mejor expresión.</li>
       </ul>
     </div>
-    <a class="ref-slide" data-i18n="ref.ir" data-ref="11">Ver diapositiva 12 (integración)</a>
+    <a class="ref-slide" data-i18n="ref.ir" data-ref="15">Ver diapositiva 16 (integración)</a>
+    <div class="valoracion" data-val="s2-a4"></div>
   </div>
 
   <!-- B5 -->
-  <div class="actividad-block">
+  <div class="actividad-block" data-act="s2-a5">
     <h4><span class="num">B5</span><span data-i18n="s2.act.a5.titulo">Reflexión final integradora</span></h4>
     <p class="enunciado" data-i18n="s2.act.a5.enun">Explica, usando el hilo conductor de la asignatura (excitabilidad → transmisión → sensación → integración → movimiento → regulación → adaptación), cómo se aprende y ejecuta un movimiento dancístico.</p>
     <div class="respuesta-wrap">
@@ -1030,11 +953,62 @@
         <li data-i18n="s2.act.a5.esq.7">Adaptación: la plasticidad permite aprender y mejorar con la práctica.</li>
       </ul>
     </div>
-    <a class="ref-slide" data-i18n="ref.ir" data-ref="11">Ver diapositiva 12 (integración)</a>
+    <a class="ref-slide" data-i18n="ref.ir" data-ref="15">Ver diapositiva 16 (integración)</a>
+    <div class="valoracion" data-val="s2-a5"></div>
+  </div>
+
+  <!-- AUTOEVALUACIÓN S2 -->
+  <div class="autoeval-box">
+    <h4>🤔 <span data-i18n="autoeval.titulo2">Autoevaluación de la Sesión 2</span></h4>
+    <p data-i18n="autoeval.p1">Después de ver el esquema esperado y la valoración, ¿qué nota te pondrías? Reflexiona honestamente sobre tu comprensión.</p>
+    <div class="escala">
+      <label><input type="radio" name="autoeval-s2" value="0-4"><span data-i18n="autoeval.insuf">Insuficiente (0-4)</span></label>
+      <label><input type="radio" name="autoeval-s2" value="5-6"><span data-i18n="autoeval.suf">Suficiente (5-6)</span></label>
+      <label><input type="radio" name="autoeval-s2" value="7-8"><span data-i18n="autoeval.not">Notable (7-8)</span></label>
+      <label><input type="radio" name="autoeval-s2" value="9-10"><span data-i18n="autoeval.exc">Excelente (9-10)</span></label>
+    </div>
+    <div class="nota-propia">
+      <span data-i18n="autoeval.nota">Nota concreta (0-10):</span>
+      <input type="number" min="0" max="10" step="0.5" data-autoeval-nota="s2">
+    </div>
+    <p style="margin-top:12px;font-size:.9rem;" data-i18n="autoeval.justif">Justifica tu nota (qué has entendido bien, qué te falta):</p>
+    <textarea data-autoeval-text="s2" placeholder="Escribe aquí tu reflexión..."></textarea>
   </div>
 
   <div class="notas" data-label="Notas del profesor" data-i18n="notas.s2.act">
-    B1 y B3 en clase (30 min). B2 como diario semanal. B4 y B5 como cierre de la unidad. Las respuestas se guardan en localStorage; recuerda al alumnado que pueden exportarlas con el botón 💾 Exportar.
+    Cada actividad tiene valoración automática + autoevaluación. Recuerda al alumnado que pueden exportar todo al final.
+  </div>
+</section>
+
+<!-- ================= RESUMEN FINAL ================= -->
+<section class="slide">
+  <span class="tag autoeval" data-i18n="tag.resumen">Resumen final</span>
+  <h2 data-i18n="resumen.titulo">Resumen de tu trabajo y valoración global</h2>
+
+  <div class="resumen-final" id="resumen-final">
+    <h3 data-i18n="resumen.sub">Valoración automática por actividad</h3>
+    <table>
+      <thead>
+        <tr>
+          <th data-i18n="resumen.act">Actividad</th>
+          <th data-i18n="resumen.puntos">Puntos clave cubiertos</th>
+          <th data-i18n="resumen.nota">Nota (0-10)</th>
+        </tr>
+      </thead>
+      <tbody id="resumen-tabla">
+        <tr><td colspan="3" style="text-align:center;color:var(--muted);" data-i18n="resumen.vacio">Escribe tus respuestas para ver la valoración.</td></tr>
+      </tbody>
+    </table>
+    <div class="total" id="resumen-total">— / 10</div>
+  </div>
+
+  <div class="box danza" style="margin-top:20px;">
+    <span class="emoji">💃</span>
+    <span data-i18n="resumen.reflexion"><b>Reflexión final:</b> revisa tu autoevaluación de cada sesión. ¿Coincide con la valoración automática? ¿Qué aspecto necesitas repasar antes de la evaluación?</span>
+  </div>
+
+  <div class="notas" data-label="Notas del profesor" data-i18n="notas.resumen">
+    Esta diapositiva muestra el resumen de valoraciones automáticas y autoevaluaciones. Es el punto de partida para la conversación final con el alumnado.
   </div>
 </section>
 
@@ -1053,9 +1027,6 @@
       <b data-i18n="s2.cierre.eval">Evaluación sugerida:</b>
       <span data-i18n="s2.cierre.eval2"> caso aplicado + portfolio de prácticas + reflexión integradora.</span>
     </div>
-    <div class="notas" data-label="Notas del profesor" data-i18n="notas.s2.cierre">
-      Cierra la unidad con una reflexión grupal: "¿Qué haréis diferente a partir de ahora?"
-    </div>
   </div>
 </section>
 
@@ -1065,9 +1036,6 @@
     <h1 data-i18n="fin.titulo">Fin de la unidad</h1>
     <p class="sub" data-i18n="fin.sub">El sistema nervioso: del impulso al arte</p>
     <div class="big" data-i18n="fin.big">¡A moverse con conciencia!</div>
-    <div class="notas" data-label="Notas del profesor" data-i18n="notas.fin">
-      ¡Enhorabuena! Has completado las dos sesiones.
-    </div>
   </div>
 </section>
 
@@ -1088,9 +1056,9 @@ const translations = {
     "portada.sub":"Del impulso nervioso al movimiento dancístico",
     "portada.cap":"Neurona multipolar (Wikimedia Commons)",
     "portada.sesiones":"2 sesiones · 3 horas cada una",
-    "portada.resumen":"Explicación + 10 prácticas + actividades interactivas",
-    "notas.portada":"Presenta la unidad como un viaje del impulso al movimiento. Pregunta inicial: ¿Qué creéis que ocurre en vuestro cuerpo cuando aprendéis un paso nuevo?",
-    "tag.nueva":"Nueva diapositiva",
+    "portada.resumen":"Explicación + 10 prácticas + actividades interactivas + autoevaluación",
+    "notas.portada":"Presenta la unidad como un viaje del impulso al movimiento.",
+    "tag.nueva":"Nueva diapositiva","tag.resumen":"Resumen final",
     "indice.titulo":"Presentación de la unidad y hoja de ruta",
     "indice.s1":"Sesión 1 · De la neurona al movimiento",
     "indice.s1.1":"¿Por qué estudiar el sistema nervioso en danza?",
@@ -1098,17 +1066,17 @@ const translations = {
     "indice.s1.3":"Organización funcional de la sensibilidad",
     "indice.s1.4":"Procesamiento e integración central",
     "indice.s1.5":"10 prácticas cortas",
-    "indice.s1.6":"5 actividades interactivas",
+    "indice.s1.6":"5 actividades interactivas + autoevaluación",
     "indice.s2":"Sesión 2 · Control motor y adaptación",
     "indice.s2.1":"Control motor (eferencias)",
     "indice.s2.2":"Aprendizaje motor",
     "indice.s2.3":"Sistema nervioso autónomo",
     "indice.s2.4":"Integración y adaptación",
     "indice.s2.5":"10 prácticas cortas",
-    "indice.s2.6":"5 actividades interactivas",
+    "indice.s2.6":"5 actividades interactivas + autoevaluación",
     "indice.danza":"<b>Hilo conductor:</b> Excitabilidad → Transmisión → Sensación → Integración → Movimiento → Regulación → Adaptación (aprendizaje).",
-    "indice.evaluacion":"<b>Evaluación:</b> respuestas escritas en las actividades interactivas + portfolio + reflexión final integradora.",
-    "notas.indice":"Diapositiva nueva: sirve de índice y contrato didáctico. Explica que las actividades son escribibles, se guardan en el navegador y se pueden exportar.",
+    "indice.evaluacion":"<b>Evaluación:</b> valoración automática por actividad + autoevaluación reflexiva + portfolio + exportación final.",
+    "notas.indice":"Diapositiva nueva: sirve de índice y contrato didáctico.",
     "s1.tag":"Sesión 1","s1.titulo":"De la neurona al movimiento",
     "s1.sub":"Excitabilidad · Transmisión · Sensación · Reflexos",
     "s1.obj.l":"Objetivo:","s1.obj":" comprender cómo el sistema nervioso genera, transmite e integra información para producir respuestas motoras básicas.",
@@ -1126,8 +1094,21 @@ const translations = {
     "tag.actividad1":"Actividades interactivas · Sesión 1",
     "tag.actividad2":"Actividades interactivas · Sesión 2",
     "label.respuesta":"Tu respuesta:","btn.ver":"Ver esquema esperado",
-    "ref.ir":"Ir a la diapositiva","hint.esquema":"Pulsa R o el botón para ver el esquema esperado",
-    "prog.completadas":"respondidas","prog.auto":"Se guarda automáticamente",
+    "ref.ir":"Ir a la diapositiva","hint.esquema":"Pulsa R o el botón para ver el esquema",
+    "prog.completadas":"respondidas","prog.auto":"Autoguardado",
+    "autoeval.titulo":"Autoevaluación de la Sesión 1",
+    "autoeval.titulo2":"Autoevaluación de la Sesión 2",
+    "autoeval.p1":"Después de ver el esquema esperado y la valoración, ¿qué nota te pondrías? Reflexiona honestamente sobre tu comprensión.",
+    "autoeval.insuf":"Insuficiente (0-4)","autoeval.suf":"Suficiente (5-6)",
+    "autoeval.not":"Notable (7-8)","autoeval.exc":"Excelente (9-10)",
+    "autoeval.nota":"Nota concreta (0-10):",
+    "autoeval.justif":"Justifica tu nota (qué has entendido bien, qué te falta):",
+    "resumen.titulo":"Resumen de tu trabajo y valoración global",
+    "resumen.sub":"Valoración automática por actividad",
+    "resumen.act":"Actividad","resumen.puntos":"Puntos clave cubiertos","resumen.nota":"Nota (0-10)",
+    "resumen.vacio":"Escribe tus respuestas para ver la valoración.",
+    "resumen.reflexion":"<b>Reflexión final:</b> revisa tu autoevaluación de cada sesión. ¿Coincide con la valoración automática?",
+    "notas.resumen":"Esta diapositiva muestra el resumen de valoraciones automáticas y autoevaluaciones.",
     "s1.b1.titulo":"1. ¿Por qué estudiar el sistema nervioso en danza?",
     "s1.b1.l1":"El movimiento es el <b>resultado visible</b> de un proceso nervioso invisible.",
     "s1.b1.l2":"Entender la función permite <b>optimizar el aprendizaje</b>, prevenir lesiones y controlar la activación.",
@@ -1135,31 +1116,28 @@ const translations = {
     "s1.b1.danza":"<b>Conexión danza:</b> cada paso, cada equilibrio, cada matiz expresivo nace de una secuencia: receptor → vía aferente → integración → vía eferente → efector.",
     "s1.b1.cap":"Esquema funcional del arco reflejo (Wikimedia Commons)",
     "s1.b1.hilo":"Excitabilidad → Transmisión → Sensación → Integración → Movimiento",
-    "notas.s1.b1":"Insiste en el cambio de mirada: no preguntar ¿cómo se llama esta parte? sino ¿qué hace?.",
+    "notas.s1.b1":"Insiste en el cambio de mirada.",
     "s1.b2.titulo":"2. La neurona como unidad funcional",
     "s1.b2.h1":"Excitabilidad","s1.b2.l1":"Potencial de membrana en reposo (~-70 mV).","s1.b2.l2":"Umbral de excitación.",
     "s1.b2.h2":"Potencial de acción","s1.b2.l3":"Despolarización → repolarización → hiperpolarización.","s1.b2.l4":"Ley del todo o nada.",
     "s1.b2.h3":"Sinapsis","s1.b2.l5":"Transmisión química: neurotransmisores.","s1.b2.l6":"Excitación vs. inhibición.",
     "s1.b2.l7":"<b>Plasticidad sináptica</b>: base del aprendizaje motor.",
-    "s1.b2.cap":"Perfil del potencial de acción (Wikimedia Commons)","s1.b2.video":"Vídeo: sinapsis y neurotransmisores (2 min)",
+    "s1.b2.cap":"Perfil del potencial de acción (Wikimedia Commons)",
     "s1.b2.danza":"<b>Conexión danza:</b> la repetición fortalece conexiones sinápticas → el paso se automatiza.",
     "notas.s1.b2":"Analogía: el potencial de acción es como un mensaje de texto que se envía entero o no se envía.",
     "s1.p1.titulo":"Prácticas 1–5: neurona y sensación",
-    "s1.p1.e1":"<b>P1 · Reflejo rotuliano (2 min).</b> En parejas, golpear suavemente bajo la rótula.",
-    "s1.p1.e2":"<b>P2 · Tiempo de reacción (3 min).</b> Un compañero suelta una regla entre los dedos del otro.",
-    "s1.p1.e3":"<b>P3 · Discriminación de dos puntos (3 min).</b> Con dos palillos, tocar la piel del antebrazo y de la espalda.",
-    "s1.p1.e4":"<b>P4 · Propiocepción con ojos cerrados (3 min).</b> De pie, ojos cerrados, mantener equilibrio 20 s.",
-    "s1.p1.e5":"<b>P5 · Adaptación sensorial (2 min).</b> Colocar una goma suave en la muñeca.",
-    "notas.s1.p1":"Cronometra las prácticas (2-4 min) y deja 30 s entre ellas para comentar qué han notado.",
+    "s1.p1.e1":"<b>P1 · Reflejo rotuliano (2 min).</b>",
+    "s1.p1.e2":"<b>P2 · Tiempo de reacción (3 min).</b>",
+    "s1.p1.e3":"<b>P3 · Discriminación de dos puntos (3 min).</b>",
+    "s1.p1.e4":"<b>P4 · Propiocepción con ojos cerrados (3 min).</b>",
+    "s1.p1.e5":"<b>P5 · Adaptación sensorial (2 min).</b>",
     "img.receptor":"Receptor","img.propio":"Propiocepción","img.adapt":"Adaptación",
     "s1.b3.titulo":"3. Organización funcional de la sensibilidad",
     "s1.b3.h1":"Receptores sensoriales","s1.b3.l1":"Mecanorreceptores, nociceptores, propioceptores...",
     "s1.b3.l2":"Transducción: estímulo → impulso nervioso.",
     "s1.b3.h2":"Propiocepción","s1.b3.l3":"Husos musculares (longitud).","s1.b3.l4":"Órganos de Golgi (tensión).","s1.b3.l5":"Receptores articulares.",
-    "s1.b3.h3":"Integración sensorial","s1.b3.l6":"Adaptación, inhibición lateral, filtrado.",
     "s1.b3.cap":"Huso muscular: detector de longitud (Wikimedia Commons)",
     "s1.b3.danza":"<b>Conexión danza:</b> el equilibrio y la conciencia corporal dependen de la propiocepción. Un mal procesamiento = lesión.",
-    "notas.s1.b3":"Analogía: el huso muscular es como un sensor de goma elástica que avisa cuando el músculo se estira.",
     "s1.b4.titulo":"4. Procesamiento e integración central",
     "s1.b4.th1":"Estructura","s1.b4.th2":"Función principal","s1.b4.th3":"Ejemplo en danza",
     "s1.b4.r1a":"Médula espinal","s1.b4.r1b":"Reflejos medulares","s1.b4.r1c":"Reflejo miotático en un salto",
@@ -1169,17 +1147,15 @@ const translations = {
     "s1.b4.r5a":"Tálamo","s1.b4.r5b":"Relevo e integración sensorial","s1.b4.r5c":"Filtrar información",
     "s1.b4.r6a":"Corteza motora","s1.b4.r6b":"Planificación y ejecución","s1.b4.r6c":"Decidir un movimiento",
     "s1.b4.r7a":"Sistema límbico","s1.b4.r7b":"Emoción y movimiento","s1.b4.r7c":"Expresividad",
-    "img.cerebelo":"Cerebelo","img.ganglios":"Ganglios basales","img.corteza":"Corteza motora",
     "s1.b4.danza":"<b>Conexión danza:</b> automatización vs. control consciente; memoria procedural; interpretación emocional.",
-    "notas.s1.b4":"Evita caer en la anatomía pura. Para cada estructura, lanza una pregunta: ¿Qué pasaría en un giro si el cerebelo no funcionara?",
+    "notas.s1.b4":"Evita caer en la anatomía pura.",
     "s1.p2.titulo":"Prácticas 6–10: integración y control",
-    "s1.p2.e6":"<b>P6 · Reflejo miotático en pareja (3 min).</b> Estirar pasivamente el bíceps del compañero.",
-    "s1.p2.e7":"<b>P7 · Equilibrio con perturbación (3 min).</b> El compañero empuja suavemente el hombro.",
-    "s1.p2.e8":"<b>P8 · Cambio de dirección con/sin señal visual (3 min).</b> Caminar y cambiar de dirección al oír una palmada.",
-    "s1.p2.e9":"<b>P9 · Secuencia de 4 pasos (4 min).</b> Aprender una secuencia corta. Repetir 5 veces.",
-    "s1.p2.e10":"<b>P10 · Visualización motora (3 min).</b> Imaginar vívidamente un movimiento conocido sin ejecutarlo.",
-    "notas.s1.p2":"La P6 requiere control: el estiramiento debe ser lento y suave. La P9 es clave para enlazar con la sesión 2.",
-    "s1.act.titulo":"Actividades por apartados (escribibles)",
+    "s1.p2.e6":"<b>P6 · Reflejo miotático en pareja (3 min).</b>",
+    "s1.p2.e7":"<b>P7 · Equilibrio con perturbación (3 min).</b>",
+    "s1.p2.e8":"<b>P8 · Cambio de dirección con/sin señal visual (3 min).</b>",
+    "s1.p2.e9":"<b>P9 · Secuencia de 4 pasos (4 min).</b>",
+    "s1.p2.e10":"<b>P10 · Visualización motora (3 min).</b>",
+    "s1.act.titulo":"Actividades por apartados (escribibles + valoración)",
     "s1.act.a1.titulo":"Mapa funcional de la neurona",
     "s1.act.a1.enun":"Dibuja o describe una neurona y señala con flechas el recorrido del impulso nervioso. Explica qué ocurre en cada zona (dendritas, soma, axón, mielina, terminal sináptico).",
     "s1.act.a1.esq":"",
@@ -1193,21 +1169,21 @@ const translations = {
     "s1.act.a2.esq":"",
     "s1.act.a2.esq.1":"Excitadora: neurotransmisor como el glutamato; favorece la despolarización; facilita el movimiento.",
     "s1.act.a2.esq.2":"Inhibidora: neurotransmisor como el GABA; hiperpolariza; frena o modula el movimiento.",
-    "s1.act.a2.esq.3":"Ejemplo danza: la excitación permite iniciar el paso; la inhibición permite el control fino y detener el movimiento.",
+    "s1.act.a2.esq.3":"Ejemplo danza: la excitación permite iniciar el paso; la inhibición permite el control fino.",
     "s1.act.a3.titulo":"Análisis de caso: lesión de tobillo y propiocepción",
     "s1.act.a3.enun":"Un bailarín se lesiona los ligamentos del tobillo. Explica qué receptores propioceptivos se ven afectados, cómo afecta al equilibrio y propón 3 ejercicios de reeducación.",
     "s1.act.a3.esq":"",
-    "s1.act.a3.esq.1":"Receptores afectados: receptores articulares del tobillo, husos musculares y órganos de Golgi de la zona.",
-    "s1.act.a3.esq.2":"Consecuencia: menor información sobre la posición del pie → peor equilibrio, más riesgo de recaída.",
-    "s1.act.a3.esq.3":"Ejercicios: equilibrio a una pierna, ojos cerrados, superficies inestables, trabajo con bandas elásticas.",
+    "s1.act.a3.esq.1":"Receptores afectados: receptores articulares del tobillo, husos musculares y órganos de Golgi.",
+    "s1.act.a3.esq.2":"Consecuencia: menor información sobre la posición del pie → peor equilibrio.",
+    "s1.act.a3.esq.3":"Ejercicios: equilibrio a una pierna, ojos cerrados, superficies inestables, bandas elásticas.",
     "s1.act.a3.esq.4":"Relación con la lesión: la reeducación busca restaurar la información sensorial y la respuesta motora.",
     "s1.act.a4.titulo":"Tabla de estructuras y funciones",
     "s1.act.a4.enun":"Completa una tabla con al menos 4 estructuras del sistema nervioso central: nombre, función principal, ejemplo dancístico y consecuencia si falla.",
     "s1.act.a4.esq":"",
     "s1.act.a4.esq.1":"Médula espinal: reflejos; ejemplo, reflejo miotático; si falla, pérdida de reflejos y tono.",
     "s1.act.a4.esq.2":"Cerebelo: coordinación y timing; ejemplo, ajustar un giro; si falla, movimientos descoordinados.",
-    "s1.act.a4.esq.3":"Ganglios basales: inicio y secuenciación; ejemplo, encadenar pasos; si fallan, dificultad para iniciar el movimiento.",
-    "s1.act.a4.esq.4":"Corteza motora: planificación y ejecución; ejemplo, decidir un movimiento; si falla, pérdida de control voluntario.",
+    "s1.act.a4.esq.3":"Ganglios basales: inicio y secuenciación; ejemplo, encadenar pasos; si fallan, dificultad para iniciar.",
+    "s1.act.a4.esq.4":"Corteza motora: planificación y ejecución; ejemplo, decidir un movimiento; si falla, pérdida de control.",
     "s1.act.a5.titulo":"Reflexión: repetición y aprendizaje motor",
     "s1.act.a5.enun":"Explica por qué un movimiento mejora con la repetición. Menciona el papel de la mielina, la sinapsis y la plasticidad sináptica.",
     "s1.act.a5.esq":"",
@@ -1215,66 +1191,54 @@ const translations = {
     "s1.act.a5.esq.2":"Sinapsis: se refuerzan las conexiones que se usan repetidamente.",
     "s1.act.a5.esq.3":"Plasticidad sináptica: base del aprendizaje motor; el cerebro se reorganiza con la práctica.",
     "s1.act.a5.esq.4":"Consecuencia en danza: el paso se automatiza y libera atención para la expresión.",
-    "notas.s1.act":"Las respuestas se guardan automáticamente en el navegador. Cada actividad incluye un esquema esperado (botón o tecla R). A1 y A2 en clase; A3-A5 como portfolio.",
+    "notas.s1.act":"Cada actividad tiene valoración automática + autoevaluación.",
     "s1.cierre.tag":"Cierre Sesión 1","s1.cierre.titulo":"Ideas clave",
     "s1.cierre.l1":"El impulso nervioso es la base de toda función.",
     "s1.cierre.l2":"La sensación informa; la integración decide; el movimiento ejecuta.",
     "s1.cierre.l3":"La propiocepción es esencial para el equilibrio y la técnica.",
     "s1.cierre.l4":"La plasticidad sináptica explica el aprendizaje motor.",
     "s1.cierre.prox":"Para la próxima sesión:","s1.cierre.prox2":" repasar prácticas 1–10 y traer dudas.",
-    "notas.s1.cierre":"Cierra con una pregunta abierta: ¿Qué os ha sorprendido más de vuestro propio cuerpo hoy?",
     "s2.tag":"Sesión 2","s2.titulo":"Control motor, autonomía y adaptación",
     "s2.sub":"Eferencias · Aprendizaje · Sistema autónomo · Integración",
     "s2.obj.l":"Objetivo:","s2.obj":" comprender cómo el sistema nervioso controla el movimiento voluntario, regula el medio interno y se adapta con el entrenamiento dancístico.",
-    "notas.s2.portada":"Recupera brevemente lo aprendido en la sesión 1 con 3 preguntas rápidas.",
-    "s2.video":"Vídeo: control motor en bailarines (3 min)","video.placeholder2":"[Insertar enlace al vídeo]",
+    "notas.s2.portada":"Recupera brevemente lo aprendido en la sesión 1.",
+    "s2.video":"Vídeo: control motor en bailarines (3 min)",
     "s2.b5.titulo":"5. Control motor (eferencias)",
     "s2.b5.h1":"Unidad motora","s2.b5.l1":"Motoneurona + fibras musculares.","s2.b5.l2":"Tipos: lentas (resistencia) y rápidas (potencia).","s2.b5.l3":"Reclutamiento progresivo.",
     "s2.b5.h2":"Reflejo miotático y tono","s2.b5.l4":"Base del tono muscular.","s2.b5.l5":"Ajuste automático ante estiramientos.",
     "s2.b5.h3":"Vías descendentes (función)","s2.b5.l6":"Piramidal: movimiento fino y voluntario.","s2.b5.l7":"Extrapiramidal: postura, tono, automatismos.",
     "s2.b5.h4":"Control voluntario","s2.b5.l8":"Planificación → ejecución → retroalimentación.","s2.b5.l9":"Feedforward y feedback.",
-    "img.motora":"Unidad motora","img.piramidal":"Vía piramidal","img.feedback":"Feedback",
-    "s2.b5.danza":"<b>Conexión danza:</b> el novato usa control consciente; el experto automatiza y libera atención para la expresión.",
-    "notas.s2.b5":"Concepto clave: la unidad motora es la letra con la que el sistema nervioso escribe el movimiento.",
+    "s2.b5.danza":"<b>Conexión danza:</b> el novato usa control consciente; el experto automatiza.",
     "s2.b6.titulo":"6. Aprendizaje motor",
     "s2.b6.th1":"Fase","s2.b6.th2":"Características","s2.b6.th3":"En danza",
     "s2.b6.r1a":"Cognitiva","s2.b6.r1b":"Mucha atención, errores, movimiento rígido","s2.b6.r1c":"Aprender un paso nuevo",
     "s2.b6.r2a":"Asociativa","s2.b6.r2b":"Menos errores, mejora la coordinación","s2.b6.r2c":"Repetir la coreografía",
     "s2.b6.r3a":"Autónoma","s2.b6.r3b":"Movimiento fluido y automático","s2.b6.r3c":"Interpretar sin pensar en los pasos",
-    "s2.b6.f1":"Cognitiva","s2.b6.f2":"Asociativa","s2.b6.f3":"Autónoma",
-    "s2.b6.cap":"Fases del aprendizaje motor",
     "s2.b6.danza":"<b>Conexión danza:</b> la práctica distribuida y la visualización aceleran el paso a la fase autónoma.",
-    "notas.s2.b6":"Pregunta al grupo: ¿En qué fase estáis con vuestro paso más difícil?",
     "s2.p1.titulo":"Prácticas 1–5: control motor",
-    "s2.p1.e1":"<b>P1 · Reclutamiento de unidades motoras (3 min).</b> Sostener un objeto ligero y luego uno pesado.",
-    "s2.p1.e2":"<b>P2 · Movimiento lento vs. rápido (3 min).</b> Realizar un mismo gesto muy lento y muy rápido.",
-    "s2.p1.e3":"<b>P3 · Feedback visual (3 min).</b> Realizar un equilibrio con ojos abiertos y luego cerrados.",
-    "s2.p1.e4":"<b>P4 · Feedforward (3 min).</b> Antes de saltar, anticipar la postura.",
-    "s2.p1.e5":"<b>P5 · Automatización progresiva (4 min).</b> Repetir una secuencia de 4 pasos 10 veces.",
-    "notas.s2.p1":"La P1 puede hacerse con un libro y luego con una mochila cargada.",
+    "s2.p1.e1":"<b>P1 · Reclutamiento de unidades motoras (3 min).</b>",
+    "s2.p1.e2":"<b>P2 · Movimiento lento vs. rápido (3 min).</b>",
+    "s2.p1.e3":"<b>P3 · Feedback visual (3 min).</b>",
+    "s2.p1.e4":"<b>P4 · Feedforward (3 min).</b>",
+    "s2.p1.e5":"<b>P5 · Automatización progresiva (4 min).</b>",
     "s2.b7.titulo":"7. Sistema nervioso autónomo",
     "s2.b7.h1":"Simpático","s2.b7.l1":'Activación: "lucha o huida".',"s2.b7.l2":"Aumenta FC, respiración, sudoración.","s2.b7.l3":"Moviliza energía.",
     "s2.b7.h2":"Parasimpático","s2.b7.l4":"Relajación y recuperación.","s2.b7.l5":"Disminuye FC, favorece digestión.","s2.b7.l6":"Vuelta a la homeostasis.",
-    "s2.b7.center":"SNA","s2.b7.simp":"Simpático","s2.b7.para":"Parasimpático",
-    "s2.b7.danza":"<b>Conexión danza:</b> control de la ansiedad escénica, activación óptima antes de actuar, recuperación post-esfuerzo.",
-    "notas.s2.b7":"Introduce el concepto de activación óptima: ni poca ni excesiva.",
+    "s2.b7.danza":"<b>Conexión danza:</b> control de la ansiedad escénica, activación óptima, recuperación.",
     "s2.b8.titulo":"8. Integración: el sistema nervioso y el movimiento dancístico",
     "s2.b8.l1":"<b>Jerarquía y paralelismo</b> en el control motor.",
     "s2.b8.l2":"<b>Integración sensoriomotora</b>: ver → planificar → ejecutar → corregir.",
     "s2.b8.l3":"<b>Fatiga neuromuscular</b>: causas centrales y periféricas.",
-    "s2.b8.l4":"<b>Adaptaciones al entrenamiento dancístico</b>: mejora de la propiocepción, mayor eficiencia sináptica, cambios en la representación cortical.",
+    "s2.b8.l4":"<b>Adaptaciones al entrenamiento dancístico</b>: propiocepción, eficiencia sináptica, representación cortical.",
     "s2.b8.l5":"<b>Nociones de lesiones neurológicas</b>: dolor, alteraciones del equilibrio.",
-    "s2.b8.video":"Vídeo: plasticidad cerebral en bailarines (4 min)","video.placeholder3":"[Insertar enlace al vídeo]",
-    "s2.b8.danza":"<b>Conexión danza:</b> el cerebro del bailarín se reorganiza con la práctica: más eficiencia, menos esfuerzo aparente.",
-    "notas.s2.b8":"Cierre conceptual. Vuelve al hilo conductor.",
+    "s2.b8.danza":"<b>Conexión danza:</b> el cerebro del bailarín se reorganiza con la práctica.",
     "s2.p2.titulo":"Prácticas 6–10: autonomía y adaptación",
-    "s2.p2.e6":"<b>P6 · Activación simpática (3 min).</b> Medir FC y respiración en reposo. Realizar 30 s de saltos.",
-    "s2.p2.e7":"<b>P7 · Respiración parasimpática (3 min).</b> Respiración diafragmática lenta (4 s inspiración, 6 s espiración).",
-    "s2.p2.e8":"<b>P8 · Visualización antes de actuar (3 min).</b> Imaginar una actuación completa.",
-    "s2.p2.e9":"<b>P9 · Fatiga central vs. periférica (3 min).</b> Mantener una contracción isométrica hasta el fallo.",
-    "s2.p2.e10":"<b>P10 · Efecto del entrenamiento (4 min).</b> Comparar equilibrio en una pierna antes y después de 5 min de práctica.",
-    "notas.s2.p2":"La P6 y P7 son complementarias: una activa, la otra relaja.",
-    "s2.act.titulo":"Actividades por apartados (escribibles)",
+    "s2.p2.e6":"<b>P6 · Activación simpática (3 min).</b>",
+    "s2.p2.e7":"<b>P7 · Respiración parasimpática (3 min).</b>",
+    "s2.p2.e8":"<b>P8 · Visualización antes de actuar (3 min).</b>",
+    "s2.p2.e9":"<b>P9 · Fatiga central vs. periférica (3 min).</b>",
+    "s2.p2.e10":"<b>P10 · Efecto del entrenamiento (4 min).</b>",
+    "s2.act.titulo":"Actividades por apartados (escribibles + valoración)",
     "s2.act.a1.titulo":"Análisis de una coreografía",
     "s2.act.a1.enun":"Elige un fragmento de una coreografía que conozcas. Identifica qué estructuras nerviosas participan en cada fase: planificación, ejecución, corrección y expresión emocional.",
     "s2.act.a1.esq":"",
@@ -1284,17 +1248,17 @@ const translations = {
     "s2.act.a1.esq.4":"Expresión emocional: sistema límbico.",
     "s2.act.a1.esq.5":"Integración sensorial: propiocepción + visión + audición.",
     "s2.act.a2.titulo":"Diario de aprendizaje motor",
-    "s2.act.a2.enun":"Registra durante una semana la evolución de un paso nuevo. Describe en qué fase (cognitiva, asociativa, autónoma) estabas cada día y qué cambió.",
+    "s2.act.a2.enun":"Registra durante una semana la evolución de un paso nuevo. Describe en qué fase estabas cada día.",
     "s2.act.a2.esq":"",
     "s2.act.a2.esq.1":"Día 1-2: fase cognitiva; mucha atención, errores frecuentes.",
     "s2.act.a2.esq.2":"Día 3-4: fase asociativa; menos errores, mejor coordinación.",
     "s2.act.a2.esq.3":"Día 5-7: fase autónoma; movimiento fluido, atención liberada.",
     "s2.act.a2.esq.4":"Reflexión: ¿qué facilitó el paso de una fase a otra?",
     "s2.act.a3.titulo":"Caso de ansiedad escénica",
-    "s2.act.a3.enun":"Describe qué ocurre en el cuerpo de un bailarín antes de salir a escena: respuestas simpáticas y parasimpáticas. Propón 3 estrategias fisiológicas para regularlo.",
+    "s2.act.a3.enun":"Describe qué ocurre antes de salir a escena: respuestas simpáticas y parasimpáticas. Propón 3 estrategias fisiológicas.",
     "s2.act.a3.esq":"",
     "s2.act.a3.esq.1":"Simpático: aumento de FC, respiración rápida, sudoración, tensión muscular.",
-    "s2.act.a3.esq.2":"Parasimpático: si se activa en exceso, sensación de calma; si no, prevalece el simpático.",
+    "s2.act.a3.esq.2":"Parasimpático: si se activa, sensación de calma.",
     "s2.act.a3.esq.3":"Estrategias: respiración diafragmática lenta, visualización positiva, calentamiento progresivo.",
     "s2.act.a3.esq.4":"Concepto clave: activación óptima (ni poca ni excesiva).",
     "s2.act.a4.titulo":"Cuadro de adaptaciones: novel vs. experto",
@@ -1305,7 +1269,7 @@ const translations = {
     "s2.act.a4.esq.3":"Representación cortical: mayor área dedicada al movimiento entrenado.",
     "s2.act.a4.esq.4":"Consecuencia: aparente facilidad, menos fatiga, mejor expresión.",
     "s2.act.a5.titulo":"Reflexión final integradora",
-    "s2.act.a5.enun":"Explica, usando el hilo conductor de la asignatura (excitabilidad → transmisión → sensación → integración → movimiento → regulación → adaptación), cómo se aprende y ejecuta un movimiento dancístico.",
+    "s2.act.a5.enun":"Explica, usando el hilo conductor (excitabilidad → transmisión → sensación → integración → movimiento → regulación → adaptación), cómo se aprende y ejecuta un movimiento dancístico.",
     "s2.act.a5.esq":"",
     "s2.act.a5.esq.1":"Excitabilidad: la neurona está preparada para responder.",
     "s2.act.a5.esq.2":"Transmisión: el impulso viaja y se comunica en la sinapsis.",
@@ -1314,16 +1278,14 @@ const translations = {
     "s2.act.a5.esq.5":"Movimiento: se ejecuta mediante las vías motoras y las unidades motoras.",
     "s2.act.a5.esq.6":"Regulación: el sistema autónomo ajusta la activación.",
     "s2.act.a5.esq.7":"Adaptación: la plasticidad permite aprender y mejorar con la práctica.",
-    "notas.s2.act":"B1 y B3 en clase (30 min). B2 como diario semanal. B4 y B5 como cierre de la unidad.",
+    "notas.s2.act":"Cada actividad tiene valoración automática + autoevaluación.",
     "s2.cierre.tag":"Cierre Sesión 2","s2.cierre.titulo":"Ideas clave",
     "s2.cierre.l1":"El control motor es jerárquico y paralelo.",
     "s2.cierre.l2":"El aprendizaje motor pasa por 3 fases hasta automatizarse.",
     "s2.cierre.l3":"El sistema autónomo regula activación y recuperación.",
     "s2.cierre.l4":"El entrenamiento dancístico reorganiza el sistema nervioso.",
     "s2.cierre.eval":"Evaluación sugerida:","s2.cierre.eval2":" caso aplicado + portfolio de prácticas + reflexión integradora.",
-    "notas.s2.cierre":"Cierra la unidad con una reflexión grupal: ¿Qué haréis diferente a partir de ahora?",
-    "fin.titulo":"Fin de la unidad","fin.sub":"El sistema nervioso: del impulso al arte","fin.big":"¡A moverse con conciencia!",
-    "notas.fin":"¡Enhorabuena! Has completado las dos sesiones."
+    "fin.titulo":"Fin de la unidad","fin.sub":"El sistema nervioso: del impulso al arte","fin.big":"¡A moverse con conciencia!"
   },
   ca: {
     "nav.prev":"← Anterior","nav.next":"Següent →",
@@ -1331,9 +1293,9 @@ const translations = {
     "portada.sub":"De l'impuls nerviós al moviment dansístic",
     "portada.cap":"Neurona multipolar (Wikimedia Commons)",
     "portada.sesiones":"2 sessions · 3 hores cadascuna",
-    "portada.resumen":"Explicació + 10 pràctiques + activitats interactives",
+    "portada.resumen":"Explicació + 10 pràctiques + activitats interactives + autoavaluació",
     "notas.portada":"Presenta la unitat com un viatge de l'impuls al moviment.",
-    "tag.nueva":"Nova diapositiva",
+    "tag.nueva":"Nova diapositiva","tag.resumen":"Resum final",
     "indice.titulo":"Presentació de la unitat i full de ruta",
     "indice.s1":"Sessió 1 · De la neurona al moviment",
     "indice.s1.1":"Per què estudiar el sistema nerviós a la dansa?",
@@ -1341,21 +1303,21 @@ const translations = {
     "indice.s1.3":"Organització funcional de la sensibilitat",
     "indice.s1.4":"Processament i integració central",
     "indice.s1.5":"10 pràctiques curtes",
-    "indice.s1.6":"5 activitats interactives",
+    "indice.s1.6":"5 activitats interactives + autoavaluació",
     "indice.s2":"Sessió 2 · Control motor i adaptació",
     "indice.s2.1":"Control motor (eferències)",
     "indice.s2.2":"Aprenentatge motor",
     "indice.s2.3":"Sistema nerviós autònom",
     "indice.s2.4":"Integració i adaptació",
     "indice.s2.5":"10 pràctiques curtes",
-    "indice.s2.6":"5 activitats interactives",
+    "indice.s2.6":"5 activitats interactives + autoavaluació",
     "indice.danza":"<b>Fil conductor:</b> Excitabilitat → Transmissió → Sensació → Integració → Moviment → Regulació → Adaptació (aprenentatge).",
-    "indice.evaluacion":"<b>Avaluació:</b> respostes escrites a les activitats interactives + portfolio + reflexió final integradora.",
+    "indice.evaluacion":"<b>Avaluació:</b> valoració automàtica + autoavaluació reflexiva + portfolio + exportació final.",
     "notas.indice":"Diapositiva nova: serveix d'índex i contracte didàctic.",
     "s1.tag":"Sessió 1","s1.titulo":"De la neurona al moviment",
     "s1.sub":"Excitabilitat · Transmissió · Sensació · Reflexos",
-    "s1.obj.l":"Objectiu:","s1.obj":" comprendre com el sistema nerviós genera, transmet i integra informació per produir respostes motores bàsiques.",
-    "notas.s1.portada":"Temps orientatiu: explicació 90 min, pràctiques 45 min, activitats 40 min, tancament 5 min.",
+    "s1.obj.l":"Objectiu:","s1.obj":" comprendre com el sistema nerviós genera, transmet i integra informació.",
+    "notas.s1.portada":"Temps orientatiu.",
     "video.intro":'Vídeo introductori: "El viatge de l\'impuls nerviós" (3 min)',
     "video.placeholder":"[Inserir enllaç al vídeo]",
     "tag.explica":"Explicació · 25 min","tag.explica2":"Explicació · 30 min",
@@ -1369,155 +1331,151 @@ const translations = {
     "tag.actividad1":"Activitats interactives · Sessió 1",
     "tag.actividad2":"Activitats interactives · Sessió 2",
     "label.respuesta":"La teva resposta:","btn.ver":"Veure esquema esperat",
-    "ref.ir":"Anar a la diapositiva","hint.esquema":"Prem R o el botó per veure l'esquema esperat",
-    "prog.completadas":"respostes","prog.auto":"Es guarda automàticament",
+    "ref.ir":"Anar a la diapositiva","hint.esquema":"Prem R o el botó per veure l'esquema",
+    "prog.completadas":"respostes","prog.auto":"Autoguardat",
+    "autoeval.titulo":"Autoavaluació de la Sessió 1",
+    "autoeval.titulo2":"Autoavaluació de la Sessió 2",
+    "autoeval.p1":"Després de veure l'esquema esperat i la valoració, quina nota et posaries?",
+    "autoeval.insuf":"Insuficient (0-4)","autoeval.suf":"Suficient (5-6)",
+    "autoeval.not":"Notable (7-8)","autoeval.exc":"Excel·lent (9-10)",
+    "autoeval.nota":"Nota concreta (0-10):",
+    "autoeval.justif":"Justifica la teva nota:",
+    "resumen.titulo":"Resum de la teva feina i valoració global",
+    "resumen.sub":"Valoració automàtica per activitat",
+    "resumen.act":"Activitat","resumen.puntos":"Punts clau coberts","resumen.nota":"Nota (0-10)",
+    "resumen.vacio":"Escriu les teves respostes per veure la valoració.",
+    "resumen.reflexion":"<b>Reflexió final:</b> revisa la teva autoavaluació.",
+    "notas.resumen":"Aquesta diapositiva mostra el resum de valoracions i autoavaluacions.",
     "s1.b1.titulo":"1. Per què estudiar el sistema nerviós a la dansa?",
     "s1.b1.l1":"El moviment és el <b>resultat visible</b> d'un procés nerviós invisible.",
-    "s1.b1.l2":"Entendre la funció permet <b>optimitzar l'aprenentatge</b>, prevenir lesions i controlar l'activació.",
-    "s1.b1.l3":"Enfocament <b>funcional</b>: com es genera?, com es regula?, com s'aprèn?",
-    "s1.b1.danza":"<b>Connexió dansa:</b> cada pas, cada equilibri, cada matís expressiu neix d'una seqüència.",
+    "s1.b1.l2":"Entendre la funció permet <b>optimitzar l'aprenentatge</b>.",
+    "s1.b1.l3":"Enfocament <b>funcional</b>.",
+    "s1.b1.danza":"<b>Connexió dansa:</b> cada pas neix d'una seqüència.",
     "s1.b1.cap":"Esquema funcional de l'arc reflex (Wikimedia Commons)",
     "s1.b1.hilo":"Excitabilitat → Transmissió → Sensació → Integració → Moviment",
     "notas.s1.b1":"Insisteix en el canvi de mirada.",
     "s1.b2.titulo":"2. La neurona com a unitat funcional",
-    "s1.b2.h1":"Excitabilitat","s1.b2.l1":"Potencial de membrana en repòs (~-70 mV).","s1.b2.l2":"Llindar d'excitació.",
-    "s1.b2.h2":"Potencial d'acció","s1.b2.l3":"Despolarització → repolarització → hiperpolarització.","s1.b2.l4":"Llei del tot o res.",
-    "s1.b2.h3":"Sinapsi","s1.b2.l5":"Transmissió química: neurotransmissors.","s1.b2.l6":"Excitació vs. inhibició.",
-    "s1.b2.l7":"<b>Plasticitat sinàptica</b>: base de l'aprenentatge motor.",
-    "s1.b2.cap":"Perfil del potencial d'acció (Wikimedia Commons)","s1.b2.video":"Vídeo: sinapsi i neurotransmissors (2 min)",
-    "s1.b2.danza":"<b>Connexió dansa:</b> la repetició enforteix connexions sinàptiques.",
+    "s1.b2.h1":"Excitabilitat","s1.b2.l1":"Potencial de membrana en repòs.","s1.b2.l2":"Llindar d'excitació.",
+    "s1.b2.h2":"Potencial d'acció","s1.b2.l3":"Despolarització → repolarització.","s1.b2.l4":"Llei del tot o res.",
+    "s1.b2.h3":"Sinapsi","s1.b2.l5":"Transmissió química.","s1.b2.l6":"Excitació vs. inhibició.",
+    "s1.b2.l7":"<b>Plasticitat sinàptica</b>.",
+    "s1.b2.cap":"Perfil del potencial d'acció (Wikimedia Commons)",
+    "s1.b2.danza":"<b>Connexió dansa:</b> la repetició enforteix connexions.",
     "notas.s1.b2":"Analogia útil.",
     "s1.p1.titulo":"Pràctiques 1–5: neurona i sensació",
-    "s1.p1.e1":"<b>P1 · Reflex rotulià (2 min).</b> En parelles, colpejar suaument sota la ròtula.",
-    "s1.p1.e2":"<b>P2 · Temps de reacció (3 min).</b> Un company deixa caure un regle.",
-    "s1.p1.e3":"<b>P3 · Discriminació de dos punts (3 min).</b> Amb dos escuradents, tocar la pell.",
-    "s1.p1.e4":"<b>P4 · Propiocepció amb ulls tancats (3 min).</b> Mantenir equilibri 20 s.",
-    "s1.p1.e5":"<b>P5 · Adaptació sensorial (2 min).</b> Col·locar una goma suau al canell.",
-    "notas.s1.p1":"Cronometra les pràctiques.",
+    "s1.p1.e1":"<b>P1 · Reflex rotulià (2 min).</b>",
+    "s1.p1.e2":"<b>P2 · Temps de reacció (3 min).</b>",
+    "s1.p1.e3":"<b>P3 · Discriminació de dos punts (3 min).</b>",
+    "s1.p1.e4":"<b>P4 · Propiocepció amb ulls tancats (3 min).</b>",
+    "s1.p1.e5":"<b>P5 · Adaptació sensorial (2 min).</b>",
     "img.receptor":"Receptor","img.propio":"Propiocepció","img.adapt":"Adaptació",
     "s1.b3.titulo":"3. Organització funcional de la sensibilitat",
-    "s1.b3.h1":"Receptors sensorials","s1.b3.l1":"Mecanoreceptors, nociceptors, propioceptors...",
+    "s1.b3.h1":"Receptors sensorials","s1.b3.l1":"Mecanoreceptors, nociceptors...",
     "s1.b3.l2":"Transducció: estímul → impuls nerviós.",
-    "s1.b3.h2":"Propiocepció","s1.b3.l3":"Fusos musculars (longitud).","s1.b3.l4":"Òrgans de Golgi (tensió).","s1.b3.l5":"Receptors articulars.",
-    "s1.b3.h3":"Integració sensorial","s1.b3.l6":"Adaptació, inhibició lateral, filtratge.",
-    "s1.b3.cap":"Fus muscular: detector de longitud (Wikimedia Commons)",
-    "s1.b3.danza":"<b>Connexió dansa:</b> l'equilibri i la consciència corporal depenen de la propiocepció.",
-    "notas.s1.b3":"Analogia: el fus muscular és com un sensor de goma elàstica.",
+    "s1.b3.h2":"Propiocepció","s1.b3.l3":"Fusos musculars.","s1.b3.l4":"Òrgans de Golgi.","s1.b3.l5":"Receptors articulars.",
+    "s1.b3.cap":"Fus muscular (Wikimedia Commons)",
+    "s1.b3.danza":"<b>Connexió dansa:</b> l'equilibri depèn de la propiocepció.",
     "s1.b4.titulo":"4. Processament i integració central",
     "s1.b4.th1":"Estructura","s1.b4.th2":"Funció principal","s1.b4.th3":"Exemple en dansa",
-    "s1.b4.r1a":"Medul·la espinal","s1.b4.r1b":"Reflexos medul·lars","s1.b4.r1c":"Reflex miotàtic en un salt",
-    "s1.b4.r2a":"Tronc encefàlic","s1.b4.r2b":"Tó, postura, ritme","s1.b4.r2c":"Mantenir l'eix",
-    "s1.b4.r3a":"Cerebel","s1.b4.r3b":"Coordinació, timing, correcció","s1.b4.r3c":"Ajustar un gir",
+    "s1.b4.r1a":"Medul·la espinal","s1.b4.r1b":"Reflexos","s1.b4.r1c":"Reflex miotàtic",
+    "s1.b4.r2a":"Tronc encefàlic","s1.b4.r2b":"Tó i postura","s1.b4.r2c":"Mantenir l'eix",
+    "s1.b4.r3a":"Cerebel","s1.b4.r3b":"Coordinació","s1.b4.r3c":"Ajustar un gir",
     "s1.b4.r4a":"Ganglis basals","s1.b4.r4b":"Inici i seqüenciació","s1.b4.r4c":"Enllaçar passos",
-    "s1.b4.r5a":"Tàlem","s1.b4.r5b":"Relé i integració sensorial","s1.b4.r5c":"Filtrar informació",
-    "s1.b4.r6a":"Escorça motora","s1.b4.r6b":"Planificació i execució","s1.b4.r6c":"Decidir un moviment",
-    "s1.b4.r7a":"Sistema límbic","s1.b4.r7b":"Emoció i moviment","s1.b4.r7c":"Expressivitat",
-    "img.cerebelo":"Cerebel","img.ganglios":"Ganglis basals","img.corteza":"Escorça motora",
+    "s1.b4.r5a":"Tàlem","s1.b4.r5b":"Relé sensorial","s1.b4.r5c":"Filtrar informació",
+    "s1.b4.r6a":"Escorça motora","s1.b4.r6b":"Planificació","s1.b4.r6c":"Decidir un moviment",
+    "s1.b4.r7a":"Sistema límbic","s1.b4.r7b":"Emoció","s1.b4.r7c":"Expressivitat",
     "s1.b4.danza":"<b>Connexió dansa:</b> automatització vs. control conscient.",
-    "notas.s1.b4":"Evita caure en l'anatomia pura.",
+    "notas.s1.b4":"Evita l'anatomia pura.",
     "s1.p2.titulo":"Pràctiques 6–10: integració i control",
-    "s1.p2.e6":"<b>P6 · Reflex miotàtic en parella (3 min).</b> Estirar passivament el bíceps.",
-    "s1.p2.e7":"<b>P7 · Equilibri amb pertorbació (3 min).</b> El company empeny l'espatlla.",
-    "s1.p2.e8":"<b>P8 · Canvi de direcció (3 min).</b> Caminar i canviar de direcció en sentir una palmada.",
-    "s1.p2.e9":"<b>P9 · Seqüència de 4 passos (4 min).</b> Repetir 5 vegades.",
-    "s1.p2.e10":"<b>P10 · Visualització motora (3 min).</b> Imaginar un moviment conegut.",
-    "notas.s1.p2":"La P6 requereix control.",
-    "s1.act.titulo":"Activitats per apartats (escriptibles)",
+    "s1.p2.e6":"<b>P6 · Reflex miotàtic (3 min).</b>",
+    "s1.p2.e7":"<b>P7 · Equilibri amb pertorbació (3 min).</b>",
+    "s1.p2.e8":"<b>P8 · Canvi de direcció (3 min).</b>",
+    "s1.p2.e9":"<b>P9 · Seqüència de 4 passos (4 min).</b>",
+    "s1.p2.e10":"<b>P10 · Visualització motora (3 min).</b>",
+    "s1.act.titulo":"Activitats per apartats (escriptibles + valoració)",
     "s1.act.a1.titulo":"Mapa funcional de la neurona",
-    "s1.act.a1.enun":"Dibuixa o descriu una neurona i assenyala amb fletxes el recorregut de l'impuls nerviós.",
+    "s1.act.a1.enun":"Dibuixa o descriu una neurona.",
     "s1.act.a1.esq":"",
     "s1.act.a1.esq.1":"Dendrites: reben la informació.",
     "s1.act.a1.esq.2":"Soma: integra les senyals.",
-    "s1.act.a1.esq.3":"Axó: condueix l'impuls; la mielina accelera la conducció.",
+    "s1.act.a1.esq.3":"Axó: condueix l'impuls.",
     "s1.act.a1.esq.4":"Terminal sinàptic: allibera neurotransmissors.",
     "s1.act.a1.esq.5":"Direcció: dendrites → soma → axó → terminal.",
     "s1.act.a2.titulo":"Quadre comparatiu: sinapsi excitadora vs. inhibidora",
     "s1.act.a2.enun":"Compara els dos tipus de sinapsi.",
     "s1.act.a2.esq":"",
-    "s1.act.a2.esq.1":"Excitadora: glutamat; afavoreix la despolarització.",
-    "s1.act.a2.esq.2":"Inhibidora: GABA; hiperpolaritza.",
-    "s1.act.a2.esq.3":"Exemple dansa: iniciar vs. controlar el moviment.",
+    "s1.act.a2.esq.1":"Excitadora: glutamat.",
+    "s1.act.a2.esq.2":"Inhibidora: GABA.",
+    "s1.act.a2.esq.3":"Exemple dansa.",
     "s1.act.a3.titulo":"Anàlisi de cas: lesió de turmell",
-    "s1.act.a3.enun":"Un ballarí es lesiona els lligaments del turmell.",
+    "s1.act.a3.enun":"Un ballarí es lesiona el turmell.",
     "s1.act.a3.esq":"",
-    "s1.act.a3.esq.1":"Receptors afectats: articulars, fusos musculars i òrgans de Golgi.",
+    "s1.act.a3.esq.1":"Receptors afectats.",
     "s1.act.a3.esq.2":"Conseqüència: pitjor equilibri.",
-    "s1.act.a3.esq.3":"Exercicis: equilibri a una cama, ulls tancats, superfícies inestables.",
-    "s1.act.a3.esq.4":"Reeducació: restaurar la informació sensorial.",
+    "s1.act.a3.esq.3":"Exercicis.",
+    "s1.act.a3.esq.4":"Reeducació.",
     "s1.act.a4.titulo":"Taula d'estructures i funcions",
-    "s1.act.a4.enun":"Completa una taula amb almenys 4 estructures.",
+    "s1.act.a4.enun":"Completa una taula.",
     "s1.act.a4.esq":"",
-    "s1.act.a4.esq.1":"Medul·la espinal: reflexos.",
-    "s1.act.a4.esq.2":"Cerebel: coordinació i timing.",
-    "s1.act.a4.esq.3":"Ganglis basals: inici i seqüenciació.",
-    "s1.act.a4.esq.4":"Escorça motora: planificació i execució.",
+    "s1.act.a4.esq.1":"Medul·la espinal.",
+    "s1.act.a4.esq.2":"Cerebel.",
+    "s1.act.a4.esq.3":"Ganglis basals.",
+    "s1.act.a4.esq.4":"Escorça motora.",
     "s1.act.a5.titulo":"Reflexió: repetició i aprenentatge motor",
     "s1.act.a5.enun":"Explica per què un moviment millora amb la repetició.",
     "s1.act.a5.esq":"",
-    "s1.act.a5.esq.1":"Mielina: millora la conducció.",
-    "s1.act.a5.esq.2":"Sinapsi: s'enforteixen les connexions.",
-    "s1.act.a5.esq.3":"Plasticitat sinàptica: base de l'aprenentatge.",
-    "s1.act.a5.esq.4":"Conseqüència: el pas s'automatitza.",
-    "notas.s1.act":"Les respostes es guarden automàticament.",
+    "s1.act.a5.esq.1":"Mielina.",
+    "s1.act.a5.esq.2":"Sinapsi.",
+    "s1.act.a5.esq.3":"Plasticitat sinàptica.",
+    "s1.act.a5.esq.4":"Conseqüència en dansa.",
+    "notas.s1.act":"Valoració automàtica i autoavaluació.",
     "s1.cierre.tag":"Tancament Sessió 1","s1.cierre.titulo":"Idees clau",
-    "s1.cierre.l1":"L'impuls nerviós és la base de tota funció.",
-    "s1.cierre.l2":"La sensació informa; la integració decideix; el moviment executa.",
-    "s1.cierre.l3":"La propiocepció és essencial per a l'equilibri i la tècnica.",
-    "s1.cierre.l4":"La plasticitat sinàptica explica l'aprenentatge motor.",
-    "s1.cierre.prox":"Per a la propera sessió:","s1.cierre.prox2":" repassar pràctiques 1–10.",
-    "notas.s1.cierre":"Tanca amb una pregunta oberta.",
+    "s1.cierre.l1":"L'impuls nerviós és la base.",
+    "s1.cierre.l2":"La sensació informa; la integració decideix.",
+    "s1.cierre.l3":"La propiocepció és essencial.",
+    "s1.cierre.l4":"La plasticitat explica l'aprenentatge.",
+    "s1.cierre.prox":"Per a la propera sessió:","s1.cierre.prox2":" repassar pràctiques.",
     "s2.tag":"Sessió 2","s2.titulo":"Control motor, autonomia i adaptació",
     "s2.sub":"Eferències · Aprenentatge · Sistema autònom · Integració",
     "s2.obj.l":"Objectiu:","s2.obj":" comprendre com el sistema nerviós controla el moviment voluntari.",
-    "notas.s2.portada":"Recupera breument el que s'ha après.",
-    "s2.video":"Vídeo: control motor en ballarins (3 min)","video.placeholder2":"[Inserir enllaç]",
+    "notas.s2.portada":"Recupera breument.",
+    "s2.video":"Vídeo: control motor (3 min)",
     "s2.b5.titulo":"5. Control motor (eferències)",
-    "s2.b5.h1":"Unitat motora","s2.b5.l1":"Motoneurona + fibres musculars.","s2.b5.l2":"Tipus: lentes i ràpides.","s2.b5.l3":"Reclutament progressiu.",
-    "s2.b5.h2":"Reflex miotàtic i tó","s2.b5.l4":"Base del tó muscular.","s2.b5.l5":"Ajust automàtic.",
-    "s2.b5.h3":"Vies descendents","s2.b5.l6":"Piramidal: moviment fi.","s2.b5.l7":"Extrapiramidal: postura i automatismes.",
-    "s2.b5.h4":"Control voluntari","s2.b5.l8":"Planificació → execució → retroalimentació.","s2.b5.l9":"Feedforward i feedback.",
-    "img.motora":"Unitat motora","img.piramidal":"Via piramidal","img.feedback":"Feedback",
+    "s2.b5.h1":"Unitat motora","s2.b5.l1":"Motoneurona + fibres.","s2.b5.l2":"Lentes i ràpides.","s2.b5.l3":"Reclutament progressiu.",
+    "s2.b5.h2":"Reflex miotàtic","s2.b5.l4":"Base del tó.","s2.b5.l5":"Ajust automàtic.",
+    "s2.b5.h3":"Vies descendents","s2.b5.l6":"Piramidal.","s2.b5.l7":"Extrapiramidal.",
+    "s2.b5.h4":"Control voluntari","s2.b5.l8":"Planificació → execució.","s2.b5.l9":"Feedforward i feedback.",
     "s2.b5.danza":"<b>Connexió dansa:</b> el novell usa control conscient.",
-    "notas.s2.b5":"Concepte clau: la unitat motora.",
     "s2.b6.titulo":"6. Aprenentatge motor",
     "s2.b6.th1":"Fase","s2.b6.th2":"Característiques","s2.b6.th3":"En dansa",
-    "s2.b6.r1a":"Cognitiva","s2.b6.r1b":"Molta atenció, errors","s2.b6.r1c":"Aprendre un pas nou",
-    "s2.b6.r2a":"Associativa","s2.b6.r2b":"Menys errors","s2.b6.r2c":"Repetir la coreografia",
-    "s2.b6.r3a":"Autònoma","s2.b6.r3b":"Moviment fluid","s2.b6.r3c":"Interpretar sense pensar",
-    "s2.b6.f1":"Cognitiva","s2.b6.f2":"Associativa","s2.b6.f3":"Autònoma",
-    "s2.b6.cap":"Fases de l'aprenentatge motor",
-    "s2.b6.danza":"<b>Connexió dansa:</b> la pràctica distribuïda accelera la fase autònoma.",
-    "notas.s2.b6":"Pregunta al grup.",
+    "s2.b6.r1a":"Cognitiva","s2.b6.r1b":"Molta atenció","s2.b6.r1c":"Pas nou",
+    "s2.b6.r2a":"Associativa","s2.b6.r2b":"Menys errors","s2.b6.r2c":"Repetir",
+    "s2.b6.r3a":"Autònoma","s2.b6.r3b":"Moviment fluid","s2.b6.r3c":"Interpretar",
+    "s2.b6.danza":"<b>Connexió dansa:</b> la pràctica accelera la fase autònoma.",
     "s2.p1.titulo":"Pràctiques 1–5: control motor",
-    "s2.p1.e1":"<b>P1 · Reclutament d'unitats motores (3 min).</b> Sostenir un objecte lleuger i després un de pesat.",
-    "s2.p1.e2":"<b>P2 · Moviment lent vs. ràpid (3 min).</b>",
+    "s2.p1.e1":"<b>P1 · Reclutament (3 min).</b>",
+    "s2.p1.e2":"<b>P2 · Lent vs. ràpid (3 min).</b>",
     "s2.p1.e3":"<b>P3 · Feedback visual (3 min).</b>",
     "s2.p1.e4":"<b>P4 · Feedforward (3 min).</b>",
-    "s2.p1.e5":"<b>P5 · Automatització progressiva (4 min).</b>",
-    "notas.s2.p1":"La P5 és la més important.",
+    "s2.p1.e5":"<b>P5 · Automatització (4 min).</b>",
     "s2.b7.titulo":"7. Sistema nerviós autònom",
     "s2.b7.h1":"Simpàtic","s2.b7.l1":'Activació: "lluita o fuga".',"s2.b7.l2":"Augmenta FC.","s2.b7.l3":"Mobilitza energia.",
-    "s2.b7.h2":"Parasimpàtic","s2.b7.l4":"Relaxació.","s2.b7.l5":"Disminueix FC.","s2.b7.l6":"Tornada a l'homeòstasi.",
-    "s2.b7.center":"SNA","s2.b7.simp":"Simpàtic","s2.b7.para":"Parasimpàtic",
-    "s2.b7.danza":"<b>Connexió dansa:</b> control de l'ansietat escènica.",
-    "notas.s2.b7":"Activació òptima.",
-    "s2.b8.titulo":"8. Integració: el sistema nerviós i el moviment dansístic",
+    "s2.b7.h2":"Parasimpàtic","s2.b7.l4":"Relaxació.","s2.b7.l5":"Disminueix FC.","s2.b7.l6":"Homeòstasi.",
+    "s2.b7.danza":"<b>Connexió dansa:</b> control de l'ansietat.",
+    "s2.b8.titulo":"8. Integració",
     "s2.b8.l1":"<b>Jerarquia i paral·lelisme</b>.",
     "s2.b8.l2":"<b>Integració sensoriomotora</b>.",
     "s2.b8.l3":"<b>Fatiga neuromuscular</b>.",
     "s2.b8.l4":"<b>Adaptacions a l'entrenament</b>.",
-    "s2.b8.l5":"<b>Nocions de lesions neurològiques</b>.",
-    "s2.b8.video":"Vídeo: plasticitat cerebral (4 min)","video.placeholder3":"[Inserir enllaç]",
-    "s2.b8.danza":"<b>Connexió dansa:</b> el cervell del ballarí es reorganitza.",
-    "notas.s2.b8":"Tancament conceptual.",
+    "s2.b8.l5":"<b>Lesions neurològiques</b>.",
+    "s2.b8.danza":"<b>Connexió dansa:</b> el cervell es reorganitza.",
     "s2.p2.titulo":"Pràctiques 6–10: autonomia i adaptació",
     "s2.p2.e6":"<b>P6 · Activació simpàtica (3 min).</b>",
     "s2.p2.e7":"<b>P7 · Respiració parasimpàtica (3 min).</b>",
-    "s2.p2.e8":"<b>P8 · Visualització abans d'actuar (3 min).</b>",
-    "s2.p2.e9":"<b>P9 · Fatiga central vs. perifèrica (3 min).</b>",
+    "s2.p2.e8":"<b>P8 · Visualització (3 min).</b>",
+    "s2.p2.e9":"<b>P9 · Fatiga (3 min).</b>",
     "s2.p2.e10":"<b>P10 · Efecte de l'entrenament (4 min).</b>",
-    "notas.s2.p2":"La P6 i P7 són complementàries.",
-    "s2.act.titulo":"Activitats per apartats (escriptibles)",
+    "s2.act.titulo":"Activitats per apartats (escriptibles + valoració)",
     "s2.act.a1.titulo":"Anàlisi d'una coreografia",
     "s2.act.a1.enun":"Tria un fragment d'una coreografia.",
     "s2.act.a1.esq":"",
@@ -1527,26 +1485,26 @@ const translations = {
     "s2.act.a1.esq.4":"Expressió: sistema límbic.",
     "s2.act.a1.esq.5":"Integració sensorial.",
     "s2.act.a2.titulo":"Diari d'aprenentatge motor",
-    "s2.act.a2.enun":"Registra durant una setmana l'evolució d'un pas nou.",
+    "s2.act.a2.enun":"Registra l'evolució d'un pas nou.",
     "s2.act.a2.esq":"",
-    "s2.act.a2.esq.1":"Dia 1-2: fase cognitiva.",
-    "s2.act.a2.esq.2":"Dia 3-4: fase associativa.",
-    "s2.act.a2.esq.3":"Dia 5-7: fase autònoma.",
+    "s2.act.a2.esq.1":"Dia 1-2: cognitiva.",
+    "s2.act.a2.esq.2":"Dia 3-4: associativa.",
+    "s2.act.a2.esq.3":"Dia 5-7: autònoma.",
     "s2.act.a2.esq.4":"Reflexió final.",
     "s2.act.a3.titulo":"Cas d'ansietat escènica",
-    "s2.act.a3.enun":"Descriu què passa al cos abans de sortir a escena.",
+    "s2.act.a3.enun":"Descriu què passa abans de sortir a escena.",
     "s2.act.a3.esq":"",
-    "s2.act.a3.esq.1":"Simpàtic: augment de FC.",
-    "s2.act.a3.esq.2":"Parasimpàtic: calma.",
-    "s2.act.a3.esq.3":"Estratègies: respiració, visualització.",
+    "s2.act.a3.esq.1":"Simpàtic.",
+    "s2.act.a3.esq.2":"Parasimpàtic.",
+    "s2.act.a3.esq.3":"Estratègies.",
     "s2.act.a3.esq.4":"Activació òptima.",
     "s2.act.a4.titulo":"Quadre d'adaptacions",
     "s2.act.a4.enun":"Compara novel vs. expert.",
     "s2.act.a4.esq":"",
-    "s2.act.a4.esq.1":"Propiocepció: més precisa.",
-    "s2.act.a4.esq.2":"Eficiència sinàptica: més automatització.",
-    "s2.act.a4.esq.3":"Representació cortical: més àrea.",
-    "s2.act.a4.esq.4":"Conseqüència: menys fatiga.",
+    "s2.act.a4.esq.1":"Propiocepció.",
+    "s2.act.a4.esq.2":"Eficiència sinàptica.",
+    "s2.act.a4.esq.3":"Representació cortical.",
+    "s2.act.a4.esq.4":"Conseqüència.",
     "s2.act.a5.titulo":"Reflexió final integradora",
     "s2.act.a5.enun":"Explica el fil conductor complet.",
     "s2.act.a5.esq":"",
@@ -1557,16 +1515,14 @@ const translations = {
     "s2.act.a5.esq.5":"Moviment.",
     "s2.act.a5.esq.6":"Regulació.",
     "s2.act.a5.esq.7":"Adaptació.",
-    "notas.s2.act":"B1 i B3 a classe.",
+    "notas.s2.act":"Valoració automàtica i autoavaluació.",
     "s2.cierre.tag":"Tancament Sessió 2","s2.cierre.titulo":"Idees clau",
-    "s2.cierre.l1":"El control motor és jeràrquic i paral·lel.",
-    "s2.cierre.l2":"L'aprenentatge motor passa per 3 fases.",
-    "s2.cierre.l3":"El sistema autònom regula activació i recuperació.",
-    "s2.cierre.l4":"L'entrenament reorganitza el sistema nerviós.",
-    "s2.cierre.eval":"Avaluació suggerida:","s2.cierre.eval2":" cas aplicat + portfolio + reflexió.",
-    "notas.s2.cierre":"Tanca la unitat.",
-    "fin.titulo":"Fi de la unitat","fin.sub":"El sistema nerviós: de l'impuls a l'art","fin.big":"A moure's amb consciència!",
-    "notas.fin":"Enhorabona!"
+    "s2.cierre.l1":"El control motor és jeràrquic.",
+    "s2.cierre.l2":"L'aprenentatge passa per 3 fases.",
+    "s2.cierre.l3":"El sistema autònom regula.",
+    "s2.cierre.l4":"L'entrenament reorganitza.",
+    "s2.cierre.eval":"Avaluació:","s2.cierre.eval2":" cas + portfolio + reflexió.",
+    "fin.titulo":"Fi de la unitat","fin.sub":"El sistema nerviós: de l'impuls a l'art","fin.big":"A moure's amb consciència!"
   },
   en: {
     "nav.prev":"← Previous","nav.next":"Next →",
@@ -1574,9 +1530,9 @@ const translations = {
     "portada.sub":"From nerve impulse to dance movement",
     "portada.cap":"Multipolar neuron (Wikimedia Commons)",
     "portada.sesiones":"2 sessions · 3 hours each",
-    "portada.resumen":"Explanation + 10 practices + interactive activities",
+    "portada.resumen":"Explanation + 10 practices + interactive activities + self-assessment",
     "notas.portada":"Present the unit as a journey from impulse to movement.",
-    "tag.nueva":"New slide",
+    "tag.nueva":"New slide","tag.resumen":"Final summary",
     "indice.titulo":"Unit presentation and roadmap",
     "indice.s1":"Session 1 · From neuron to movement",
     "indice.s1.1":"Why study the nervous system in dance?",
@@ -1584,21 +1540,21 @@ const translations = {
     "indice.s1.3":"Functional organization of sensitivity",
     "indice.s1.4":"Central processing and integration",
     "indice.s1.5":"10 short practices",
-    "indice.s1.6":"5 interactive activities",
+    "indice.s1.6":"5 interactive activities + self-assessment",
     "indice.s2":"Session 2 · Motor control and adaptation",
     "indice.s2.1":"Motor control (efferents)",
     "indice.s2.2":"Motor learning",
     "indice.s2.3":"Autonomic nervous system",
     "indice.s2.4":"Integration and adaptation",
     "indice.s2.5":"10 short practices",
-    "indice.s2.6":"5 interactive activities",
+    "indice.s2.6":"5 interactive activities + self-assessment",
     "indice.danza":"<b>Guiding thread:</b> Excitability → Transmission → Sensation → Integration → Movement → Regulation → Adaptation (learning).",
-    "indice.evaluacion":"<b>Evaluation:</b> written answers in interactive activities + portfolio + final integrative reflection.",
+    "indice.evaluacion":"<b>Evaluation:</b> automatic scoring + reflective self-assessment + portfolio + final export.",
     "notas.indice":"New slide: serves as index and didactic contract.",
     "s1.tag":"Session 1","s1.titulo":"From neuron to movement",
     "s1.sub":"Excitability · Transmission · Sensation · Reflexes",
-    "s1.obj.l":"Objective:","s1.obj":" understand how the nervous system generates, transmits and integrates information to produce basic motor responses.",
-    "notas.s1.portada":"Timing: explanation 90 min, practices 45 min, activities 40 min, closing 5 min.",
+    "s1.obj.l":"Objective:","s1.obj":" understand how the nervous system generates, transmits and integrates information.",
+    "notas.s1.portada":"Timing: explanation 90 min, practices 45 min, activities 40 min.",
     "video.intro":'Introductory video: "The journey of the nerve impulse" (3 min)',
     "video.placeholder":"[Insert video link]",
     "tag.explica":"Explanation · 25 min","tag.explica2":"Explanation · 30 min",
@@ -1612,184 +1568,180 @@ const translations = {
     "tag.actividad1":"Interactive activities · Session 1",
     "tag.actividad2":"Interactive activities · Session 2",
     "label.respuesta":"Your answer:","btn.ver":"Show expected outline",
-    "ref.ir":"Go to slide","hint.esquema":"Press R or the button to see the expected outline",
+    "ref.ir":"Go to slide","hint.esquema":"Press R or the button to see the outline",
     "prog.completadas":"answered","prog.auto":"Auto-saved",
+    "autoeval.titulo":"Self-assessment Session 1",
+    "autoeval.titulo2":"Self-assessment Session 2",
+    "autoeval.p1":"After seeing the expected outline and the score, what grade would you give yourself?",
+    "autoeval.insuf":"Insufficient (0-4)","autoeval.suf":"Sufficient (5-6)",
+    "autoeval.not":"Good (7-8)","autoeval.exc":"Excellent (9-10)",
+    "autoeval.nota":"Specific grade (0-10):",
+    "autoeval.justif":"Justify your grade:",
+    "resumen.titulo":"Summary of your work and overall score",
+    "resumen.sub":"Automatic score per activity",
+    "resumen.act":"Activity","resumen.puntos":"Key points covered","resumen.nota":"Grade (0-10)",
+    "resumen.vacio":"Write your answers to see the score.",
+    "resumen.reflexion":"<b>Final reflection:</b> review your self-assessment.",
+    "notas.resumen":"This slide shows the summary of automatic scores and self-assessments.",
     "s1.b1.titulo":"1. Why study the nervous system in dance?",
     "s1.b1.l1":"Movement is the <b>visible result</b> of an invisible nervous process.",
-    "s1.b1.l2":"Understanding function allows you to <b>optimize learning</b>, prevent injury and control activation.",
-    "s1.b1.l3":"<b>Functional</b> approach: how is it generated? how is it regulated? how is it learned?",
-    "s1.b1.danza":"<b>Dance connection:</b> every step, every balance, every expressive nuance is born from a sequence.",
+    "s1.b1.l2":"Understanding function allows you to <b>optimize learning</b>.",
+    "s1.b1.l3":"<b>Functional</b> approach.",
+    "s1.b1.danza":"<b>Dance connection:</b> every step is born from a sequence.",
     "s1.b1.cap":"Functional diagram of the reflex arc (Wikimedia Commons)",
     "s1.b1.hilo":"Excitability → Transmission → Sensation → Integration → Movement",
     "notas.s1.b1":"Insist on the shift in perspective.",
     "s1.b2.titulo":"2. The neuron as a functional unit",
-    "s1.b2.h1":"Excitability","s1.b2.l1":"Resting membrane potential (~-70 mV).","s1.b2.l2":"Excitation threshold.",
-    "s1.b2.h2":"Action potential","s1.b2.l3":"Depolarization → repolarization → hyperpolarization.","s1.b2.l4":"All-or-nothing law.",
-    "s1.b2.h3":"Synapse","s1.b2.l5":"Chemical transmission: neurotransmitters.","s1.b2.l6":"Excitation vs. inhibition.",
-    "s1.b2.l7":"<b>Synaptic plasticity</b>: basis of motor learning.",
-    "s1.b2.cap":"Action potential profile (Wikimedia Commons)","s1.b2.video":"Video: synapse and neurotransmitters (2 min)",
-    "s1.b2.danza":"<b>Dance connection:</b> repetition strengthens synaptic connections.",
+    "s1.b2.h1":"Excitability","s1.b2.l1":"Resting membrane potential.","s1.b2.l2":"Excitation threshold.",
+    "s1.b2.h2":"Action potential","s1.b2.l3":"Depolarization → repolarization.","s1.b2.l4":"All-or-nothing law.",
+    "s1.b2.h3":"Synapse","s1.b2.l5":"Chemical transmission.","s1.b2.l6":"Excitation vs. inhibition.",
+    "s1.b2.l7":"<b>Synaptic plasticity</b>.",
+    "s1.b2.cap":"Action potential profile (Wikimedia Commons)",
+    "s1.b2.danza":"<b>Dance connection:</b> repetition strengthens connections.",
     "notas.s1.b2":"Useful analogy.",
     "s1.p1.titulo":"Practices 1–5: neuron and sensation",
     "s1.p1.e1":"<b>P1 · Patellar reflex (2 min).</b>",
     "s1.p1.e2":"<b>P2 · Reaction time (3 min).</b>",
     "s1.p1.e3":"<b>P3 · Two-point discrimination (3 min).</b>",
-    "s1.p1.e4":"<b>P4 · Proprioception with eyes closed (3 min).</b>",
+    "s1.p1.e4":"<b>P4 · Proprioception eyes closed (3 min).</b>",
     "s1.p1.e5":"<b>P5 · Sensory adaptation (2 min).</b>",
-    "notas.s1.p1":"Time the practices.",
     "img.receptor":"Receptor","img.propio":"Proprioception","img.adapt":"Adaptation",
     "s1.b3.titulo":"3. Functional organization of sensitivity",
-    "s1.b3.h1":"Sensory receptors","s1.b3.l1":"Mechanoreceptors, nociceptors, proprioceptors...",
+    "s1.b3.h1":"Sensory receptors","s1.b3.l1":"Mechanoreceptors, nociceptors...",
     "s1.b3.l2":"Transduction: stimulus → nerve impulse.",
-    "s1.b3.h2":"Proprioception","s1.b3.l3":"Muscle spindles (length).","s1.b3.l4":"Golgi tendon organs (tension).","s1.b3.l5":"Joint receptors.",
-    "s1.b3.h3":"Sensory integration","s1.b3.l6":"Adaptation, lateral inhibition, filtering.",
-    "s1.b3.cap":"Muscle spindle: length detector (Wikimedia Commons)",
-    "s1.b3.danza":"<b>Dance connection:</b> balance and body awareness depend on proprioception.",
-    "notas.s1.b3":"Analogy: the muscle spindle is like an elastic band sensor.",
+    "s1.b3.h2":"Proprioception","s1.b3.l3":"Muscle spindles.","s1.b3.l4":"Golgi tendon organs.","s1.b3.l5":"Joint receptors.",
+    "s1.b3.cap":"Muscle spindle (Wikimedia Commons)",
+    "s1.b3.danza":"<b>Dance connection:</b> balance depends on proprioception.",
     "s1.b4.titulo":"4. Central processing and integration",
     "s1.b4.th1":"Structure","s1.b4.th2":"Main function","s1.b4.th3":"Dance example",
-    "s1.b4.r1a":"Spinal cord","s1.b4.r1b":"Spinal reflexes","s1.b4.r1c":"Myotatic reflex in a jump",
-    "s1.b4.r2a":"Brainstem","s1.b4.r2b":"Tone, posture, rhythm","s1.b4.r2c":"Maintaining the axis",
-    "s1.b4.r3a":"Cerebellum","s1.b4.r3b":"Coordination, timing, correction","s1.b4.r3c":"Adjusting a turn",
-    "s1.b4.r4a":"Basal ganglia","s1.b4.r4b":"Initiation and sequencing","s1.b4.r4c":"Chaining steps",
-    "s1.b4.r5a":"Thalamus","s1.b4.r5b":"Relay and sensory integration","s1.b4.r5c":"Filtering information",
-    "s1.b4.r6a":"Motor cortex","s1.b4.r6b":"Planning and execution","s1.b4.r6c":"Deciding a movement",
-    "s1.b4.r7a":"Limbic system","s1.b4.r7b":"Emotion and movement","s1.b4.r7c":"Expressiveness",
-    "img.cerebelo":"Cerebellum","img.ganglios":"Basal ganglia","img.corteza":"Motor cortex",
+    "s1.b4.r1a":"Spinal cord","s1.b4.r1b":"Reflexes","s1.b4.r1c":"Myotatic reflex",
+    "s1.b4.r2a":"Brainstem","s1.b4.r2b":"Tone and posture","s1.b4.r2c":"Maintaining the axis",
+    "s1.b4.r3a":"Cerebellum","s1.b4.r3b":"Coordination","s1.b4.r3c":"Adjusting a turn",
+    "s1.b4.r4a":"Basal ganglia","s1.b4.r4b":"Initiation","s1.b4.r4c":"Chaining steps",
+    "s1.b4.r5a":"Thalamus","s1.b4.r5b":"Sensory relay","s1.b4.r5c":"Filtering",
+    "s1.b4.r6a":"Motor cortex","s1.b4.r6b":"Planning","s1.b4.r6c":"Deciding",
+    "s1.b4.r7a":"Limbic system","s1.b4.r7b":"Emotion","s1.b4.r7c":"Expressiveness",
     "s1.b4.danza":"<b>Dance connection:</b> automatization vs. conscious control.",
     "notas.s1.b4":"Avoid pure anatomy.",
     "s1.p2.titulo":"Practices 6–10: integration and control",
-    "s1.p2.e6":"<b>P6 · Myotatic reflex in pairs (3 min).</b>",
+    "s1.p2.e6":"<b>P6 · Myotatic reflex (3 min).</b>",
     "s1.p2.e7":"<b>P7 · Balance with perturbation (3 min).</b>",
     "s1.p2.e8":"<b>P8 · Direction change (3 min).</b>",
     "s1.p2.e9":"<b>P9 · 4-step sequence (4 min).</b>",
     "s1.p2.e10":"<b>P10 · Motor imagery (3 min).</b>",
-    "notas.s1.p2":"P6 requires control.",
-    "s1.act.titulo":"Activities by section (writable)",
+    "s1.act.titulo":"Activities by section (writable + scoring)",
     "s1.act.a1.titulo":"Functional map of the neuron",
-    "s1.act.a1.enun":"Draw or describe a neuron and mark with arrows the path of the nerve impulse.",
+    "s1.act.a1.enun":"Draw or describe a neuron.",
     "s1.act.a1.esq":"",
     "s1.act.a1.esq.1":"Dendrites: receive information.",
     "s1.act.a1.esq.2":"Soma: integrates signals.",
-    "s1.act.a1.esq.3":"Axon: conducts impulse; myelin speeds it up.",
+    "s1.act.a1.esq.3":"Axon: conducts impulse.",
     "s1.act.a1.esq.4":"Synaptic terminal: releases neurotransmitters.",
     "s1.act.a1.esq.5":"Direction: dendrites → soma → axon → terminal.",
     "s1.act.a2.titulo":"Comparative table: excitatory vs. inhibitory synapse",
     "s1.act.a2.enun":"Compare the two types of synapse.",
     "s1.act.a2.esq":"",
-    "s1.act.a2.esq.1":"Excitatory: glutamate; favors depolarization.",
-    "s1.act.a2.esq.2":"Inhibitory: GABA; hyperpolarizes.",
-    "s1.act.a2.esq.3":"Dance example: starting vs. controlling movement.",
+    "s1.act.a2.esq.1":"Excitatory: glutamate.",
+    "s1.act.a2.esq.2":"Inhibitory: GABA.",
+    "s1.act.a2.esq.3":"Dance example.",
     "s1.act.a3.titulo":"Case analysis: ankle injury",
     "s1.act.a3.enun":"A dancer injures ankle ligaments.",
     "s1.act.a3.esq":"",
-    "s1.act.a3.esq.1":"Affected receptors: joint, muscle spindles, Golgi.",
+    "s1.act.a3.esq.1":"Affected receptors.",
     "s1.act.a3.esq.2":"Consequence: worse balance.",
-    "s1.act.a3.esq.3":"Exercises: one-leg balance, eyes closed, unstable surfaces.",
-    "s1.act.a3.esq.4":"Reeducation: restore sensory information.",
+    "s1.act.a3.esq.3":"Exercises.",
+    "s1.act.a3.esq.4":"Reeducation.",
     "s1.act.a4.titulo":"Structures and functions table",
-    "s1.act.a4.enun":"Complete a table with at least 4 structures.",
+    "s1.act.a4.enun":"Complete a table.",
     "s1.act.a4.esq":"",
-    "s1.act.a4.esq.1":"Spinal cord: reflexes.",
-    "s1.act.a4.esq.2":"Cerebellum: coordination and timing.",
-    "s1.act.a4.esq.3":"Basal ganglia: initiation and sequencing.",
-    "s1.act.a4.esq.4":"Motor cortex: planning and execution.",
+    "s1.act.a4.esq.1":"Spinal cord.",
+    "s1.act.a4.esq.2":"Cerebellum.",
+    "s1.act.a4.esq.3":"Basal ganglia.",
+    "s1.act.a4.esq.4":"Motor cortex.",
     "s1.act.a5.titulo":"Reflection: repetition and motor learning",
     "s1.act.a5.enun":"Explain why a movement improves with repetition.",
     "s1.act.a5.esq":"",
-    "s1.act.a5.esq.1":"Myelin: improves conduction.",
-    "s1.act.a5.esq.2":"Synapse: connections strengthen.",
-    "s1.act.a5.esq.3":"Synaptic plasticity: basis of learning.",
-    "s1.act.a5.esq.4":"Consequence: the step becomes automatic.",
-    "notas.s1.act":"Answers auto-save.",
+    "s1.act.a5.esq.1":"Myelin.",
+    "s1.act.a5.esq.2":"Synapse.",
+    "s1.act.a5.esq.3":"Synaptic plasticity.",
+    "s1.act.a5.esq.4":"Consequence in dance.",
+    "notas.s1.act":"Automatic scoring and self-assessment.",
     "s1.cierre.tag":"Session 1 Closing","s1.cierre.titulo":"Key ideas",
-    "s1.cierre.l1":"The nerve impulse is the basis of all function.",
-    "s1.cierre.l2":"Sensation informs; integration decides; movement executes.",
-    "s1.cierre.l3":"Proprioception is essential for balance and technique.",
-    "s1.cierre.l4":"Synaptic plasticity explains motor learning.",
-    "s1.cierre.prox":"For next session:","s1.cierre.prox2":" review practices 1–10.",
-    "notas.s1.cierre":"Close with an open question.",
+    "s1.cierre.l1":"The nerve impulse is the basis.",
+    "s1.cierre.l2":"Sensation informs; integration decides.",
+    "s1.cierre.l3":"Proprioception is essential.",
+    "s1.cierre.l4":"Plasticity explains learning.",
+    "s1.cierre.prox":"For next session:","s1.cierre.prox2":" review practices.",
     "s2.tag":"Session 2","s2.titulo":"Motor control, autonomy and adaptation",
     "s2.sub":"Efferents · Learning · Autonomic system · Integration",
     "s2.obj.l":"Objective:","s2.obj":" understand how the nervous system controls voluntary movement.",
-    "notas.s2.portada":"Briefly review session 1.",
-    "s2.video":"Video: motor control in dancers (3 min)","video.placeholder2":"[Insert video link]",
+    "notas.s2.portada":"Briefly review.",
+    "s2.video":"Video: motor control (3 min)",
     "s2.b5.titulo":"5. Motor control (efferents)",
-    "s2.b5.h1":"Motor unit","s2.b5.l1":"Motoneuron + muscle fibers.","s2.b5.l2":"Types: slow and fast.","s2.b5.l3":"Progressive recruitment.",
-    "s2.b5.h2":"Myotatic reflex and tone","s2.b5.l4":"Basis of muscle tone.","s2.b5.l5":"Automatic adjustment.",
-    "s2.b5.h3":"Descending pathways","s2.b5.l6":"Pyramidal: fine movement.","s2.b5.l7":"Extrapyramidal: posture and automatisms.",
-    "s2.b5.h4":"Voluntary control","s2.b5.l8":"Planning → execution → feedback.","s2.b5.l9":"Feedforward and feedback.",
-    "img.motora":"Motor unit","img.piramidal":"Pyramidal pathway","img.feedback":"Feedback",
+    "s2.b5.h1":"Motor unit","s2.b5.l1":"Motoneuron + fibers.","s2.b5.l2":"Slow and fast.","s2.b5.l3":"Progressive recruitment.",
+    "s2.b5.h2":"Myotatic reflex","s2.b5.l4":"Basis of tone.","s2.b5.l5":"Automatic adjustment.",
+    "s2.b5.h3":"Descending pathways","s2.b5.l6":"Pyramidal.","s2.b5.l7":"Extrapyramidal.",
+    "s2.b5.h4":"Voluntary control","s2.b5.l8":"Planning → execution.","s2.b5.l9":"Feedforward and feedback.",
     "s2.b5.danza":"<b>Dance connection:</b> the novice uses conscious control.",
-    "notas.s2.b5":"Key concept: motor unit.",
     "s2.b6.titulo":"6. Motor learning",
     "s2.b6.th1":"Phase","s2.b6.th2":"Characteristics","s2.b6.th3":"In dance",
-    "s2.b6.r1a":"Cognitive","s2.b6.r1b":"Much attention, errors","s2.b6.r1c":"Learning a new step",
-    "s2.b6.r2a":"Associative","s2.b6.r2b":"Fewer errors","s2.b6.r2c":"Repeating the choreography",
-    "s2.b6.r3a":"Autonomous","s2.b6.r3b":"Fluid movement","s2.b6.r3c":"Performing without thinking",
-    "s2.b6.f1":"Cognitive","s2.b6.f2":"Associative","s2.b6.f3":"Autonomous",
-    "s2.b6.cap":"Phases of motor learning",
-    "s2.b6.danza":"<b>Dance connection:</b> distributed practice accelerates the autonomous phase.",
-    "notas.s2.b6":"Ask the group.",
+    "s2.b6.r1a":"Cognitive","s2.b6.r1b":"Much attention","s2.b6.r1c":"New step",
+    "s2.b6.r2a":"Associative","s2.b6.r2b":"Fewer errors","s2.b6.r2c":"Repeating",
+    "s2.b6.r3a":"Autonomous","s2.b6.r3b":"Fluid movement","s2.b6.r3c":"Performing",
+    "s2.b6.danza":"<b>Dance connection:</b> practice accelerates the autonomous phase.",
     "s2.p1.titulo":"Practices 1–5: motor control",
-    "s2.p1.e1":"<b>P1 · Motor unit recruitment (3 min).</b>",
-    "s2.p1.e2":"<b>P2 · Slow vs. fast movement (3 min).</b>",
+    "s2.p1.e1":"<b>P1 · Recruitment (3 min).</b>",
+    "s2.p1.e2":"<b>P2 · Slow vs. fast (3 min).</b>",
     "s2.p1.e3":"<b>P3 · Visual feedback (3 min).</b>",
     "s2.p1.e4":"<b>P4 · Feedforward (3 min).</b>",
-    "s2.p1.e5":"<b>P5 · Progressive automatization (4 min).</b>",
-    "notas.s2.p1":"P5 is the most important.",
+    "s2.p1.e5":"<b>P5 · Automatization (4 min).</b>",
     "s2.b7.titulo":"7. Autonomic nervous system",
     "s2.b7.h1":"Sympathetic","s2.b7.l1":'Activation: "fight or flight".',"s2.b7.l2":"Increases HR.","s2.b7.l3":"Mobilizes energy.",
-    "s2.b7.h2":"Parasympathetic","s2.b7.l4":"Relaxation.","s2.b7.l5":"Decreases HR.","s2.b7.l6":"Return to homeostasis.",
-    "s2.b7.center":"ANS","s2.b7.simp":"Sympathetic","s2.b7.para":"Parasympathetic",
+    "s2.b7.h2":"Parasympathetic","s2.b7.l4":"Relaxation.","s2.b7.l5":"Decreases HR.","s2.b7.l6":"Homeostasis.",
     "s2.b7.danza":"<b>Dance connection:</b> managing stage anxiety.",
-    "notas.s2.b7":"Optimal activation.",
-    "s2.b8.titulo":"8. Integration: the nervous system and dance movement",
+    "s2.b8.titulo":"8. Integration",
     "s2.b8.l1":"<b>Hierarchy and parallelism</b>.",
     "s2.b8.l2":"<b>Sensorimotor integration</b>.",
     "s2.b8.l3":"<b>Neuromuscular fatigue</b>.",
     "s2.b8.l4":"<b>Adaptations to training</b>.",
-    "s2.b8.l5":"<b>Notions of neurological injuries</b>.",
-    "s2.b8.video":"Video: brain plasticity (4 min)","video.placeholder3":"[Insert video link]",
-    "s2.b8.danza":"<b>Dance connection:</b> the dancer's brain reorganizes.",
-    "notas.s2.b8":"Conceptual closing.",
+    "s2.b8.l5":"<b>Neurological injuries</b>.",
+    "s2.b8.danza":"<b>Dance connection:</b> the brain reorganizes.",
     "s2.p2.titulo":"Practices 6–10: autonomy and adaptation",
     "s2.p2.e6":"<b>P6 · Sympathetic activation (3 min).</b>",
     "s2.p2.e7":"<b>P7 · Parasympathetic breathing (3 min).</b>",
-    "s2.p2.e8":"<b>P8 · Imagery before performing (3 min).</b>",
-    "s2.p2.e9":"<b>P9 · Central vs. peripheral fatigue (3 min).</b>",
+    "s2.p2.e8":"<b>P8 · Imagery (3 min).</b>",
+    "s2.p2.e9":"<b>P9 · Fatigue (3 min).</b>",
     "s2.p2.e10":"<b>P10 · Training effect (4 min).</b>",
-    "notas.s2.p2":"P6 and P7 are complementary.",
-    "s2.act.titulo":"Activities by section (writable)",
+    "s2.act.titulo":"Activities by section (writable + scoring)",
     "s2.act.a1.titulo":"Choreography analysis",
     "s2.act.a1.enun":"Choose a fragment of a choreography.",
     "s2.act.a1.esq":"",
     "s2.act.a1.esq.1":"Planning: motor cortex.",
-    "s2.act.a1.esq.2":"Execution: pyramidal and extrapyramidal pathways.",
+    "s2.act.a1.esq.2":"Execution: pyramidal and extrapyramidal.",
     "s2.act.a1.esq.3":"Correction: cerebellum and basal ganglia.",
     "s2.act.a1.esq.4":"Expression: limbic system.",
     "s2.act.a1.esq.5":"Sensory integration.",
     "s2.act.a2.titulo":"Motor learning diary",
-    "s2.act.a2.enun":"Record the evolution of a new step over one week.",
+    "s2.act.a2.enun":"Record the evolution of a new step.",
     "s2.act.a2.esq":"",
-    "s2.act.a2.esq.1":"Day 1-2: cognitive phase.",
-    "s2.act.a2.esq.2":"Day 3-4: associative phase.",
-    "s2.act.a2.esq.3":"Day 5-7: autonomous phase.",
+    "s2.act.a2.esq.1":"Day 1-2: cognitive.",
+    "s2.act.a2.esq.2":"Day 3-4: associative.",
+    "s2.act.a2.esq.3":"Day 5-7: autonomous.",
     "s2.act.a2.esq.4":"Final reflection.",
     "s2.act.a3.titulo":"Stage anxiety case",
-    "s2.act.a3.enun":"Describe what happens in the body before performing.",
+    "s2.act.a3.enun":"Describe what happens before performing.",
     "s2.act.a3.esq":"",
-    "s2.act.a3.esq.1":"Sympathetic: increased HR.",
-    "s2.act.a3.esq.2":"Parasympathetic: calm.",
-    "s2.act.a3.esq.3":"Strategies: breathing, imagery.",
+    "s2.act.a3.esq.1":"Sympathetic.",
+    "s2.act.a3.esq.2":"Parasympathetic.",
+    "s2.act.a3.esq.3":"Strategies.",
     "s2.act.a3.esq.4":"Optimal activation.",
     "s2.act.a4.titulo":"Adaptations table",
     "s2.act.a4.enun":"Compare novice vs. expert.",
     "s2.act.a4.esq":"",
-    "s2.act.a4.esq.1":"Proprioception: more precise.",
-    "s2.act.a4.esq.2":"Synaptic efficiency: more automatization.",
-    "s2.act.a4.esq.3":"Cortical representation: larger area.",
-    "s2.act.a4.esq.4":"Consequence: less fatigue.",
+    "s2.act.a4.esq.1":"Proprioception.",
+    "s2.act.a4.esq.2":"Synaptic efficiency.",
+    "s2.act.a4.esq.3":"Cortical representation.",
+    "s2.act.a4.esq.4":"Consequence.",
     "s2.act.a5.titulo":"Final integrative reflection",
     "s2.act.a5.enun":"Explain the full guiding thread.",
     "s2.act.a5.esq":"",
@@ -1800,17 +1752,29 @@ const translations = {
     "s2.act.a5.esq.5":"Movement.",
     "s2.act.a5.esq.6":"Regulation.",
     "s2.act.a5.esq.7":"Adaptation.",
-    "notas.s2.act":"B1 and B3 in class.",
+    "notas.s2.act":"Automatic scoring and self-assessment.",
     "s2.cierre.tag":"Session 2 Closing","s2.cierre.titulo":"Key ideas",
-    "s2.cierre.l1":"Motor control is hierarchical and parallel.",
-    "s2.cierre.l2":"Motor learning goes through 3 phases.",
-    "s2.cierre.l3":"The autonomic system regulates activation and recovery.",
-    "s2.cierre.l4":"Dance training reorganizes the nervous system.",
-    "s2.cierre.eval":"Suggested evaluation:","s2.cierre.eval2":" applied case + portfolio + reflection.",
-    "notas.s2.cierre":"Close the unit.",
-    "fin.titulo":"End of unit","fin.sub":"The nervous system: from impulse to art","fin.big":"Let's move with awareness!",
-    "notas.fin":"Congratulations!"
+    "s2.cierre.l1":"Motor control is hierarchical.",
+    "s2.cierre.l2":"Learning goes through 3 phases.",
+    "s2.cierre.l3":"The autonomic system regulates.",
+    "s2.cierre.l4":"Training reorganizes.",
+    "s2.cierre.eval":"Evaluation:","s2.cierre.eval2":" case + portfolio + reflection.",
+    "fin.titulo":"End of unit","fin.sub":"The nervous system: from impulse to art","fin.big":"Let's move with awareness!"
   }
+};
+
+/* ====================== PALABRAS CLAVE PARA VALORACIÓN ====================== */
+const KEYWORDS = {
+  's1-a1': ['dendrita','soma','axón','axon','mielina','terminal','sinapsis','impulso','umbral','potencial'],
+  's1-a2': ['glutamato','gaba','excitadora','inhibidora','despolariza','hiperpolariza','neurotransmisor'],
+  's1-a3': ['huso','golgi','articular','receptor','equilibrio','propiocep','tobillo','rehabilit','ejercicio'],
+  's1-a4': ['médula','medula','cerebelo','ganglio','corteza','reflejo','coordinaci','secuenci','planific'],
+  's1-a5': ['mielina','sinapsis','plasticidad','repetici','aprendizaje','automatiz','conducci'],
+  's2-a1': ['corteza','piramidal','extrapiramidal','cerebelo','ganglio','límbico','limbico','planific','ejecuci','correcci'],
+  's2-a2': ['cognitiva','asociativa','autónoma','autonoma','fase','atenci','error','automatiz'],
+  's2-a3': ['simpático','simpatico','parasimpático','parasimpatico','respiraci','visualizaci','activaci','ansiedad','frecuencia'],
+  's2-a4': ['propiocep','sináptic','sinaptic','cortical','automatiz','experto','novel','eficien'],
+  's2-a5': ['excitabilidad','transmis','sensaci','integraci','movimiento','regulaci','adaptaci','plasticidad']
 };
 
 /* ====================== NAVEGACIÓN ====================== */
@@ -1824,6 +1788,7 @@ function show(i){
   slides[i].classList.add('active');
   counter.textContent = `Diapositiva ${i+1} / ${slides.length}`;
   progress.style.width = ((i+1)/slides.length*100)+'%';
+  if(slides[i].querySelector('#resumen-tabla')) actualizarResumen();
 }
 function next(){ if(idx < slides.length-1){ idx++; show(idx);} }
 function prev(){ if(idx > 0){ idx--; show(idx);} }
@@ -1835,13 +1800,7 @@ document.addEventListener('keydown', e=>{
   if(e.key === 'r' || e.key === 'R'){
     const active = document.querySelector('.slide.active');
     if(active){
-      active.querySelectorAll('.esquema').forEach(esq=>{
-        esq.classList.toggle('visible');
-      });
-      active.querySelectorAll('.btn-toggle-esquema').forEach(btn=>{
-        const t = esq.classList.contains('visible');
-        btn.textContent = t ? '🔽 Ocultar esquema' : '🔽 Ver esquema esperado';
-      });
+      active.querySelectorAll('.esquema').forEach(esq=>esq.classList.toggle('visible'));
     }
   }
 });
@@ -1851,11 +1810,7 @@ function applyLang(lang){
   const dict = translations[lang];
   document.querySelectorAll('[data-i18n]').forEach(el=>{
     const key = el.getAttribute('data-i18n');
-    if(dict[key] !== undefined){
-      if(dict[key] === ''){
-        // claves vacías (encabezados de esquema): no sobrescribir contenido
-        return;
-      }
+    if(dict[key] !== undefined && dict[key] !== ''){
       el.innerHTML = dict[key];
     }
   });
@@ -1864,6 +1819,7 @@ function applyLang(lang){
     b.classList.toggle('active', b.dataset.lang === lang);
   });
   actualizarProgreso();
+  valorarTodas();
   show(idx);
 }
 
@@ -1877,41 +1833,32 @@ document.querySelectorAll('.btn-toggle-esquema').forEach(btn=>{
     const target = document.getElementById(btn.dataset.target);
     if(!target) return;
     target.classList.toggle('visible');
-    btn.textContent = target.classList.contains('visible')
-      ? '🔽 ' + (document.documentElement.lang === 'en' ? 'Hide outline'
-              : document.documentElement.lang === 'ca' ? 'Amagar esquema'
-              : 'Ocultar esquema')
-      : '🔽 ' + (document.documentElement.lang === 'en' ? 'Show expected outline'
-              : document.documentElement.lang === 'ca' ? 'Veure esquema esperat'
-              : 'Ver esquema esperado');
   });
 });
 
-/* ====================== REFERENCIAS A DIAPOSITIVAS ====================== */
+/* ====================== REFERENCIAS ====================== */
 document.querySelectorAll('.ref-slide').forEach(link=>{
   link.addEventListener('click', (e)=>{
     e.preventDefault();
     const target = parseInt(link.dataset.ref, 10);
     if(!isNaN(target) && target >= 0 && target < slides.length){
-      idx = target;
-      show(idx);
+      idx = target; show(idx);
     }
   });
 });
 
-/* ====================== RESPUESTAS DEL ALUMNADO ====================== */
-const STORAGE_KEY = 'fisiologia_danza_respuestas_v1';
+/* ====================== RESPUESTAS ====================== */
+const STORAGE_KEY = 'fisiologia_danza_respuestas_v2';
+const AUTOEVAL_KEY = 'fisiologia_danza_autoeval_v2';
 
 function cargarRespuestas(){
   try{
     const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
     document.querySelectorAll('textarea.respuesta').forEach(ta=>{
       const key = ta.dataset.key;
-      if(data[key] !== undefined){
-        ta.value = data[key];
-      }
+      if(data[key] !== undefined) ta.value = data[key];
     });
-  }catch(e){ console.warn('No se pudieron cargar respuestas', e); }
+  }catch(e){ console.warn(e); }
 }
 
 function guardarRespuesta(key, value){
@@ -1919,8 +1866,50 @@ function guardarRespuesta(key, value){
     const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
     data[key] = value;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  }catch(e){ console.warn('No se pudo guardar', e); }
+  }catch(e){ console.warn(e); }
 }
+
+function cargarAutoeval(){
+  try{
+    const data = JSON.parse(localStorage.getItem(AUTOEVAL_KEY) || '{}');
+    document.querySelectorAll('[data-autoeval-text]').forEach(ta=>{
+      const k = 'text-' + ta.dataset.autoevalText;
+      if(data[k] !== undefined) ta.value = data[k];
+    });
+    document.querySelectorAll('[data-autoeval-nota]').forEach(inp=>{
+      const k = 'nota-' + inp.dataset.autoevalNota;
+      if(data[k] !== undefined) inp.value = data[k];
+    });
+    document.querySelectorAll('input[type=radio][name^="autoeval"]').forEach(r=>{
+      const k = 'radio-' + r.name + '-' + r.value;
+      if(data[k]) r.checked = true;
+    });
+  }catch(e){ console.warn(e); }
+}
+
+function guardarAutoeval(k, v){
+  try{
+    const data = JSON.parse(localStorage.getItem(AUTOEVAL_KEY) || '{}');
+    data[k] = v;
+    localStorage.setItem(AUTOEVAL_KEY, JSON.stringify(data));
+  }catch(e){ console.warn(e); }
+}
+
+document.querySelectorAll('textarea[data-autoeval-text]').forEach(ta=>{
+  ta.addEventListener('input', ()=>{
+    guardarAutoeval('text-' + ta.dataset.autoevalText, ta.value);
+  });
+});
+document.querySelectorAll('input[data-autoeval-nota]').forEach(inp=>{
+  inp.addEventListener('input', ()=>{
+    guardarAutoeval('nota-' + inp.dataset.autoevalNota, inp.value);
+  });
+});
+document.querySelectorAll('input[type=radio][name^="autoeval"]').forEach(r=>{
+  r.addEventListener('change', ()=>{
+    guardarAutoeval('radio-' + r.name + '-' + r.value, r.checked);
+  });
+});
 
 function actualizarEstado(key, estado){
   const el = document.querySelector(`[data-key-status="${key}"]`);
@@ -1938,9 +1927,7 @@ function actualizarProgreso(){
   ['s1','s2'].forEach(prefix=>{
     const textos = document.querySelectorAll(`textarea[data-key^="${prefix}-a"]`);
     let completadas = 0;
-    textos.forEach(ta=>{
-      if(ta.value.trim().length >= 20) completadas++;
-    });
+    textos.forEach(ta=>{ if(ta.value.trim().length >= 20) completadas++; });
     const prog = document.getElementById(`prog-${prefix}`);
     const bar = document.getElementById(`bar-${prefix}`);
     if(prog) prog.textContent = completadas;
@@ -1948,6 +1935,101 @@ function actualizarProgreso(){
   });
 }
 
+/* ====================== VALORACIÓN AUTOMÁTICA ====================== */
+function valorarActividad(key, texto){
+  const keywords = KEYWORDS[key] || [];
+  if(!keywords.length) return {nota: 0, encontradas: [], faltan: [], total: 0};
+
+  const textoNorm = texto.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+
+  const encontradas = [];
+  const faltan = [];
+  keywords.forEach(kw=>{
+    const kwNorm = kw.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    if(textoNorm.includes(kwNorm)) encontradas.push(kw);
+    else faltan.push(kw);
+  });
+
+  // Nota = % de palabras clave encontradas, ajustada por longitud
+  const ratio = encontradas.length / keywords.length;
+  let nota = Math.round(ratio * 10 * 2) / 2; // redondeo a 0.5
+  // Penalizar respuestas muy cortas
+  if(texto.trim().length < 30) nota = Math.min(nota, 3);
+  else if(texto.trim().length < 60) nota = Math.min(nota, 6);
+
+  return {nota, encontradas, faltan, total: keywords.length};
+}
+
+function valorarTodas(){
+  document.querySelectorAll('.actividad-block').forEach(block=>{
+    const key = block.dataset.act;
+    const textarea = block.querySelector('textarea.respuesta');
+    const contenedor = block.querySelector('.valoracion');
+    if(!textarea || !contenedor) return;
+    const texto = textarea.value || '';
+    const lang = document.documentElement.lang;
+
+    if(texto.trim().length < 10){
+      contenedor.innerHTML = `<span style="color:var(--muted);">${
+        lang === 'en' ? 'Write your answer to see the score.'
+        : lang === 'ca' ? 'Escriu la teva resposta per veure la valoració.'
+        : 'Escribe tu respuesta para ver la valoración.'}</span>`;
+      return;
+    }
+
+    const r = valorarActividad(key, texto);
+    const claseBarra = r.nota >= 7 ? '' : (r.nota >= 5 ? 'medio' : 'bajo');
+    const etiqueta = r.nota >= 9 ? (lang==='en'?'Excellent':lang==='ca'?'Excel·lent':'Excelente')
+                    : r.nota >= 7 ? (lang==='en'?'Good':lang==='ca'?'Notable':'Notable')
+                    : r.nota >= 5 ? (lang==='en'?'Sufficient':lang==='ca'?'Suficient':'Suficiente')
+                    : (lang==='en'?'Needs review':lang==='ca'?'Cal repassar':'Necesita repaso');
+
+    contenedor.innerHTML = `
+      <div class="puntos">
+        <span class="nota">${r.nota}</span>
+        <span>${etiqueta} · ${r.encontradas.length}/${r.total} ${
+          lang==='en'?'key points':lang==='ca'?'punts clau':'puntos clave'}</span>
+      </div>
+      <div class="barra"><div class="barra-fill ${claseBarra}" style="width:${r.nota*10}%"></div></div>
+      <div class="detalle">
+        <div><span class="ok">✓</span> ${
+          lang==='en'?'Found':lang==='ca'?'Trobats':'Encontrados'}: ${
+          r.encontradas.length ? r.encontradas.join(', ') : '—'}</div>
+        <div><span class="falta">✗</span> ${
+          lang==='en'?'Missing':lang==='ca'?'Falten':'Faltan'}: ${
+          r.faltan.length ? r.faltan.join(', ') : (lang==='en'?'none':lang==='ca'?'cap':'ninguno')}</div>
+      </div>
+    `;
+  });
+}
+
+function actualizarResumen(){
+  const tbody = document.getElementById('resumen-tabla');
+  const totalEl = document.getElementById('resumen-total');
+  if(!tbody) return;
+  const lang = document.documentElement.lang;
+  const etiquetas = {
+    's1-a1': 'A1','s1-a2': 'A2','s1-a3': 'A3','s1-a4': 'A4','s1-a5': 'A5',
+    's2-a1': 'B1','s2-a2': 'B2','s2-a3': 'B3','s2-a4': 'B4','s2-a5': 'B5'
+  };
+  let suma = 0, count = 0;
+  let html = '';
+  Object.keys(etiquetas).forEach(key=>{
+    const ta = document.querySelector(`textarea[data-key="${key}"]`);
+    const texto = ta ? ta.value : '';
+    const r = valorarActividad(key, texto);
+    if(texto.trim().length >= 10){ suma += r.nota; count++; }
+    html += `<tr><td>${etiquetas[key]}</td><td>${r.encontradas.length}/${r.total}</td><td><b style="color:${
+      r.nota >= 7 ? 'var(--ok)' : r.nota >= 5 ? 'var(--warn)' : 'var(--bad)'
+    }">${texto.trim().length >= 10 ? r.nota : '—'}</b></td></tr>`;
+  });
+  tbody.innerHTML = html;
+  const media = count ? (suma/count).toFixed(1) : '—';
+  totalEl.textContent = `${media} / 10`;
+}
+
+/* ====================== TEXTAREAS RESPUESTAS ====================== */
 document.querySelectorAll('textarea.respuesta').forEach(ta=>{
   let timer;
   ta.addEventListener('input', ()=>{
@@ -1957,70 +2039,86 @@ document.querySelectorAll('textarea.respuesta').forEach(ta=>{
       guardarRespuesta(ta.dataset.key, ta.value);
       actualizarEstado(ta.dataset.key, 'guardado');
       actualizarProgreso();
+      valorarTodas();
     }, 500);
   });
 });
 
-/* ====================== EXPORTAR RESPUESTAS ====================== */
+/* ====================== EXPORTAR ====================== */
 function exportarRespuestas(){
   const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+  const auto = JSON.parse(localStorage.getItem(AUTOEVAL_KEY) || '{}');
   const lang = document.documentElement.lang;
-  let contenido = '';
-  contenido += '=========================================\n';
-  contenido += lang === 'en' ? 'PHYSIOLOGY - DANCE 1st\n'
-            : lang === 'ca' ? 'FISIOLOGIA - DANSA 1r\n'
-            : 'FISIOLOGÍA - DANZA 1º\n';
-  contenido += (lang === 'en' ? 'Nervous system - Answers\n'
-            : lang === 'ca' ? 'Sistema nerviós - Respostes\n'
-            : 'Sistema nervioso - Respuestas\n');
-  contenido += '=========================================\n\n';
+
+  const nombre = prompt(
+    lang === 'en' ? 'Your name (for the file):'
+    : lang === 'ca' ? 'El teu nom (per al fitxer):'
+    : 'Tu nombre (para el archivo):'
+  ) || '';
+  const nombreLimpio = nombre.trim().replace(/\s+/g,'_').replace(/[^\w\-]/g,'') || 'alumno';
 
   const etiquetas = {
-    's1-a1': lang === 'en' ? 'A1. Functional map of the neuron'
-            : lang === 'ca' ? 'A1. Mapa funcional de la neurona'
-            : 'A1. Mapa funcional de la neurona',
-    's1-a2': lang === 'en' ? 'A2. Comparative table: synapse'
-            : lang === 'ca' ? 'A2. Quadre comparatiu: sinapsi'
-            : 'A2. Cuadro comparativo: sinapsis',
-    's1-a3': lang === 'en' ? 'A3. Case analysis: ankle injury'
-            : lang === 'ca' ? 'A3. Anàlisi de cas: lesió de turmell'
-            : 'A3. Análisis de caso: lesión de tobillo',
-    's1-a4': lang === 'en' ? 'A4. Structures and functions table'
-            : lang === 'ca' ? 'A4. Taula d\'estructures i funcions'
-            : 'A4. Tabla de estructuras y funciones',
-    's1-a5': lang === 'en' ? 'A5. Reflection: repetition and motor learning'
-            : lang === 'ca' ? 'A5. Reflexió: repetició i aprenentatge motor'
-            : 'A5. Reflexión: repetición y aprendizaje motor',
-    's2-a1': lang === 'en' ? 'B1. Choreography analysis'
-            : lang === 'ca' ? 'B1. Anàlisi d\'una coreografia'
-            : 'B1. Análisis de una coreografía',
-    's2-a2': lang === 'en' ? 'B2. Motor learning diary'
-            : lang === 'ca' ? 'B2. Diari d\'aprenentatge motor'
-            : 'B2. Diario de aprendizaje motor',
-    's2-a3': lang === 'en' ? 'B3. Stage anxiety case'
-            : lang === 'ca' ? 'B3. Cas d\'ansietat escènica'
-            : 'B3. Caso de ansiedad escénica',
-    's2-a4': lang === 'en' ? 'B4. Adaptations table'
-            : lang === 'ca' ? 'B4. Quadre d\'adaptacions'
-            : 'B4. Cuadro de adaptaciones',
-    's2-a5': lang === 'en' ? 'B5. Final integrative reflection'
-            : lang === 'ca' ? 'B5. Reflexió final integradora'
-            : 'B5. Reflexión final integradora'
+    's1-a1': lang==='en'?'A1. Functional map of the neuron':lang==='ca'?'A1. Mapa funcional de la neurona':'A1. Mapa funcional de la neurona',
+    's1-a2': lang==='en'?'A2. Synapse comparison':lang==='ca'?'A2. Quadre comparatiu: sinapsi':'A2. Cuadro comparativo: sinapsis',
+    's1-a3': lang==='en'?'A3. Ankle injury case':lang==='ca'?'A3. Cas de lesió de turmell':'A3. Análisis de caso: lesión de tobillo',
+    's1-a4': lang==='en'?'A4. Structures table':lang==='ca'?'A4. Taula d\'estructures':'A4. Tabla de estructuras',
+    's1-a5': lang==='en'?'A5. Repetition reflection':lang==='ca'?'A5. Reflexió: repetició':'A5. Reflexión: repetición',
+    's2-a1': lang==='en'?'B1. Choreography analysis':lang==='ca'?'B1. Anàlisi de coreografia':'B1. Análisis de coreografía',
+    's2-a2': lang==='en'?'B2. Motor learning diary':lang==='ca'?'B2. Diari d\'aprenentatge':'B2. Diario de aprendizaje motor',
+    's2-a3': lang==='en'?'B3. Stage anxiety case':lang==='ca'?'B3. Cas d\'ansietat escènica':'B3. Caso de ansiedad escénica',
+    's2-a4': lang==='en'?'B4. Adaptations table':lang==='ca'?'B4. Quadre d\'adaptacions':'B4. Cuadro de adaptaciones',
+    's2-a5': lang==='en'?'B5. Final reflection':lang==='ca'?'B5. Reflexió final integradora':'B5. Reflexión final integradora'
   };
+
+  let contenido = '';
+  contenido += '=========================================\n';
+  contenido += lang==='en'?'DANCE PHYSIOLOGY - 1st\n':lang==='ca'?'FISIOLOGIA - DANSA 1r\n':'FISIOLOGÍA - DANZA 1º\n';
+  contenido += lang==='en'?'Nervous system - Answers\n':lang==='ca'?'Sistema nerviós - Respostes\n':'Sistema nervioso - Respuestas\n';
+  contenido += '=========================================\n';
+  if(nombre) contenido += (lang==='en'?'Student: ':lang==='ca'?'Alumne/a: ':'Alumno/a: ') + nombre + '\n';
+  contenido += (lang==='en'?'Date: ':lang==='ca'?'Data: ':'Fecha: ') + new Date().toLocaleString() + '\n';
+  contenido += '=========================================\n\n';
+
+  let suma = 0, count = 0;
 
   Object.keys(etiquetas).forEach(key=>{
     contenido += `--- ${etiquetas[key]} ---\n`;
-    contenido += (data[key] || (lang === 'en' ? '(no answer)' : lang === 'ca' ? '(sense resposta)' : '(sin respuesta)'));
-    contenido += '\n\n';
+    const resp = data[key] || '';
+    contenido += resp || (lang==='en'?'(no answer)':lang==='ca'?'(sense resposta)':'(sin respuesta)');
+    contenido += '\n';
+    const r = valorarActividad(key, resp);
+    contenido += `\n  📊 ${lang==='en'?'Score':lang==='ca'?'Valoració':'Valoración'}: ${resp.trim().length >= 10 ? r.nota + '/10' : '—'}`;
+    contenido += ` (${r.encontradas.length}/${r.total} ${
+      lang==='en'?'key points':lang==='ca'?'punts clau':'puntos clave'})\n`;
+    if(resp.trim().length >= 10){ suma += r.nota; count++; }
+    contenido += '\n';
   });
+
+  contenido += '\n=========================================\n';
+  contenido += lang==='en'?'SELF-ASSESSMENT\n':lang==='ca'?'AUTOAVALUACIÓ\n':'AUTOEVALUACIÓN\n';
+  contenido += '=========================================\n';
+  ['s1','s2'].forEach(prefix=>{
+    contenido += `\n--- ${prefix.toUpperCase()} ---\n`;
+    const radio = Object.keys(auto).find(k => k.startsWith(`radio-autoeval-${prefix}-`) && auto[k]);
+    const radioVal = radio ? radio.split('-').pop() : '(no marcado)';
+    const nota = auto['nota-' + prefix] || '—';
+    const texto = auto['text-' + prefix] || '(sin reflexión)';
+    contenido += `Rango: ${radioVal}\n`;
+    contenido += `Nota que me pondría: ${nota}\n`;
+    contenido += `Justificación: ${texto}\n`;
+  });
+
+  contenido += '\n=========================================\n';
+  const media = count ? (suma/count).toFixed(1) : '—';
+  contenido += (lang==='en'?'OVERALL AVERAGE: ':lang==='ca'?'MITJANA GLOBAL: ':'MEDIA GLOBAL: ') + media + ' / 10\n';
+  contenido += '=========================================\n';
 
   const blob = new Blob([contenido], {type:'text/plain;charset=utf-8'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = lang === 'en' ? 'dance_physiology_answers.txt'
-              : lang === 'ca' ? 'respostes_fisiologia_dansa.txt'
-              : 'respuestas_fisiologia_danza.txt';
+  const fecha = new Date().toISOString().slice(0,10);
+  a.download = `respuestas_${nombreLimpio}_${fecha}.txt`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -2029,7 +2127,9 @@ function exportarRespuestas(){
 
 /* ====================== INICIO ====================== */
 cargarRespuestas();
+cargarAutoeval();
 actualizarProgreso();
+valorarTodas();
 show(0);
 </script>
 </body>
