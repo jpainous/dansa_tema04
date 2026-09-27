@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Bloque 1 · Fisiología Neuronal y Señalización</title>
+<style>
+  :root{--bg:#0d1024;--card:#1a1f3c;--accent:#ff5c8a;--accent2:#4fd1c5;--text:#f5f7ff;--muted:#b8c0e0;--ok:#4ade80;--warn:#fbbf24;--bad:#f87171;--notas:#ffd166;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+  header{background:#1a1f3c;padding:18px 30px;border-bottom:2px solid var(--accent2);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+  header h1{font-size:1.4rem;color:var(--accent);}
+  header .sub{color:var(--muted);font-size:.9rem;margin-top:4px;}
+  .controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+  .controls button,.controls select{background:#252b52;color:var(--accent2);border:1px solid #3a4170;padding:7px 12px;border-radius:8px;cursor:pointer;font-weight:700;font-size:.85rem;}
+  .controls button:hover{background:var(--accent2);color:#0f1226;}
+  .btn-volver{background:#252b52;color:var(--accent2);border:1px solid #3a4170;padding:7px 12px;border-radius:8px;cursor:pointer;font-weight:700;font-size:.85rem;}
+  .btn-volver:hover{background:var(--accent2);color:#0f1226;}
+  main{max-width:1100px;margin:0 auto;padding:24px 20px 80px;}
+  .slide{display:none;padding:40px 60px;border-radius:16px;}
+  .slide.active{display:block;animation:fade .3s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+  h2{color:var(--accent2);font-size:1.6rem;margin-bottom:14px;border-bottom:2px solid var(--accent2);padding-bottom:8px;}
+  h3{color:var(--accent);font-size:1.15rem;margin:14px 0 8px;}
+  p,li{line-height:1.6;font-size:1rem;margin-bottom:6px;}
+  ul,ol{margin-left:22px;margin-bottom:10px;}
+  .box{background:var(--card);border-radius:12px;padding:14px 18px;margin:10px 0;border-left:5px solid var(--accent2);}
+  .box.danza{background:#2a1f3d;border-left-color:var(--accent);}
+  .box.nota{background:#3a2f10;border-left-color:var(--notas);color:#ffe9b0;font-size:.92rem;}
+  .box.nueva{background:#1a2a1a;border-left-color:var(--ok);}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .nav{position:fixed;bottom:16px;right:20px;display:flex;gap:8px;z-index:50;}
+  .nav button{background:var(--accent);color:#0f1226;border:none;padding:9px 16px;border-radius:8px;font-weight:800;cursor:pointer;}
+  .nav button:hover{background:var(--accent2);}
+  .counter{position:fixed;bottom:22px;left:20px;color:var(--muted);font-size:.85rem;z-index:50;}
+  .progress{position:fixed;top:0;left:0;height:4px;background:var(--accent);transition:width .3s;z-index:100;}
+  .actividad{background:var(--card);border-radius:12px;padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--accent2);}
+  .actividad h4{font-size:1rem;color:var(--accent2);margin-bottom:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .chip{padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:800;text-transform:uppercase;}
+  .chip.indiv{background:#4fd1c5;color:#0f1226;}
+  .chip.pareja{background:#b07cff;color:#fff;}
+  .chip.grupo{background:#ff9f43;color:#0f1226;}
+  .opciones{display:flex;flex-direction:column;gap:6px;margin:8px 0;}
+  .opciones label{background:#0f1226;border:1px solid #3a4170;border-radius:8px;padding:8px 12px;cursor:pointer;font-size:.9rem;}
+  .opciones label:hover{border-color:var(--accent2);}
+  .opciones input{accent-color:var(--accent2);margin-right:6px;}
+  textarea{width:100%;min-height:70px;padding:9px 12px;background:#0f1226;color:var(--text);border:1px solid #3a4170;border-radius:8px;font-family:inherit;font-size:.9rem;resize:vertical;}
+  textarea:focus{outline:none;border-color:var(--accent2);}
+  .feedback{margin-top:8px;padding:8px 12px;border-radius:8px;font-size:.85rem;font-weight:700;display:none;}
+  .feedback.ok{background:#1a3a1a;color:var(--ok);border-left:4px solid var(--ok);display:block;}
+  .feedback.ko{background:#3a1a1a;color:var(--bad);border-left:4px solid var(--bad);display:block;}
+  .feedback.guardado{background:#1a2540;color:var(--accent2);border-left:4px solid var(--accent2);display:block;}
+  .acciones{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+  .acciones button{background:var(--accent2);color:#0f1226;border:none;padding:7px 14px;border-radius:8px;font-weight:800;cursor:pointer;font-size:.85rem;}
+  .acciones button:hover{background:var(--accent);}
+  .progreso-actividades{position:sticky;top:0;background:#1a1f3c;border-radius:10px;padding:10px 16px;margin-bottom:14px;border:1px solid #2d3560;display:flex;justify-content:space-between;align-items:center;font-size:.85rem;z-index:10;}
+  .progreso-actividades .bar{flex:1;height:8px;background:#0f1226;border-radius:4px;margin:0 14px;overflow:hidden;}
+  .progreso-actividades .bar-fill{height:100%;background:var(--ok);transition:width .3s;}
+  table{width:100%;border-collapse:collapse;margin:10px 0;}
+  th,td{border:1px solid #3a4170;padding:7px 10px;text-align:left;font-size:.9rem;}
+  th{background:#252b52;color:var(--accent2);}
+  .illus{background:#151a33;border-radius:12px;padding:14px;display:flex;justify-content:center;align-items:center;}
+  .autoeval-box{background:#3a2f10;border-left:5px solid #ffd166;border-radius:12px;padding:18px 22px;margin:14px 0;}
+  .autoeval-box h4{color:#ffd166;margin-bottom:10px;}
+  .escala{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0;}
+  .escala label{background:#1a1f3c;border:2px solid #2d3560;border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:700;font-size:.9rem;display:flex;align-items:center;gap:6px;}
+  .escala label:hover{border-color:#ffd166;}
+  .escala input[type=radio]{accent-color:#ffd166;}
+  .autoeval-box textarea{width:100%;min-height:80px;padding:10px;background:#0f1226;color:var(--text);border:1px solid #3a4170;border-radius:8px;font-family:inherit;font-size:.9rem;resize:vertical;}
+  .nota-propia{display:flex;align-items:center;gap:10px;margin-top:10px;}
+  .nota-propia input{width:70px;padding:6px 10px;background:#0f1226;color:var(--text);border:1px solid #3a4170;border-radius:6px;font-size:1rem;font-weight:800;text-align:center;}
+  .nota-propia span{color:#ffd166;font-weight:700;}
+  .media-box{background:#1a2540;border:1px solid var(--accent2);border-radius:10px;padding:12px 18px;margin:14px 0;display:flex;justify-content:space-between;align-items:center;}
+  .media-box .nota-grande{font-size:1.8rem;font-weight:900;color:var(--accent2);}
+  @media(max-width:700px){.grid2{grid-template-columns:1fr;}.slide{padding:20px;}}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<header>
+  <div>
+    <h1>Bloque 1 · Fisiología Neuronal y Señalización</h1>
+    <div class="sub">Fisiología · 1º Danza · Curso 2026-2027 · Cèlia Painous</div>
+  </div>
+  <div class="controls">
+    <button class="btn-volver" onclick="volverIndice()">← Índice</button>
+    <select id="langSel"><option value="es">ES</option><option value="ca">CA</option><option value="en">EN</option></select>
+    <button onclick="exportarInforme()">💾 Exportar</button>
+    <button onclick="reiniciar()">🔄 Reiniciar</button>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ DIAPOSITIVAS ORIGINALES ============ -->
+<section class="slide active">
+  <h2>1. La neurona: unidad funcional del sistema nervioso</h2>
+  <p>El sistema nervioso es el director de orquesta del movimiento dancístico. Todo empieza en la neurona: una célula especializada en recibir, procesar e integrar información mediante señales eléctricas y químicas.</p>
+  <div class="grid2">
+    <div>
+      <h3>Estructura celular</h3>
+      <ul>
+        <li><b>Soma</b>: contiene el núcleo y los orgánulos; integra las señales recibidas.</li>
+        <li><b>Dendritas</b>: reciben señales de otras neuronas o receptores sensoriales.</li>
+        <li><b>Axón</b>: conduce el potencial de acción desde el soma.</li>
+        <li><b>Vaina de mielina</b>: recubre el axón y aumenta la velocidad de conducción.</li>
+        <li><b>Terminales axónicas</b>: transmiten la información mediante la sinapsis.</li>
+      </ul>
+    </div>
+    <div class="illus">
+      <svg viewBox="0 0 340 220" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="70" cy="110" r="30" fill="#4fd1c5"/><circle cx="70" cy="110" r="11" fill="#ff5c8a"/>
+        <line x1="100" y1="110" x2="230" y2="110" stroke="#4fd1c5" stroke-width="5"/>
+        <rect x="120" y="99" width="22" height="22" rx="5" fill="#b8c0e0"/>
+        <rect x="150" y="99" width="22" height="22" rx="5" fill="#b8c0e0"/>
+        <rect x="180" y="99" width="22" height="22" rx="5" fill="#b8c0e0"/>
+        <line x1="230" y1="110" x2="260" y2="90" stroke="#4fd1c5" stroke-width="3"/>
+        <line x1="230" y1="110" x2="260" y2="110" stroke="#4fd1c5" stroke-width="3"/>
+        <line x1="230" y1="110" x2="260" y2="130" stroke="#4fd1c5" stroke-width="3"/>
+        <circle cx="262" cy="90" r="5" fill="#ff5c8a"/><circle cx="262" cy="110" r="5" fill="#ff5c8a"/><circle cx="262" cy="130" r="5" fill="#ff5c8a"/>
+      </svg>
+    </div>
+  </div>
+  <div class="box danza"><b>Conexión danza:</b> cuando aprendes un paso, las dendritas reciben la información del profesor, el soma la integra y el axón envía la orden al músculo.</div>
+</section>
+
+<section class="slide">
+  <h2>2. Las células gliales</h2>
+  <p>Las neuronas no trabajan solas. Están rodeadas por células gliales que cumplen funciones de soporte, nutrición, defensa y aislamiento.</p>
+  <table>
+    <tr><th>Célula</th><th>Función principal</th><th>Localización</th></tr>
+    <tr><td>Astrocitos</td><td>Nutrición y equilibrio químico</td><td>SNC</td></tr>
+    <tr><td>Microglía</td><td>Defensa inmunitaria</td><td>SNC</td></tr>
+    <tr><td>Oligodendrocitos</td><td>Formación de mielina</td><td>SNC</td></tr>
+    <tr><td>Células de Schwann</td><td>Formación de mielina</td><td>SNP</td></tr>
+  </table>
+</section>
+
+<section class="slide">
+  <h2>3. La mielina: el aislante que acelera el movimiento</h2>
+  <p>La mielina es una capa aislante rica en lípidos que envuelve segmentos del axón. Acelera la transmisión y ahorra energía.</p>
+  <div class="grid2">
+    <div class="box"><h3>Conducción continua (sin mielina)</h3><ul><li>Despolarización punto por punto.</li><li>Velocidad: 0,5 – 2 m/s.</li><li>Mayor gasto energético.</li></ul></div>
+    <div class="box" style="border-left-color:var(--accent);"><h3>Conducción saltatoria (con mielina)</h3><ul><li>El impulso salta de nodo a nodo de Ranvier.</li><li>Velocidad: 70 – 120 m/s.</li><li>Menor gasto energético.</li></ul></div>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>4. El potencial de acción</h2>
+  <ol>
+    <li><b>Reposo</b>: interior negativo (~-70 mV).</li>
+    <li><b>Estímulo</b>: si supera el umbral, se genera el potencial de acción.</li>
+    <li><b>Propagación</b>: el impulso recorre el axón sin perder intensidad.</li>
+  </ol>
+  <div class="box"><b>Principio del todo o nada:</b> el impulso se genera por completo o no se genera. Lo que cambia con la intensidad del estímulo es la frecuencia de disparo.</div>
+</section>
+
+<section class="slide">
+  <h2>5. La sinapsis</h2>
+  <p>El impulso llega al final del axón (presináptico), se liberan neurotransmisores a la hendidura sináptica y estos se unen a receptores postsinápticos.</p>
+  <div class="grid2">
+    <div class="box" style="border-left-color:var(--ok);"><h3>Señales excitatorias (PEPS)</h3><p>Entrada de Na⁺ → favorece la activación.</p></div>
+    <div class="box" style="border-left-color:var(--bad);"><h3>Señales inhibitorias (PIPS)</h3><p>Entrada de Cl⁻ o salida de K⁺ → dificulta la activación.</p></div>
+  </div>
+</section>
+
+<!-- ============ NUEVAS DIAPOSITIVAS 14-21 ============ -->
+
+<section class="slide">
+  <span class="tag" style="background:var(--ok);color:#0f1226;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:.5px;">NUEVA · 14</span>
+  <h2>14. Cómo funciona un canal iónico: la puerta que se abre y se cierra</h2>
+  <p><b>Idea-fuerza:</b> la membrana de la neurona no es una pared sólida; tiene <b>puertas</b> que se abren y se cierran según lo que ocurre dentro y fuera de la célula.</p>
+  <div class="box nota"><b>Analogía:</b> imagina una discoteca con puertas que solo se abren cuando hay suficiente ruido. Dentro hay mucha gente (K⁺) y fuera hay otra esperando (Na⁺). Las puertas están cerradas hasta que llega el "aviso".</div>
+  <h3>Qué es un canal iónico</h3>
+  <ul>
+    <li>Es una <b>proteína</b> incrustada en la membrana.</li>
+    <li>Tiene un <b>agujero</b> por donde pasan iones.</li>
+    <li>Algunos están <b>siempre abiertos</b> (canales de fuga).</li>
+    <li>Otros se abren <b>según el voltaje</b> (voltaje-dependientes).</li>
+    <li>Otros se abren <b>al unirse una molécula</b> (ligando-dependientes).</li>
+  </ul>
+  <table>
+    <tr><th>Ion</th><th>Dónde está más concentrado</th><th>Qué hace al entrar/salir</th></tr>
+    <tr><td><b>Na⁺ (sodio)</b></td><td>Fuera de la célula</td><td>Al entrar, <b>despolariza</b> (activa)</td></tr>
+    <tr><td><b>K⁺ (potasio)</b></td><td>Dentro de la célula</td><td>Al salir, <b>repolariza</b> (calma)</td></tr>
+  </table>
+  <div class="box danza"><b>Conexión danza:</b> cada vez que decides mover un brazo, se abren miles de canales de Na⁺ en las neuronas motoras. Si esos canales no funcionaran, la orden no llegaría al músculo.</div>
+</section>
+
+<section class="slide">
+  <span class="tag" style="background:var(--ok);color:#0f1226;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:.5px;">NUEVA · 15</span>
+  <h2>15. La bomba Na⁺/K⁺: el motor que gasta energía</h2>
+  <p><b>Idea-fuerza:</b> para que las puertas funcionen bien, dentro y fuera de la célula tiene que haber distintas concentraciones de iones. La neurona las mantiene gastando energía.</p>
+  <div class="box nota"><b>Analogía:</b> como una piscina con agua muy salada y otra con agua dulce separadas por un muro. El agua tiende a mezclarse, pero tú quieres mantenerlas separadas. Para lograrlo necesitas una bomba que trabaje continuamente y gaste electricidad.</div>
+  <h3>Cómo funciona</h3>
+  <ul>
+    <li>La <b>bomba Na⁺/K⁺-ATPasa</b> está en la membrana.</li>
+    <li><b>Saca 3 Na⁺</b> hacia fuera y <b>mete 2 K⁺</b> hacia dentro.</li>
+    <li>Consume <b>ATP</b> (energía).</li>
+    <li>Resultado: el interior queda <b>negativo</b> respecto al exterior.</li>
+  </ul>
+  <div class="box danza"><b>Conexión danza:</b> toda la actividad neuronal consume energía. Si no has desayunado bien antes de entrenar, la bomba funciona peor → peor concentración y peor coordinación. Por eso conviene comer bien antes de clase o actuación.</div>
+</section>
+
+<section class="slide">
+  <span class="tag" style="background:var(--ok);color:#0f1226;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:.5px;">NUEVA · 16</span>
+  <h2>16. Período refractario: por qué una neurona no dispara sin parar</h2>
+  <p><b>Idea-fuerza:</b> después de disparar un potencial de acción, la neurona necesita un momento para "recargarse". Eso limita la velocidad máxima con la que puede enviar mensajes.</p>
+  <div class="box nota"><b>Analogía:</b> como una cámara de fotos antigua: después de hacer una foto, tienes que esperar un instante para la siguiente. No puedes hacer 100 fotos en un segundo.</div>
+  <h3>Dos tipos</h3>
+  <ul>
+    <li><b>Período refractario absoluto</b>: la neurona <b>no puede</b> disparar, pase lo que pase. Dura 1-2 ms.</li>
+    <li><b>Período refractario relativo</b>: la neurona <b>puede</b> disparar, pero solo si el estímulo es más fuerte de lo normal.</li>
+  </ul>
+  <div class="box danza"><b>Conexión danza:</b> cuando aprendes un paso nuevo, tu cerebro envía muchas órdenes a la vez. Si el sistema está saturado, hay errores. Por eso conviene aprender poco a poco, no atiborrar de información en una sola sesión.</div>
+</section>
+
+<section class="slide">
+  <span class="tag" style="background:var(--ok);color:#0f1226;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:.5px;">NUEVA · 17</span>
+  <h2>17. Sumación: cómo el soma decide si dispara o no</h2>
+  <p><b>Idea-fuerza:</b> una neurona recibe miles de señales a la vez. El soma tiene que <b>sumarlas</b> y decidir si la suma supera el umbral.</p>
+  <div class="box nota"><b>Analogía:</b> imagina que estás en una sala con 20 personas hablándote a la vez. Tu cerebro suma todas las voces y decide si hay suficiente "ruido" para reaccionar.</div>
+  <h3>Dos tipos de sumación</h3>
+  <ul>
+    <li><b>Sumación espacial</b>: señales que llegan desde distintos lugares a la vez.</li>
+    <li><b>Sumación temporal</b>: señales que llegan desde el mismo lugar, muy seguidas.</li>
+  </ul>
+  <p><b>Regla del umbral:</b> si la suma supera el umbral (~-55 mV), la neurona dispara. Si no, no dispara.</p>
+  <div class="box danza"><b>Conexión danza:</b> para que un bailarín reaccione al cambio de música, varias señales sensoriales (oído, vista, propiocepción) tienen que sumarse. Si una sola llega débil, no reacciona.</div>
+</section>
+
+<section class="slide">
+  <span class="tag" style="background:var(--ok);color:#0f1226;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:.5px;">NUEVA · 18</span>
+  <h2>18. Más allá de PEPS y PIPS: neuromoduladores</h2>
+  <p><b>Idea-fuerza:</b> no todo es "excitación o inhibición". Existen sustancias que <b>modulan</b> la actividad del sistema nervioso.</p>
+  <div class="box nota"><b>Analogía:</b> en una orquesta, los instrumentos suenan y hacen la melodía (PEPS/PIPS). Pero además hay un <b>director</b> que decide si tocan fuerte o suave. Los neuromoduladores son ese director.</div>
+  <table>
+    <tr><th>Neuromodulador</th><th>Función</th><th>En danza</th></tr>
+    <tr><td>Dopamina</td><td>Motivación, control motor</td><td>Ganas de bailar</td></tr>
+    <tr><td>Serotonina</td><td>Estado de ánimo</td><td>Buen humor antes de actuar</td></tr>
+    <tr><td>Noradrenalina</td><td>Alerta, atención</td><td>Concentración antes de salir</td></tr>
+    <tr><td>Acetilcolina</td><td>Atención, memoria, contracción</td><td>Aprender y ejecutar pasos</td></tr>
+    <tr><td>Endorfinas</td><td>Bienestar, analgesia</td><td>Sensación tras bailar</td></tr>
+    <tr><td>Cortisol</td><td>Respuesta al estrés</td><td>Nervios antes de actuar</td></tr>
+  </table>
+  <div class="box danza"><b>Conexión danza:</b> antes de actuar, la noradrenalina te mantiene alerta. Si te pasas, el cortisol te bloquea. Si terminas contento, las endorfinas te dan esa sensación de placer que engancha a la danza.</div>
+</section>
+
+<section class="slide">
+  <span class="tag" style="background:var(--ok);color:#0f1226;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:.5px;">NUEVA · 19</span>
+  <h2>19. Plasticidad sináptica: por qué el cerebro aprende con la práctica</h2>
+  <p><b>Idea-fuerza:</b> las sinapsis no son fijas. Con la repetición, se <b>refuerzan</b> o se <b>debilitan</b>. Esto es la base del aprendizaje motor.</p>
+  <div class="box nota"><b>Analogía:</b> imagina un camino en el bosque. La primera vez apenas se nota. Si lo cruzas todos los días, se hace más ancho. Si dejas de pasar, la hierba lo cubre otra vez.</div>
+  <h3>Dos procesos</h3>
+  <ul>
+    <li><b>LTP (potenciación a largo plazo)</b>: la sinapsis se refuerza → se aprende.</li>
+    <li><b>LTD (depresión a largo plazo)</b>: la sinapsis se debilita → se olvida.</li>
+  </ul>
+  <h3>Cómo se produce</h3>
+  <ol>
+    <li>La neurona presináptica libera <b>glutamato</b>.</li>
+    <li>La postsináptica recibe la señal.</li>
+    <li>Si es repetida y suficiente, entra <b>Ca²⁺</b>.</li>
+    <li>El calcio activa proteínas que refuerzan la sinapsis.</li>
+  </ol>
+  <div class="box danza"><b>Conexión danza:</b> la primera vez que haces un paso, la sinapsis es débil. Con la repetición se refuerza → el paso se automatiza. La <b>práctica distribuida</b> (poco cada día) es mejor que la <b>masiva</b> (todo de golpe).</div>
+</section>
+
+<section class="slide">
+  <span class="tag" style="background:var(--ok);color:#0f1226;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:.5px;">NUEVA · 20</span>
+  <h2>20. Factores que modifican la velocidad de conducción</h2>
+  <p><b>Idea-fuerza:</b> no todos los axones conducen igual de rápido. La velocidad depende de varios factores.</p>
+  <div class="box nota"><b>Analogía:</b> es como comparar una carretera comarcal con una autopista. La comarcal es lenta (axón sin mielina, delgado); la autopista es rápida (axón con mielina, grueso).</div>
+  <table>
+    <tr><th>Factor</th><th>Qué hace</th></tr>
+    <tr><td>Más diámetro</td><td>Menos resistencia</td></tr>
+    <tr><td>Más mielina</td><td>Saltos entre nodos</td></tr>
+    <tr><td>Temperatura óptima</td><td>Los canales funcionan mejor</td></tr>
+    <tr><td>Salud del axón</td><td>Conducción normal</td></tr>
+  </table>
+  <p><b>Factores que reducen la velocidad:</b> falta de mielina, axones delgados, frío extremo, fatiga neuronal.</p>
+  <div class="box danza"><b>Conexión danza:</b> el calentamiento sube la temperatura y mejora la conducción → los movimientos se sienten más fáciles. El frío entumece los dedos. La fatiga reduce la velocidad de reacción.</div>
+</section>
+
+<section class="slide">
+  <span class="tag" style="background:var(--ok);color:#0f1226;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:.5px;">NUEVA · 21</span>
+  <h2>21. Aplicación dancística: cómo se traduce todo esto en tu entrenamiento</h2>
+  <p><b>Idea-fuerza:</b> todo lo que has visto en el Bloque 1 tiene una traducción práctica en tu día a día.</p>
+  <h3>Antes de entrenar</h3>
+  <ul>
+    <li><b>Calienta 10-15 min</b> → sube la temperatura, mejora la conducción.</li>
+    <li><b>Come bien</b> → la bomba Na⁺/K⁺ necesita glucosa.</li>
+    <li><b>Duerme</b> → la plasticidad sináptica se consolida durante el sueño.</li>
+  </ul>
+  <h3>Durante el entrenamiento</h3>
+  <ul>
+    <li><b>No satures</b>: la neurona tiene límites (período refractario, fatiga).</li>
+    <li><b>Repite poco y bien</b> → LTP se activa con repetición significativa.</li>
+    <li><b>Alterna descansos</b> → la consolidación necesita tiempo.</li>
+  </ul>
+  <h3>Después de entrenar</h3>
+  <ul>
+    <li><b>Descansa</b> → el olvido se combate con repaso al día siguiente.</li>
+    <li><b>Duerme bien</b> → la memoria motora se consolida en el sueño.</li>
+    <li><b>Hidrátate</b> → los iones necesitan equilibrio.</li>
+  </ul>
+  <div class="box danza"><b>Analogía final:</b> tu cerebro no es un músculo que se cansa y ya está. Es un <b>jardín</b> que hay que regar todos los días: poco, pero constante.</div>
+</section>
+
+<!-- ============ ACTIVIDADES ============ -->
+<section class="slide">
+  <h2>Actividades del Bloque 1</h2>
+  <p>15 actividades cortas. Cada una indica el formato recomendado. Se guardan automáticamente.</p>
+  <div class="progreso-actividades">
+    <span><b id="pCompletadas">0</b>/15 completadas</span>
+    <div class="bar"><div class="bar-fill" id="pBar" style="width:0%"></div></div>
+    <span style="color:var(--muted);">Autoguardado</span>
+  </div>
+  <div id="contenedorActividades"></div>
+  <div class="media-box"><span>📊 Nota media de tus actividades:</span><span class="nota-grande" id="notaMedia">—</span></div>
+  <div class="autoeval-box">
+    <h4>🤔 Autoevaluación del bloque</h4>
+    <p>Después de ver los esquemas y tu nota media, ¿qué nota te pondrías?</p>
+    <div class="escala">
+      <label><input type="radio" name="autoeval-rango" value="0-4"><span>Insuficiente (0-4)</span></label>
+      <label><input type="radio" name="autoeval-rango" value="5-6"><span>Suficiente (5-6)</span></label>
+      <label><input type="radio" name="autoeval-rango" value="7-8"><span>Notable (7-8)</span></label>
+      <label><input type="radio" name="autoeval-rango" value="9-10"><span>Excelente (9-10)</span></label>
+    </div>
+    <div class="nota-propia"><span>Nota concreta (0-10):</span><input type="number" min="0" max="10" step="0.5" data-autoeval-nota></div>
+    <p style="margin-top:12px;font-size:.9rem;">Justifica tu nota:</p>
+    <textarea data-autoeval-text placeholder="..."></textarea>
+  </div>
+  <div class="acciones" style="margin-top:20px;"><button onclick="exportarInforme()">💾 Descargar informe completo</button></div>
+</section>
+
+</main>
+
+<div class="counter" id="counter">Diapositiva 1 / 14</div>
+<div class="nav"><button onclick="prev()">← Anterior</button><button onclick="next()">Siguiente →</button></div>
+
+<script>
+const NUM_BLOQUE = 1;
+const STORAGE = 'bloque1_respuestas_v2';
+const TITULO_BLOQUE = {es:'BLOQUE 1 · FISIOLOGÍA NEURONAL Y SEÑALIZACIÓN',ca:'BLOC 1 · FISIOLOGIA NEURONAL',en:'BLOCK 1 · NEURONAL PHYSIOLOGY'};
+
+const ACTIVIDADES = [
+  {tipo:'test',grupo:'indiv',q:{es:"¿Qué parte de la neurona recibe las señales?",ca:"Quina part rep els senyals?",en:"Which part receives signals?"},ops:{es:["Axón","Dendritas","Soma","Mielina"],ca:["Axó","Dendrites","Soma","Mielina"],en:["Axon","Dendrites","Soma","Myelin"]},correcta:1,sol:{es:"Las dendritas.",ca:"Les dendrites.",en:"Dendrites."}},
+  {tipo:'test',grupo:'indiv',q:{es:"¿Qué célula glial forma mielina en el SNP?",ca:"Quina cèl·lula forma mielina al SNP?",en:"Which glial cell forms myelin in the PNS?"},ops:{es:["Astrocito","Microglía","Oligodendrocito","Célula de Schwann"],ca:["Astrocit","Microglia","Oligodendrocit","Cèl·lula de Schwann"],en:["Astrocyte","Microglia","Oligodendrocyte","Schwann cell"]},correcta:3,sol:{es:"Células de Schwann.",ca:"Cèl·lules de Schwann.",en:"Schwann cells."}},
+  {tipo:'test',grupo:'indiv',q:{es:"Velocidad de la conducción saltatoria:",ca:"Velocitat de la conducció saltatòria:",en:"Saltatory conduction speed:"},ops:{es:["0,5-2 m/s","5-10 m/s","70-120 m/s","200-300 m/s"],ca:["0,5-2 m/s","5-10 m/s","70-120 m/s","200-300 m/s"],en:["0.5-2 m/s","5-10 m/s","70-120 m/s","200-300 m/s"]},correcta:2,sol:{es:"70-120 m/s.",ca:"70-120 m/s.",en:"70-120 m/s."}},
+  {tipo:'test',grupo:'indiv',q:{es:"El principio del todo o nada significa que…",ca:"El tot o res significa que…",en:"All-or-nothing means…"},ops:{es:["El potencial aumenta","Se genera completo o no","La mielina lo regula","Solo ocurre en el SNP"],ca:["Augmenta","Complet o no","La mielina","Només SNP"],en:["It grows","Fires fully or not","Myelin regulates","Only PNS"]},correcta:1,sol:{es:"Lo que cambia es la frecuencia.",ca:"Canvia la freqüència.",en:"Frequency changes."}},
+  {tipo:'test',grupo:'indiv',q:{es:"¿Qué ion entra en un PEPS?",ca:"Quin ió entra en un PEPS?",en:"Which ion enters during an EPSP?"},ops:{es:["Cl⁻","K⁺","Na⁺","Ca²⁺"],ca:["Cl⁻","K⁺","Na⁺","Ca²⁺"],en:["Cl⁻","K⁺","Na⁺","Ca²⁺"]},correcta:2,sol:{es:"El Na⁺.",ca:"El Na⁺.",en:"Na⁺."}},
+  {tipo:'test',grupo:'indiv',q:{es:"Un PIPS se caracteriza por…",ca:"Un PIPS es caracteritza per…",en:"An IPSP is characterized by…"},ops:{es:["Entrada de Na⁺","Salida de Cl⁻","Entrada de Cl⁻ o salida de K⁺","Ca²⁺"],ca:["Entrada de Na⁺","Sortida de Cl⁻","Entrada de Cl⁻ o sortida de K⁺","Ca²⁺"],en:["Na⁺ entry","Cl⁻ exit","Cl⁻ in or K⁺ out","Ca²⁺"]},correcta:2,sol:{es:"Entrada de Cl⁻ o salida de K⁺.",ca:"Entrada de Cl⁻ o sortida de K⁺.",en:"Cl⁻ in or K⁺ out."}},
+  {tipo:'test',grupo:'indiv',q:{es:"¿Dónde se regenera el potencial en un axón mielinizado?",ca:"On es regenera el potencial?",en:"Where is it regenerated?"},ops:{es:["En toda la membrana","En los nodos de Ranvier","En el soma","En las dendritas"],ca:["A tota la membrana","Als nodes de Ranvier","Al soma","A les dendrites"],en:["All along","At nodes of Ranvier","In the soma","In dendrites"]},correcta:1,sol:{es:"En los nodos de Ranvier.",ca:"Als nodes de Ranvier.",en:"At nodes of Ranvier."}},
+  {tipo:'abierta',grupo:'pareja',q:{es:"Explicad la diferencia entre conducción continua y saltatoria, y por qué la segunda es más eficiente.",ca:"Expliqueu la diferència entre conducció contínua i saltatòria.",en:"Explain the difference between continuous and saltatory conduction."},keywords:['continua','saltatoria','nodo','ranvier','mielina','velocidad','energía','energia'],sol:{es:"La continua despolariza punto por punto; la saltatoria salta de nodo a nodo, más rápida y con menor gasto energético.",ca:"La contínua punt per punt; la saltatòria salt de node a node.",en:"Continuous point by point; saltatory jumps node to node."}},
+  {tipo:'abierta',grupo:'pareja',q:{es:"¿Por qué la mielina es clave en un salto rápido de danza?",ca:"Per què la mielina és clau en un salt ràpid?",en:"Why is myelin key in a fast dance jump?"},keywords:['mielina','velocidad','milisegundo','orden','músculo','musculo','rápid','rapid'],sol:{es:"Permite que la orden llegue al músculo en milisegundos; sin ella el movimiento sería lento.",ca:"Permet que l'ordre arribi en mil·lisegons.",en:"It allows the order to reach the muscle in milliseconds."}},
+  {tipo:'abierta',grupo:'pareja',q:{es:"Describid qué pasa en la sinapsis desde que llega el impulso hasta que se activa la neurona postsináptica.",ca:"Descriu què passa a la sinapsi.",en:"Describe what happens at the synapse."},keywords:['impulso','neurotransmisor','hendidura','receptor','presináptico','postsináptico','peps','pips'],sol:{es:"Llega el impulso → liberación de neurotransmisores → unión a receptores → PEPS o PIPS.",ca:"Impuls → neurotransmissors → receptors → PEPS/PIPS.",en:"Impulse → neurotransmitters → receptors → EPSP/IPSP."}},
+  {tipo:'abierta',grupo:'grupo',q:{es:"En grupos 2-3, pensad 3 situaciones dancísticas donde la inhibición (PIPS) sea tan importante como la excitación (PEPS).",ca:"Penseu 3 situacions on la inhibició sigui important.",en:"Think of 3 dance situations where inhibition is as important as excitation."},keywords:['inhibición','inibicion','pips','control','equilibrio','precisión','precisio','relajar','opuestos'],sol:{es:"Controlar el brazo que no se mueve, mantener equilibrio sin rigidez, coordinar piernas y brazos opuestos.",ca:"Controlar un braç, equilibri, coordinar.",en:"Control the other arm, balance, coordinate."}},
+  {tipo:'abierta',grupo:'grupo',q:{es:"En grupos 2-3, haced una tabla comparativa de los 4 tipos de células gliales y añadid un ejemplo dancístico.",ca:"Taula comparativa de les 4 cèl·lules glials.",en:"Make a comparison table of the 4 glial cells."},keywords:['astrocito','microglia','oligodendrocito','schwann','nutrición','defensa','mielina','snc','snp'],sol:{es:"Astrocitos (nutrición SNC), microglía (defensa SNC), oligodendrocitos (mielina SNC), Schwann (mielina SNP).",ca:"Astrocits, microglia, oligodendrocits, Schwann.",en:"Astrocytes, microglia, oligodendrocytes, Schwann."}},
+  {tipo:'abierta',grupo:'grupo',q:{es:"En grupos 2-3, simulad con un gesto dancístico la diferencia entre un movimiento 'continuo' y uno 'saltatorio'.",ca:"Simuleu un moviment continu i un de saltatori.",en:"Simulate a continuous and a saltatory movement."},keywords:['continuo','saltatorio','lento','rápido','rapido','salto','posición','posicion'],sol:{es:"Continuo: elevación lenta del brazo. Saltatorio: desplazamiento rápido por saltos entre posiciones.",ca:"Elevació lenta vs. salts.",en:"Slow arm raise vs. fast jumps."}},
+  {tipo:'abierta',grupo:'indiv',q:{es:"Reflexiona: ¿qué pasaría en tu danza si tus neuronas perdieran la mielina? Describe 2 consecuencias.",ca:"Què passaria si perdessis la mielina?",en:"What would happen if you lost myelin?"},keywords:['lent','precisión','precisio','fatiga','coordinación','coordinacio','movimiento','moviment'],sol:{es:"Movimientos lentos, poca precisión, mayor fatiga, dificultad para movimientos rápidos.",ca:"Moviments lents, poca precisió, fatiga.",en:"Slow movements, poor precision, fatigue."}},
+  {tipo:'abierta',grupo:'indiv',q:{es:"Explica con tus palabras: 'la intensidad del estímulo se codifica en la frecuencia de disparo, no en el tamaño del potencial'.",ca:"Explica la frase amb les teves paraules.",en:"Explain: 'stimulus intensity is encoded in firing frequency, not potential size'."},keywords:['frecuencia','tamaño','tamany','disparo','potencial','intensidad','estímulo','estimul'],sol:{es:"Los potenciales son iguales en tamaño; un estímulo más intenso produce más potenciales por segundo, no más grandes.",ca:"Més potencial per segon, no més grans.",en:"More action potentials per second, not bigger."}}
+];
+
+let lang='es';
+function t(k){ return k; }
+function normalizar(s){ return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\w\s]/g,' '); }
+function valorarAbierta(texto, keywords){
+  if(!texto || texto.trim().length<10) return {nota:0,encontradas:[],faltan:keywords||[],ratio:0};
+  const tx=normalizar(texto); const enc=[],fal=[];
+  (keywords||[]).forEach(k=>{ const kn=normalizar(k); if(tx.includes(kn)) enc.push(k); else fal.push(k); });
+  let ratio = keywords && keywords.length ? enc.length/keywords.length : 0;
+  let nota = Math.round(ratio*20)/2;
+  if(texto.trim().length<30) nota=Math.min(nota,3); else if(texto.trim().length<60) nota=Math.min(nota,6);
+  return {nota,encontradas:enc,faltan:fal,ratio};
+}
+function renderActividades(){
+  const cont=document.getElementById('contenedorActividades'); if(!cont) return;
+  const data=JSON.parse(localStorage.getItem(STORAGE)||'{}');
+  cont.innerHTML='';
+  const chips={indiv:'Individual',pareja:'Parejas',grupo:'Grupos 2-3'};
+  ACTIVIDADES.forEach((a,i)=>{
+    const id='a'+(i+1); const wrap=document.createElement('div'); wrap.className='actividad';
+    let html=`<h4><span>${i+1}.</span> ${a.q[lang]} <span class="chip ${a.grupo}">${chips[a.grupo]}</span></h4>`;
+    if(a.tipo==='test'){
+      html+=`<div class="opciones">`;
+      a.ops[lang].forEach((op,j)=>{ const checked=data[id]===j?'checked':''; html+=`<label><input type="radio" name="${id}" value="${j}" ${checked} onchange="responder('${id}',${j},${a.correcta})"> ${op}</label>`; });
+      html+=`</div>`;
+    } else { html+=`<textarea id="${id}" placeholder="..." oninput="guardarAbierta('${id}')">${data[id]||''}</textarea>`; }
+    html+=`<div class="feedback" id="fb-${id}"></div>`;
+    html+=`<div class="acciones">${a.tipo==='test'?`<button onclick="comprobar('${id}',${a.correcta})">Comprobar</button>`:`<button onclick="valorar('${id}',${i})">Valorar</button>`}<button onclick="verSolucion('${id}','${(a.sol[lang]||'').replace(/'/g,"\\'")}')">Ver solución</button></div>`;
+    wrap.innerHTML=html; cont.appendChild(wrap);
+    if(a.tipo==='abierta' && data[id] && data[id].trim().length>=10){ setTimeout(()=>valorar(id,i),50); }
+  });
+  actualizarProgreso();
+}
+function responder(id,val,c){ const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); data[id]=val; localStorage.setItem(STORAGE,JSON.stringify(data)); comprobar(id,c); actualizarProgreso(); }
+function guardarAbierta(id){ const ta=document.getElementById(id); const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); data[id]=ta.value; localStorage.setItem(STORAGE,JSON.stringify(data)); const fb=document.getElementById('fb-'+id); fb.className='feedback guardado'; fb.textContent='💾 Guardado'; setTimeout(()=>{if(fb.className.includes('guardado'))fb.className='feedback';},1200); actualizarProgreso(); }
+function comprobar(id,c){ const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); const fb=document.getElementById('fb-'+id); if(data[id]===c){fb.className='feedback ok';fb.textContent='✅ ¡Correcto!';}else{fb.className='feedback ko';fb.textContent='❌ Revisa.';} }
+function valorar(id,idx){ const a=ACTIVIDADES[idx]; const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); const texto=data[id]||''; const fb=document.getElementById('fb-'+id); const r=valorarAbierta(texto,a.keywords); fb.className='feedback guardado'; fb.innerHTML=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;"><span style="background:var(--accent2);color:#0f1226;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-weight:900;">${r.nota}</span><span>${r.encontradas.length}/${(a.keywords||[]).length} puntos clave</span></div><div style="height:8px;background:#0f1226;border-radius:4px;overflow:hidden;margin-bottom:6px;"><div style="height:100%;width:${r.nota*10}%;background:${r.nota>=7?'var(--ok)':r.nota>=5?'var(--warn)':'var(--bad)'};"></div></div><div style="font-size:.82rem;"><span style="color:var(--ok);">✓ ${r.encontradas.join(', ')||'—'}</span><br><span style="color:var(--bad);">✗ ${r.faltan.join(', ')||'—'}</span></div>`; data['nota-'+id]=r.nota; localStorage.setItem(STORAGE,JSON.stringify(data)); actualizarMedia(); }
+function verSolucion(id,sol){ const fb=document.getElementById('fb-'+id); fb.className='feedback guardado'; fb.textContent='📖 '+sol; }
+function actualizarProgreso(){ const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); let c=0; ACTIVIDADES.forEach((a,i)=>{ const id='a'+(i+1); if(a.tipo==='test'){if(data[id]!==undefined)c++;}else{if((data[id]||'').trim().length>=15)c++;} }); document.getElementById('pCompletadas').textContent=c; document.getElementById('pBar').style.width=(c/ACTIVIDADES.length*100)+'%'; actualizarMedia(); }
+function actualizarMedia(){ const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); let s=0,n=0; ACTIVIDADES.forEach((a,i)=>{ const id='a'+(i+1); if(a.tipo==='test' && data[id]!==undefined){s+=(data[id]===a.correcta)?10:0;n++;} else if(a.tipo==='abierta' && typeof data['nota-'+id]==='number'){s+=data['nota-'+id];n++;} }); document.getElementById('notaMedia').textContent = n?(s/n).toFixed(1):'—'; }
+let idx=0; const slides=document.querySelectorAll('.slide');
+function show(i){ slides.forEach(s=>s.classList.remove('active')); slides[i].classList.add('active'); document.getElementById('counter').textContent=`Diapositiva ${i+1} / ${slides.length}`; document.getElementById('progress').style.width=((i+1)/slides.length*100)+'%'; }
+function next(){if(idx<slides.length-1){idx++;show(idx);}}
+function prev(){if(idx>0){idx--;show(idx);}}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')next();if(e.key==='ArrowLeft')prev();});
+function cargarAutoeval(){
+  const data=JSON.parse(localStorage.getItem(STORAGE)||'{}');
+  document.querySelectorAll('[data-autoeval-text]').forEach(ta=>{ if(data['autoeval-text'])ta.value=data['autoeval-text']; ta.oninput=()=>{const d=JSON.parse(localStorage.getItem(STORAGE)||'{}'); d['autoeval-text']=ta.value; localStorage.setItem(STORAGE,JSON.stringify(d));}; });
+  document.querySelectorAll('[data-autoeval-nota]').forEach(inp=>{ if(data['autoeval-nota']!==undefined)inp.value=data['autoeval-nota']; inp.oninput=()=>{const d=JSON.parse(localStorage.getItem(STORAGE)||'{}'); d['autoeval-nota']=inp.value; localStorage.setItem(STORAGE,JSON.stringify(d));}; });
+  document.querySelectorAll('input[type=radio][name="autoeval-rango"]').forEach(r=>{ if(data['autoeval-rango']===r.value)r.checked=true; r.onchange=()=>{const d=JSON.parse(localStorage.getItem(STORAGE)||'{}'); d['autoeval-rango']=r.value; localStorage.setItem(STORAGE,JSON.stringify(d));}; });
+}
+function exportarInforme(){
+  const data=JSON.parse(localStorage.getItem(STORAGE)||'{}');
+  const nombre=prompt('Tu nombre:')||'alumno';
+  const nl=nombre.trim().replace(/\s+/g,'_').replace(/[^\w\-]/g,'')||'alumno';
+  let txt='=========================================\n'+TITULO_BLOQUE[lang]+'\n=========================================\n';
+  txt+='Alumno/a: '+nombre+'\nFecha: '+new Date().toLocaleString()+'\nBloque: '+NUM_BLOQUE+'\n=========================================\n\n';
+  let corr=0,tot=0,sn=0,nn=0;
+  ACTIVIDADES.forEach((a,i)=>{
+    const id='a'+(i+1);
+    txt+=`--- ${i+1}. ${a.q[lang]} ---\n`;
+    if(a.tipo==='test'){ const v=data[id]; txt+=(v!==undefined?a.ops[lang][v]:'(sin respuesta)')+'\n'; if(v===a.correcta){txt+='✅ Correcto\n';corr++;}else if(v!==undefined){txt+='❌ Incorrecto\n';}tot++; }
+    else { txt+=(data[id]||'(sin respuesta)')+'\n'; if(typeof data['nota-'+id]==='number'){txt+=`📊 ${data['nota-'+id]}/10\n`;sn+=data['nota-'+id];nn++;} }
+    txt+=`Solución: ${a.sol[lang]}\n\n`;
+  });
+  txt+='=========================================\nResultado test: '+corr+'/'+tot+'\n';
+  if(nn) txt+='Nota media abiertas: '+(sn/nn).toFixed(1)+'/10\n';
+  if(data['autoeval-rango']||data['autoeval-nota']||data['autoeval-text']){
+    txt+='=========================================\nAUTOEVALUACIÓN\n=========================================\n';
+    txt+='Rango: '+(data['autoeval-rango']||'—')+'\nNota: '+(data['autoeval-nota']||'—')+'/10\nJustificación: '+(data['autoeval-text']||'—')+'\n';
+  }
+  txt+='=========================================\n';
+  const blob=new Blob([txt],{type:'text/plain;charset=utf-8'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`bloque${NUM_BLOQUE}_${nl}_${new Date().toISOString().slice(0,10)}.txt`; a.click();
+}
+function reiniciar(){ if(confirm('¿Borrar las respuestas de este bloque?')){ localStorage.removeItem(STORAGE); renderActividades(); cargarAutoeval(); actualizarMedia(); } }
+function volverIndice(){ window.location.href='index.html'; }
+renderActividades(); cargarAutoeval(); show(0);
+</script>
+</body>
+</html>

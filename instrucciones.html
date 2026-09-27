@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Guía del alumnado · Fisiología del Sistema Nervioso y Danza</title>
+<style>
+  :root{--bg:#0d1024;--card:#1a1f3c;--accent:#ff5c8a;--accent2:#4fd1c5;--text:#f5f7ff;--muted:#b8c0e0;--ok:#4ade80;--warn:#fbbf24;--bad:#f87171;--cuaderno:#b07cff;--guia:#ffd166;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+  header{background:linear-gradient(135deg,#1a1f3c,#2a1f3d);padding:24px 30px;border-bottom:2px solid var(--guia);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+  header h1{font-size:1.5rem;color:var(--guia);}
+  header .sub{color:var(--muted);font-size:.9rem;margin-top:4px;}
+  .controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+  .controls button{background:#252b52;color:var(--guia);border:1px solid #3a4170;padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:700;font-size:.85rem;}
+  .controls button:hover{background:var(--guia);color:#0f1226;}
+  main{max-width:900px;margin:0 auto;padding:30px 24px 80px;}
+  section{background:var(--card);border-radius:14px;padding:24px 28px;margin-bottom:22px;border-left:5px solid var(--accent2);}
+  section.destacada{border-left-color:var(--guia);background:#2a2540;}
+  section.danza{border-left-color:var(--accent);background:#2a1f3d;}
+  section.cuaderno{border-left-color:var(--cuaderno);background:#231a3d;}
+  h2{color:var(--accent2);font-size:1.35rem;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+  h2 .num{background:var(--accent2);color:#0f1226;border-radius:50%;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-weight:900;font-size:1rem;flex-shrink:0;}
+  h3{color:var(--accent);font-size:1.05rem;margin:14px 0 8px;}
+  p,li{line-height:1.65;font-size:1rem;margin-bottom:6px;color:var(--text);}
+  ul,ol{margin-left:22px;margin-bottom:10px;}
+  .box{background:#0f1226;border-radius:10px;padding:14px 18px;margin:10px 0;border-left:4px solid var(--accent2);}
+  .box.danza{background:#2a1f3d;border-left-color:var(--accent);}
+  .box.nota{background:#3a2f10;border-left-color:var(--guia);color:#ffe9b0;}
+  .box.ok{background:#1a3a1a;border-left-color:var(--ok);color:#c8f0c8;}
+  table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.95rem;}
+  th,td{border:1px solid #3a4170;padding:9px 12px;text-align:left;}
+  th{background:#252b52;color:var(--accent2);}
+  .atajos{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:10px 0;}
+  .atajo{background:#0f1226;border:1px solid #3a4170;border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:10px;font-size:.9rem;}
+  .atajo kbd{background:#252b52;color:var(--accent2);padding:3px 9px;border-radius:6px;font-weight:800;font-family:monospace;font-size:.85rem;border:1px solid #3a4170;}
+  .indice-card{background:#0f1226;border-radius:10px;padding:12px 16px;margin-bottom:10px;border-left:4px solid var(--accent2);display:flex;align-items:center;gap:12px;}
+  .indice-card .icon{font-size:1.4rem;}
+  .indice-card .info{flex:1;}
+  .indice-card .info b{color:var(--accent2);font-size:1rem;}
+  .indice-card .info p{font-size:.85rem;color:var(--muted);margin:2px 0 0;}
+  .indice-card a{background:var(--accent2);color:#0f1226;padding:6px 12px;border-radius:6px;text-decoration:none;font-weight:800;font-size:.82rem;}
+  .indice-card a:hover{background:var(--accent);}
+  .checklist{list-style:none;margin-left:0;}
+  .checklist li{padding-left:28px;position:relative;margin-bottom:8px;}
+  .checklist li::before{content:"☐";position:absolute;left:0;color:var(--guia);font-size:1.2rem;font-weight:900;}
+  @media print{
+    @page{size:A4;margin:14mm;}
+    body{background:#fff !important;color:#000 !important;}
+    header,.controls{display:none !important;}
+    section{background:#f4f4f4 !important;border:1px solid #999 !important;color:#000 !important;page-break-inside:avoid;}
+    h1,h2,h3{color:#000 !important;}
+    p,li,td,th{color:#000 !important;}
+    .box,.box.danza,.box.nota,.box.ok,.atajo,.indice-card{background:#f9f9f9 !important;border:1px solid #999 !important;color:#000 !important;}
+    .indice-card a{background:#ddd !important;color:#000 !important;}
+    table{border:1px solid #000;}
+    th{background:#ddd !important;color:#000 !important;}
+    kbd{background:#ddd !important;color:#000 !important;border:1px solid #999 !important;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>📖 Guía del alumnado</h1>
+    <div class="sub">Fisiología del Sistema Nervioso y Danza · 1º Danza · Curso 2026-2027</div>
+  </div>
+  <div class="controls">
+    <button onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ PRESENTACIÓN ============ -->
+<section class="destacada">
+  <h2><span class="num">👋</span>Bienvenida</h2>
+  <p>Este material es tu <b>herramienta de estudio</b> para el bloque de Fisiología del Sistema Nervioso. Está formado por <b>5 bloques temáticos</b> y un <b>cuaderno de ampliación</b>.</p>
+  <p>Todo está en formato web: se abre con doble clic en un navegador (Chrome, Firefox, Edge o Safari) y funciona sin internet.</p>
+  <div class="box ok">
+    <b>Lo que puedes hacer con este material:</b>
+    <ul>
+      <li>Leer los contenidos en diapositivas navegables.</li>
+      <li>Realizar 80 actividades autocorregidas.</li>
+      <li>Ver tu progreso y tu nota media en tiempo real.</li>
+      <li>Autoevaluarte al final de cada bloque.</li>
+      <li>Exportar tus respuestas para entregarlas al profesor.</li>
+      <li>Consultar el glosario, los esquemas y las lecturas complementarias.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ ESTRUCTURA ============ -->
+<section>
+  <h2><span class="num">1</span>Estructura del material</h2>
+  <p>El material está organizado en <b>7 archivos</b> dentro de la misma carpeta:</p>
+  <div class="indice-card">
+    <div class="icon">🏠</div>
+    <div class="info">
+      <b>index.html</b>
+      <p>Página principal. Aquí ves tu progreso global, accedes a los bloques y (si eres profesor) al panel de resultados.</p>
+    </div>
+  </div>
+  <div class="indice-card">
+    <div class="icon">🧠</div>
+    <div class="info">
+      <b>bloque1.html · Fisiología Neuronal</b>
+      <p>Neurona, glía, mielina, potencial de acción, sinapsis, plasticidad.</p>
+    </div>
+  </div>
+  <div class="indice-card">
+    <div class="icon">🧩</div>
+    <div class="info">
+      <b>bloque2.html · Organización del SNC</b>
+      <p>Hemisferios, lóbulos, cerebelo, tronco, médula, reflejos, equilibrio.</p>
+    </div>
+  </div>
+  <div class="indice-card">
+    <div class="icon">🕸️</div>
+    <div class="info">
+      <b>bloque3.html · Sistema Nervioso Periférico</b>
+      <p>Somático y autónomo, dermatomas, plexos, simpático y parasimpático.</p>
+    </div>
+  </div>
+  <div class="indice-card">
+    <div class="icon">💪</div>
+    <div class="info">
+      <b>bloque4.html · Unión Neuromuscular y Control Motor</b>
+      <p>Contracción muscular, propiocepción, fatiga, aprendizaje motor.</p>
+    </div>
+  </div>
+  <div class="indice-card">
+    <div class="icon">🌐</div>
+    <div class="info">
+      <b>bloque5.html · Temas Transversales</b>
+      <p>Metabolismo neuronal, sueño, estrés, dolor, calentamiento, visualización, neuroplasticidad, diferencias individuales.</p>
+    </div>
+  </div>
+  <div class="indice-card">
+    <div class="icon">📘</div>
+    <div class="info">
+      <b>cuaderno.html · Cuaderno de ampliación</b>
+      <p>Lecturas breves, esquemas para imprimir, preguntas de profundización, glosario y bibliografía.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CÓMO USARLO ============ -->
+<section>
+  <h2><span class="num">2</span>Cómo usar el material paso a paso</h2>
+
+  <h3>Paso 1 · Abre <code>index.html</code></h3>
+  <p>Haz doble clic en el archivo <b>index.html</b>. Se abrirá en tu navegador y verás una pantalla con 6 tarjetas, una por cada bloque más el cuaderno.</p>
+
+  <h3>Paso 2 · Entra en un bloque</h3>
+  <p>Haz clic en la tarjeta del bloque que quieras estudiar. Se abrirá el bloque en la misma ventana.</p>
+
+  <h3>Paso 3 · Navega por las diapositivas</h3>
+  <p>Cada bloque tiene entre 8 y 17 diapositivas. Puedes avanzar y retroceder de varias formas:</p>
+  <div class="atajos">
+    <div class="atajo"><kbd>→</kbd> Siguiente diapositiva</div>
+    <div class="atajo"><kbd>←</kbd> Diapositiva anterior</div>
+    <div class="atajo"><kbd>Espacio</kbd> Avanzar</div>
+    <div class="atajo">Botones inferiores</div>
+  </div>
+
+  <h3>Paso 4 · Haz las actividades</h3>
+  <p>Al final de cada bloque encontrarás la sección de actividades. Hay dos tipos:</p>
+  <ul>
+    <li><b>Tipo test:</b> eliges una opción y pulsas "Comprobar". Te dice al momento si es correcta.</li>
+    <li><b>Preguntas abiertas:</b> escribes tu respuesta. El sistema la evalúa automáticamente según las palabras clave que contiene.</li>
+  </ul>
+
+  <h3>Paso 5 · Consulta los esquemas esperados</h3>
+  <p>En cada actividad abierta hay un botón <b>"Ver solución"</b> que te muestra qué contenía la respuesta esperada. Úsalo para <b>comparar</b> tu respuesta con lo que se pedía.</p>
+
+  <h3>Paso 6 · Autoevalúate</h3>
+  <p>Al final de las actividades de cada bloque hay una sección de <b>autoevaluación</b>. Marca el rango en el que crees que estás, ponte una nota y justifícala.</p>
+
+  <h3>Paso 7 · Exporta tu informe</h3>
+  <p>Cuando termines un bloque, pulsa el botón <b>💾 Exportar</b> del encabezado. Se descargará un archivo <code>.txt</code> con tu nombre, la fecha, tus respuestas, la puntuación y la autoevaluación. Este archivo es el que entregas al profesor.</p>
+</section>
+
+<!-- ============ ATAJOS ============ -->
+<section>
+  <h2><span class="num">3</span>Atajos de teclado</h2>
+  <table>
+    <thead>
+      <tr><th>Tecla</th><th>Acción</th><th>Dónde funciona</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><kbd>→</kbd></td><td>Avanzar diapositiva</td><td>Todos los bloques</td></tr>
+      <tr><td><kbd>←</kbd></td><td>Retroceder diapositiva</td><td>Todos los bloques</td></tr>
+      <tr><td><kbd>Espacio</kbd></td><td>Avanzar diapositiva</td><td>Todos los bloques</td></tr>
+      <tr><td><kbd>N</kbd></td><td>Mostrar/ocultar notas del profesor</td><td>Bloques 1-4 (solo profesor)</td></tr>
+      <tr><td><kbd>R</kbd></td><td>Abrir/cerrar esquemas esperados</td><td>Bloques 1-4</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============ SISTEMA DE VALORACIÓN ============ -->
+<section>
+  <h2><span class="num">4</span>Cómo se valoran las actividades</h2>
+
+  <h3>Actividades tipo test</h3>
+  <p>Cada pregunta correcta vale <b>10 puntos</b>. Cada incorrecta vale <b>0</b>. La nota final es la media de todas las preguntas tipo test.</p>
+
+  <h3>Preguntas abiertas</h3>
+  <p>El sistema analiza tu respuesta y busca <b>palabras clave</b>. La nota se calcula así:</p>
+  <ol>
+    <li>Se cuenta cuántas palabras clave aparecen en tu respuesta.</li>
+    <li>Se calcula el porcentaje sobre el total de palabras clave esperadas.</li>
+    <li>Se convierte a una nota del 0 al 10, redondeada a 0,5.</li>
+    <li>Si la respuesta tiene menos de 30 caracteres → nota máxima 3.</li>
+    <li>Si tiene entre 30 y 60 caracteres → nota máxima 6.</li>
+  </ol>
+
+  <div class="box nota">
+    <b>Importante:</b> no se trata de escribir mucho, sino de incluir las <b>ideas clave</b>. Una respuesta corta pero con las ideas correctas puede sacar un 8 o un 9. Una respuesta larga pero sin ideas clave puede sacar un 3.
+  </div>
+
+  <h3>Nota media del bloque</h3>
+  <p>Es la media ponderada entre las preguntas tipo test y las abiertas. Aparece al final de cada bloque.</p>
+
+  <h3>Autoevaluación</h3>
+  <p>Al final de cada bloque, tú mismo te pones una nota y la justificas. Esto <b>no</b> forma parte de la nota automática, pero sí se incluye en el informe que entregas al profesor. Sirve para que reflexiones sobre tu propio aprendizaje.</p>
+</section>
+
+<!-- ============ EXPORTAR ============ -->
+<section>
+  <h2><span class="num">5</span>Cómo exportar tu informe</h2>
+  <p>Cada bloque tiene un botón <b>💾 Exportar</b> en la parte superior derecha. Al pulsarlo:</p>
+  <ol>
+    <li>El sistema te pide tu nombre (escríbelo tal como quieres que aparezca).</li>
+    <li>Descarga un archivo <code>.txt</code> llamado <code>bloqueX_tunombre_fecha.txt</code>.</li>
+    <li>Ese archivo contiene:
+      <ul>
+        <li>Tu nombre y la fecha.</li>
+        <li>Todas tus respuestas.</li>
+        <li>La puntuación de cada actividad (test y abiertas).</li>
+        <li>La solución esperada de cada pregunta.</li>
+        <li>Tu autoevaluación (rango, nota y justificación).</li>
+        <li>La nota media final del bloque.</li>
+      </ul>
+    </li>
+  </ol>
+  <div class="box ok">
+    <b>Consejo:</b> exporta el informe <b>al terminar cada bloque</b>, no lo dejes todo para el final. Así no pierdes trabajo si algo falla.
+  </div>
+</section>
+
+<!-- ============ RECOMENDACIONES ============ -->
+<section class="danza">
+  <h2><span class="num">💃</span>Recomendaciones para estudiar</h2>
+  <ul class="checklist">
+    <li><b>Estudia poco cada día.</b> La práctica distribuida es mejor que la masiva. 30 minutos al día durante una semana es mejor que 4 horas seguidas.</li>
+    <li><b>Duerme bien.</b> La memoria motora se consolida durante el sueño. Dormir 7-9 horas mejora tu rendimiento.</li>
+    <li><b>Relaciona cada concepto con la danza.</b> Cada diapositiva tiene una sección "Conexión danza". Léela con atención: es la que te ayudará a recordar.</li>
+    <li><b>Haz las actividades después de leer.</b> No las hagas "a ver si acierto". Lee, entiende, y después responde.</li>
+    <li><b>Usa el esquema esperado.</b> Cuando falles una pregunta, mira la solución y compárala con tu respuesta. Aprende del error.</li>
+    <li><b>Repasa antes del examen.</b> Los esquemas del cuaderno son perfectos para un repaso rápido.</li>
+    <li><b>Pregunta si no entiendes.</b> El material está pensado para ser autosuficiente, pero si algo no queda claro, pregunta.</li>
+  </ul>
+</section>
+
+<!-- ============ PROBLEMAS ============ -->
+<section>
+  <h2><span class="num">🔧</span>Si algo no funciona</h2>
+
+  <h3>No se guardan mis respuestas</h3>
+  <p>Las respuestas se guardan en el navegador (localStorage). Si cierras el navegador o cambias de dispositivo, se pierden. Soluciones:</p>
+  <ul>
+    <li>No uses el <b>modo incógnito</b>: en ese modo no se guarda nada.</li>
+    <li>No borres los datos del navegador mientras estás trabajando.</li>
+    <li>Exporta el informe cada vez que termines una sesión de trabajo.</li>
+  </ul>
+
+  <h3>No se abre ningún bloque</h3>
+  <p>Comprueba que los 7 archivos están en la <b>misma carpeta</b> y que tienen exactamente estos nombres:</p>
+  <ul>
+    <li><code>index.html</code></li>
+    <li><code>bloque1.html</code></li>
+    <li><code>bloque2.html</code></li>
+    <li><code>bloque3.html</code></li>
+    <li><code>bloque4.html</code></li>
+    <li><code>bloque5.html</code></li>
+    <li><code>cuaderno.html</code></li>
+  </ul>
+  <p>Si un nombre tiene una mayúscula o un espacio de más, los enlaces no funcionarán.</p>
+
+  <h3>El botón de exportar no descarga nada</h3>
+  <p>Comprueba que tu navegador permite descargas. Si estás en un ordenador del centro, puede que tenga bloqueadas las descargas: en ese caso, habla con tu profesor/a.</p>
+
+  <h3>Las imágenes no se ven</h3>
+  <p>Algunas imágenes vienen de internet. Si no tienes conexión, verás un esquema alternativo en su lugar. Todo el contenido está diseñado para funcionar también sin conexión.</p>
+</section>
+
+<!-- ============ CONTACTO ============ -->
+<section class="destacada">
+  <h2><span class="num">📩</span>Dudas y entrega</h2>
+  <p>Si tienes cualquier duda sobre el material:</p>
+  <ul>
+    <li>Consulta el <b>cuaderno de ampliación</b> (lecturas, esquemas y glosario).</li>
+    <li>Pregunta en clase.</li>
+    <li>Escribe a la profesora: <b>Cèlia Painous</b>.</li>
+  </ul>
+  <div class="box danza">
+    <b>Recuerda:</b> este material no es un examen. Es una herramienta para que aprendas a <b>entender tu propio cuerpo</b> como bailarín/a. Úsalo con curiosidad, no con prisa.
+  </div>
+</section>
+
+</main>
+
+</body>
+</html>

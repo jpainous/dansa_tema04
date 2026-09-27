@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Bloque 5 · Temas Transversales de Fisiología</title>
+<style>
+  :root{--bg:#0d1024;--card:#1a1f3c;--accent:#ff5c8a;--accent2:#4fd1c5;--text:#f5f7ff;--muted:#b8c0e0;--ok:#4ade80;--warn:#fbbf24;--bad:#f87171;--notas:#ffd166;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+  header{background:#1a1f3c;padding:18px 30px;border-bottom:2px solid var(--accent2);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+  header h1{font-size:1.4rem;color:var(--accent);}
+  header .sub{color:var(--muted);font-size:.9rem;margin-top:4px;}
+  .controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+  .controls button,.controls select{background:#252b52;color:var(--accent2);border:1px solid #3a4170;padding:7px 12px;border-radius:8px;cursor:pointer;font-weight:700;font-size:.85rem;}
+  .controls button:hover{background:var(--accent2);color:#0f1226;}
+  .btn-volver{background:#252b52;color:var(--accent2);border:1px solid #3a4170;padding:7px 12px;border-radius:8px;cursor:pointer;font-weight:700;font-size:.85rem;}
+  .btn-volver:hover{background:var(--accent2);color:#0f1226;}
+  main{max-width:1100px;margin:0 auto;padding:24px 20px 80px;}
+  .slide{display:none;padding:40px 60px;border-radius:16px;}
+  .slide.active{display:block;animation:fade .3s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+  h2{color:var(--accent2);font-size:1.6rem;margin-bottom:14px;border-bottom:2px solid var(--accent2);padding-bottom:8px;}
+  h3{color:var(--accent);font-size:1.15rem;margin:14px 0 8px;}
+  p,li{line-height:1.6;font-size:1rem;margin-bottom:6px;}
+  ul,ol{margin-left:22px;margin-bottom:10px;}
+  .box{background:var(--card);border-radius:12px;padding:14px 18px;margin:10px 0;border-left:5px solid var(--accent2);}
+  .box.danza{background:#2a1f3d;border-left-color:var(--accent);}
+  .box.nota{background:#3a2f10;border-left-color:var(--notas);color:#ffe9b0;font-size:.92rem;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .nav{position:fixed;bottom:16px;right:20px;display:flex;gap:8px;z-index:50;}
+  .nav button{background:var(--accent);color:#0f1226;border:none;padding:9px 16px;border-radius:8px;font-weight:800;cursor:pointer;}
+  .nav button:hover{background:var(--accent2);}
+  .counter{position:fixed;bottom:22px;left:20px;color:var(--muted);font-size:.85rem;z-index:50;}
+  .progress{position:fixed;top:0;left:0;height:4px;background:var(--accent);transition:width .3s;z-index:100;}
+  .actividad{background:var(--card);border-radius:12px;padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--accent2);}
+  .actividad h4{font-size:1rem;color:var(--accent2);margin-bottom:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .chip{padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:800;text-transform:uppercase;}
+  .chip.indiv{background:#4fd1c5;color:#0f1226;}
+  .chip.pareja{background:#b07cff;color:#fff;}
+  .chip.grupo{background:#ff9f43;color:#0f1226;}
+  .opciones{display:flex;flex-direction:column;gap:6px;margin:8px 0;}
+  .opciones label{background:#0f1226;border:1px solid #3a4170;border-radius:8px;padding:8px 12px;cursor:pointer;font-size:.9rem;}
+  .opciones label:hover{border-color:var(--accent2);}
+  .opciones input{accent-color:var(--accent2);margin-right:6px;}
+  textarea{width:100%;min-height:70px;padding:9px 12px;background:#0f1226;color:var(--text);border:1px solid #3a4170;border-radius:8px;font-family:inherit;font-size:.9rem;resize:vertical;}
+  textarea:focus{outline:none;border-color:var(--accent2);}
+  .feedback{margin-top:8px;padding:8px 12px;border-radius:8px;font-size:.85rem;font-weight:700;display:none;}
+  .feedback.ok{background:#1a3a1a;color:var(--ok);border-left:4px solid var(--ok);display:block;}
+  .feedback.ko{background:#3a1a1a;color:var(--bad);border-left:4px solid var(--bad);display:block;}
+  .feedback.guardado{background:#1a2540;color:var(--accent2);border-left:4px solid var(--accent2);display:block;}
+  .acciones{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+  .acciones button{background:var(--accent2);color:#0f1226;border:none;padding:7px 14px;border-radius:8px;font-weight:800;cursor:pointer;font-size:.85rem;}
+  .acciones button:hover{background:var(--accent);}
+  .progreso-actividades{position:sticky;top:0;background:#1a1f3c;border-radius:10px;padding:10px 16px;margin-bottom:14px;border:1px solid #2d3560;display:flex;justify-content:space-between;align-items:center;font-size:.85rem;z-index:10;}
+  .progreso-actividades .bar{flex:1;height:8px;background:#0f1226;border-radius:4px;margin:0 14px;overflow:hidden;}
+  .progreso-actividades .bar-fill{height:100%;background:var(--ok);transition:width .3s;}
+  table{width:100%;border-collapse:collapse;margin:10px 0;}
+  th,td{border:1px solid #3a4170;padding:7px 10px;text-align:left;font-size:.9rem;}
+  th{background:#252b52;color:var(--accent2);}
+  .autoeval-box{background:#3a2f10;border-left:5px solid #ffd166;border-radius:12px;padding:18px 22px;margin:14px 0;}
+  .autoeval-box h4{color:#ffd166;margin-bottom:10px;}
+  .escala{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0;}
+  .escala label{background:#1a1f3c;border:2px solid #2d3560;border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:700;font-size:.9rem;display:flex;align-items:center;gap:6px;}
+  .escala label:hover{border-color:#ffd166;}
+  .escala input[type=radio]{accent-color:#ffd166;}
+  .autoeval-box textarea{width:100%;min-height:80px;padding:10px;background:#0f1226;color:var(--text);border:1px solid #3a4170;border-radius:8px;font-family:inherit;font-size:.9rem;resize:vertical;}
+  .nota-propia{display:flex;align-items:center;gap:10px;margin-top:10px;}
+  .nota-propia input{width:70px;padding:6px 10px;background:#0f1226;color:var(--text);border:1px solid #3a4170;border-radius:6px;font-size:1rem;font-weight:800;text-align:center;}
+  .nota-propia span{color:#ffd166;font-weight:700;}
+  .media-box{background:#1a2540;border:1px solid var(--accent2);border-radius:10px;padding:12px 18px;margin:14px 0;display:flex;justify-content:space-between;align-items:center;}
+  .media-box .nota-grande{font-size:1.8rem;font-weight:900;color:var(--accent2);}
+  .etiqueta-nueva{display:inline-block;background:var(--accent2);color:#0f1226;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:.5px;margin-bottom:10px;}
+  @media(max-width:700px){.grid2{grid-template-columns:1fr;}.slide{padding:20px;}}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<header>
+  <div>
+    <h1>Bloque 5 · Temas Transversales de Fisiología</h1>
+    <div class="sub">Fisiología · 1º Danza · Curso 2026-2027 · Cèlia Painous</div>
+  </div>
+  <div class="controls">
+    <button class="btn-volver" onclick="volverIndice()">← Índice</button>
+    <select id="langSel"><option value="es">ES</option><option value="ca">CA</option><option value="en">EN</option></select>
+    <button onclick="exportarInforme()">💾 Exportar</button>
+    <button onclick="reiniciar()">🔄 Reiniciar</button>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ DIAPOSITIVA 1 ============ -->
+<section class="slide active">
+  <span class="etiqueta-nueva">BLOQUE 5 · 1</span>
+  <h2>1. Metabolismo energético neuronal</h2>
+  <p><b>Idea-fuerza:</b> el cerebro es el órgano que más energía consume del cuerpo, aunque parezca pequeño.</p>
+  <div class="box nota"><b>Analogía:</b> es como un ordenador de altas prestaciones: consume mucha electricidad aunque no lo veas.</div>
+  <h3>Datos clave</h3>
+  <ul>
+    <li>El cerebro representa el <b>2% del peso corporal</b>.</li>
+    <li>Pero consume el <b>20% de la energía</b> del cuerpo.</li>
+    <li>Usa casi exclusivamente <b>glucosa</b> y <b>oxígeno</b>.</li>
+  </ul>
+  <h3>Qué pasa si falta glucosa</h3>
+  <ul>
+    <li>Peor concentración.</li>
+    <li>Peor coordinación.</li>
+    <li>Mareos, irritabilidad.</li>
+  </ul>
+  <h3>Qué pasa si falta oxígeno</h3>
+  <p>En <b>segundos</b>, pérdida de conciencia. El cerebro no puede almacenar oxígeno.</p>
+  <div class="box danza"><b>Conexión danza:</b> desayunar bien antes de entrenar, no bailar en ayunas, hidratarse durante la clase. Si te marea o te cuesta concentrarte, puede ser falta de glucosa.</div>
+</section>
+
+<!-- ============ DIAPOSITIVA 2 ============ -->
+<section class="slide">
+  <span class="etiqueta-nueva">BLOQUE 5 · 2</span>
+  <h2>2. Ritmos circadianos y sueño</h2>
+  <p><b>Idea-fuerza:</b> el cuerpo tiene un <b>reloj interno</b> que regula cuándo estás despierto, cuándo tienes más energía y cuándo necesitas dormir.</p>
+  <div class="box nota"><b>Analogía:</b> es como el horario de una tienda: hay horas punta y horas valle. Si no respetas el horario, todo funciona peor.</div>
+  <h3>Qué regula el ritmo circadiano</h3>
+  <ul>
+    <li>Sueño y vigilia.</li>
+    <li>Temperatura corporal.</li>
+    <li>Hormonas (cortisol, melatonina).</li>
+    <li>Atención y coordinación.</li>
+  </ul>
+  <h3>El sueño y el aprendizaje motor</h3>
+  <p>Durante el sueño se <b>consolida</b> lo aprendido. Bailar bien hoy depende de haber dormido bien ayer.</p>
+  <table>
+    <tr><th>Fase</th><th>Función principal</th></tr>
+    <tr><td>Sueño profundo</td><td>Reparación física, crecimiento</td></tr>
+    <tr><td>Sueño REM</td><td>Memoria, aprendizaje, emociones</td></tr>
+  </table>
+  <div class="box danza"><b>Conexión danza:</b> dormir 7-9 h, evitar pantallas antes de dormir, no entrenar justo después de comer, respetar los ritmos propios.</div>
+</section>
+
+<!-- ============ DIAPOSITIVA 3 ============ -->
+<section class="slide">
+  <span class="etiqueta-nueva">BLOQUE 5 · 3</span>
+  <h2>3. Estrés y sistema nervioso (eje HPA ampliado)</h2>
+  <p><b>Idea-fuerza:</b> el estrés no es solo "nervios". Es una <b>respuesta fisiológica completa</b> que afecta a todo el cuerpo.</p>
+  <div class="box nota"><b>Analogía:</b> es como un sistema de alarma que se activa en dos fases: primero rápida (simpático) y luego lenta (cortisol).</div>
+  <h3>Fases del estrés</h3>
+  <ol>
+    <li><b>Alarma</b>: el cuerpo detecta la amenaza. Se activa el simpático.</li>
+    <li><b>Resistencia</b>: el cuerpo se adapta. El cortisol mantiene la alerta.</li>
+    <li><b>Agotamiento</b>: si dura demasiado, el cuerpo se desgasta.</li>
+  </ol>
+  <h3>Qué produce el cortisol</h3>
+  <ul>
+    <li>Sube la glucosa en sangre (para tener energía).</li>
+    <li>Modula la respuesta inmune.</li>
+    <li>Mantiene la alerta.</li>
+    <li>Si dura mucho: ansiedad, insomnio, fatiga, problemas digestivos.</li>
+  </ul>
+  <h3>Estrés bueno vs. estrés malo</h3>
+  <p>Un poco de estrés <b>mejora el rendimiento</b> (activación óptima). Demasiado estrés lo <b>bloquea</b>.</p>
+  <div class="box danza"><b>Conexión danza:</b> antes de una actuación, un poco de nervios es útil. Si te bloquea, aplica técnicas de respiración, visualización y calentamiento progresivo.</div>
+</section>
+
+<!-- ============ DIAPOSITIVA 4 ============ -->
+<section class="slide">
+  <span class="etiqueta-nueva">BLOQUE 5 · 4</span>
+  <h2>4. Dolor: nocicepción y modulación</h2>
+  <p><b>Idea-fuerza:</b> el dolor no es solo una señal que llega al cerebro. El cerebro puede <b>modularlo</b>: aumentarlo o reducirlo.</p>
+  <div class="box nota"><b>Analogía:</b> es como el volumen de la radio: la señal llega, pero tú puedes subirla o bajarla.</div>
+  <h3>Nocicepción</h3>
+  <p>Proceso por el que se detecta un estímulo dañino (pinchazo, golpe, calor extremo).</p>
+  <h3>Tipos de dolor</h3>
+  <table>
+    <tr><th>Tipo</th><th>Duración</th><th>Función</th></tr>
+    <tr><td><b>Agudo</b></td><td>Menos de 3 meses</td><td>Avisa de una lesión (útil)</td></tr>
+    <tr><td><b>Crónico</b></td><td>Más de 3 meses</td><td>Pierde su función de aviso (problemático)</td></tr>
+  </table>
+  <h3>Modulación del dolor</h3>
+  <ul>
+    <li><b>Vía descendente</b>: el cerebro puede inhibir la señal de dolor.</li>
+    <li><b>Endorfinas</b>: analgesia natural que se libera con el ejercicio.</li>
+    <li><b>Distracción</b>: puede reducir la percepción del dolor.</li>
+  </ul>
+  <div class="box danza"><b>Conexión danza:</b> prevenir lesiones, no ignorar el dolor agudo, manejar el dolor crónico con ayuda profesional.</div>
+</section>
+
+<!-- ============ DIAPOSITIVA 5 ============ -->
+<section class="slide">
+  <span class="etiqueta-nueva">BLOQUE 5 · 5</span>
+  <h2>5. Efectos del calentamiento y enfriamiento sobre el SN</h2>
+  <p><b>Idea-fuerza:</b> antes y después de bailar, el sistema nervioso necesita adaptarse. El calentamiento y el enfriamiento son parte del entrenamiento.</p>
+  <div class="box nota"><b>Analogía:</b> es como arrancar y apagar un coche: no lo pones a 200 km/h en frío, ni lo apagas de golpe después de correr.</div>
+  <h3>Qué hace el calentamiento</h3>
+  <ul>
+    <li>Sube la temperatura corporal.</li>
+    <li>Mejora la conducción nerviosa.</li>
+    <li>Aumenta la sensibilidad de los receptores.</li>
+    <li>Prepara los sistemas cardiovascular y respiratorio.</li>
+  </ul>
+  <h3>Qué hace el enfriamiento</h3>
+  <ul>
+    <li>Baja gradualmente el pulso.</li>
+    <li>Facilita la eliminación de metabolitos.</li>
+    <li>Activa el parasimpático.</li>
+    <li>Reduce el riesgo de mareo y lesión.</li>
+  </ul>
+  <div class="box danza"><b>Conexión danza:</b> 10-15 min de calentamiento progresivo, 5-10 min de enfriamiento suave. No es una pérdida de tiempo, es parte del entrenamiento.</div>
+</section>
+
+<!-- ============ DIAPOSITIVA 6 ============ -->
+<section class="slide">
+  <span class="etiqueta-nueva">BLOQUE 5 · 6</span>
+  <h2>6. Visualización motora y su base neural</h2>
+  <p><b>Idea-fuerza:</b> imaginar un movimiento activa las <b>mismas áreas cerebrales</b> que ejecutarlo. La visualización es una herramienta real de entrenamiento.</p>
+  <div class="box nota"><b>Analogía:</b> es como ensayar mentalmente una conversación difícil: aunque no la tengas, tu cerebro la vive como si la tuviera.</div>
+  <h3>Qué activa la visualización</h3>
+  <ul>
+    <li>Corteza motora.</li>
+    <li>Áreas premotoras.</li>
+    <li>Cerebelo.</li>
+    <li>Ganglios basales.</li>
+  </ul>
+  <h3>Tipos de visualización</h3>
+  <ul>
+    <li><b>Interna</b>: desde dentro de tu cuerpo (como si lo hicieras).</li>
+    <li><b>Externa</b>: desde fuera, viéndote como un espectador.</li>
+  </ul>
+  <h3>Beneficios</h3>
+  <ul>
+    <li>Mejora la técnica.</li>
+    <li>Consolida la memoria motora.</li>
+    <li>Reduce la ansiedad.</li>
+  </ul>
+  <div class="box danza"><b>Conexión danza:</b> antes de una actuación, visualizar la coreografía. Antes de un paso difícil, ensayarlo mentalmente.</div>
+</section>
+
+<!-- ============ DIAPOSITIVA 7 ============ -->
+<section class="slide">
+  <span class="etiqueta-nueva">BLOQUE 5 · 7</span>
+  <h2>7. Neuroplasticidad a lo largo de la vida</h2>
+  <p><b>Idea-fuerza:</b> el cerebro no deja de cambiar. Se adapta a lo que haces, <b>durante toda la vida</b>.</p>
+  <div class="box nota"><b>Analogía:</b> es como una ciudad que va cambiando: se construyen calles nuevas, se mejoran las antiguas, otras se abandonan.</div>
+  <h3>Qué cambia</h3>
+  <ul>
+    <li><b>Sinapsis</b>: se refuerzan o debilitan (LTP/LTD).</li>
+    <li><b>Corteza</b>: cambia el mapa del cuerpo según el uso.</li>
+    <li><b>Mielina</b>: se forma más donde se entrena.</li>
+  </ul>
+  <h3>Factores que favorecen la plasticidad</h3>
+  <ul>
+    <li>Novedad y esfuerzo significativo.</li>
+    <li>Descanso y sueño.</li>
+    <li>Ejercicio físico.</li>
+    <li>Buena alimentación e hidratación.</li>
+  </ul>
+  <h3>Factores que la reducen</h3>
+  <ul>
+    <li>Estrés crónico.</li>
+    <li>Falta de sueño.</li>
+    <li>Sedentarismo.</li>
+    <li>Aislamiento social.</li>
+  </ul>
+  <div class="box danza"><b>Conexión danza:</b> seguir aprendiendo nuevos estilos, variar el entrenamiento, descansar y dormir bien, mantenerse activo siempre. La plasticidad no tiene edad.</div>
+</section>
+
+<!-- ============ DIAPOSITIVA 8 ============ -->
+<section class="slide">
+  <span class="etiqueta-nueva">BLOQUE 5 · 8</span>
+  <h2>8. Diferencias de sexo y edad en el control motor</h2>
+  <p><b>Idea-fuerza:</b> el control motor no es igual en todas las personas. Hay diferencias por <b>sexo, edad, experiencia y condición física</b>.</p>
+  <div class="box nota"><b>Analogía:</b> es como los coches: no todos aceleran igual, ni frenan igual, ni consumen igual. Cada uno tiene sus características.</div>
+  <h3>Diferencias por sexo</h3>
+  <table>
+    <tr><th>Aspecto</th><th>Tendencia general</th></tr>
+    <tr><td><b>Fuerza</b></td><td>Los hombres suelen tener más masa muscular y fuerza absoluta</td></tr>
+    <tr><td><b>Resistencia</b></td><td>Las mujeres suelen tener mejor resistencia a la fatiga</td></tr>
+    <tr><td><b>Flexibilidad</b></td><td>Las mujeres suelen tener mayor amplitud articular</td></tr>
+    <tr><td><b>Control motor</b></td><td>Diferencias pequeñas; depende más del entrenamiento que del sexo</td></tr>
+  </table>
+  <h3>Diferencias por edad</h3>
+  <table>
+    <tr><th>Etapa</th><th>Características</th></tr>
+    <tr><td><b>Infancia y adolescencia</b></td><td>Alta plasticidad, aprendizaje rápido</td></tr>
+    <tr><td><b>Adultez</b></td><td>Pico de fuerza y coordinación</td></tr>
+    <tr><td><b>Vejez</b></td><td>Disminuye velocidad, fuerza y equilibrio, pero <b>la plasticidad se mantiene</b></td></tr>
+  </table>
+  <div class="box danza"><b>Conexión danza:</b> adaptar el entrenamiento a cada persona, respetar los ritmos individuales, no comparar, entrenar la propiocepción a todas las edades.</div>
+</section>
+
+<!-- ============ ACTIVIDADES ============ -->
+<section class="slide">
+  <h2>Actividades del Bloque 5</h2>
+  <p>20 actividades cortas sobre los temas transversales. Se guardan automáticamente.</p>
+  <div class="progreso-actividades">
+    <span><b id="pCompletadas">0</b>/20 completadas</span>
+    <div class="bar"><div class="bar-fill" id="pBar" style="width:0%"></div></div>
+    <span style="color:var(--muted);">Autoguardado</span>
+  </div>
+  <div id="contenedorActividades"></div>
+  <div class="media-box"><span>📊 Nota media de tus actividades:</span><span class="nota-grande" id="notaMedia">—</span></div>
+  <div class="autoeval-box">
+    <h4>🤔 Autoevaluación del bloque</h4>
+    <p>Después de ver los esquemas y tu nota media, ¿qué nota te pondrías?</p>
+    <div class="escala">
+      <label><input type="radio" name="autoeval-rango" value="0-4"><span>Insuficiente (0-4)</span></label>
+      <label><input type="radio" name="autoeval-rango" value="5-6"><span>Suficiente (5-6)</span></label>
+      <label><input type="radio" name="autoeval-rango" value="7-8"><span>Notable (7-8)</span></label>
+      <label><input type="radio" name="autoeval-rango" value="9-10"><span>Excelente (9-10)</span></label>
+    </div>
+    <div class="nota-propia"><span>Nota concreta (0-10):</span><input type="number" min="0" max="10" step="0.5" data-autoeval-nota></div>
+    <p style="margin-top:12px;font-size:.9rem;">Justifica tu nota:</p>
+    <textarea data-autoeval-text placeholder="..."></textarea>
+  </div>
+  <div class="acciones" style="margin-top:20px;"><button onclick="exportarInforme()">💾 Descargar informe completo</button></div>
+</section>
+
+</main>
+
+<div class="counter" id="counter">Diapositiva 1 / 10</div>
+<div class="nav"><button onclick="prev()">← Anterior</button><button onclick="next()">Siguiente →</button></div>
+
+<script>
+const NUM_BLOQUE = 5;
+const STORAGE = 'bloque5_respuestas_v2';
+const TITULO_BLOQUE = {es:'BLOQUE 5 · TEMAS TRANSVERSALES DE FISIOLOGÍA'};
+
+const ACTIVIDADES = [
+  /* --- Metabolismo energético --- */
+  {tipo:'test',grupo:'indiv',q:{es:"¿Qué porcentaje de la energía del cuerpo consume el cerebro?",ca:"Quin percentatge d'energia consumeix el cervell?",en:"What percentage of body energy does the brain consume?"},ops:{es:["2%","10%","20%","50%"],ca:["2%","10%","20%","50%"],en:["2%","10%","20%","50%"]},correcta:2,sol:{es:"El 20% de la energía, aunque solo pesa el 2%.",ca:"El 20%.",en:"20%."}},
+  {tipo:'test',grupo:'indiv',q:{es:"¿Qué usa el cerebro como combustible principal?",ca:"Què usa el cervell com a combustible?",en:"What does the brain use as fuel?"},ops:{es:["Grasas","Proteínas","Glucosa","Alcohol"],ca:["Greixos","Proteïnes","Glucosa","Alcohol"],en:["Fats","Proteins","Glucose","Alcohol"]},correcta:2,sol:{es:"Glucosa y oxígeno.",ca:"Glucosa i oxigen.",en:"Glucose and oxygen."}},
+  {tipo:'abierta',grupo:'indiv',q:{es:"¿Por qué no conviene bailar en ayunas? Explica qué le pasa al cerebro.",ca:"Per què no convé ballar en dejú?",en:"Why shouldn't you dance on an empty stomach?"},keywords:['glucosa','energía','energia','cerebro','concentración','concentracio','mareo','hipoglucemia'],sol:{es:"Porque el cerebro necesita glucosa. Sin ella, baja la concentración, la coordinación y puede haber mareo.",ca:"El cervell necessita glucosa.",en:"The brain needs glucose."}},
+  /* --- Ritmos circadianos --- */
+  {tipo:'test',grupo:'indiv',q:{es:"¿Qué regula el ritmo circadiano?",ca:"Què regula el ritme circadià?",en:"What does the circadian rhythm regulate?"},ops:{es:["Solo el sueño","Sueño, temperatura, hormonas y atención","Solo la digestión","Solo la temperatura"],ca:["Només la son","Son, temperatura, hormones i atenció","Només la digestió","Només la temperatura"],en:["Only sleep","Sleep, temperature, hormones and attention","Only digestion","Only temperature"]},correcta:1,sol:{es:"Regula múltiples funciones.",ca:"Múltiples funcions.",en:"Multiple functions."}},
+  {tipo:'test',grupo:'indiv',q:{es:"¿En qué fase del sueño se consolida el aprendizaje motor?",ca:"En quina fase del son es consolida l'aprenentatge motor?",en:"In which sleep phase is motor learning consolidated?"},ops:{es:["Solo en sueño profundo","Solo en REM","En sueño profundo y REM","No se consolida"],ca:["Només profund","Només REM","Profund i REM","No es consolida"],en:["Only deep","Only REM","Deep and REM","It isn't"]},correcta:2,sol:{es:"En ambas fases, con funciones distintas.",ca:"En ambdues fases.",en:"In both phases."}},
+  {tipo:'abierta',grupo:'pareja',q:{es:"Explicad por qué dormir bien mejora el rendimiento dancístico. Mencionad al menos 2 razones fisiológicas.",ca:"Per què dormir bé millora el rendiment?",en:"Why does sleeping well improve dance performance?"},keywords:['memoria','aprendizaje','consolida','descanso','recuperación','recuperacio','atención','atencio','coordinación','coordinacio'],sol:{es:"Consolida la memoria motora y recupera el sistema nervioso.",ca:"Consolida la memòria i recupera el SN.",en:"Consolidates motor memory and recovers the nervous system."}},
+  {tipo:'abierta',grupo:'indiv',q:{es:"¿Cuántas horas duermes normalmente? ¿Crees que es suficiente? Justifica tu respuesta con lo que has aprendido.",ca:"Quantes hores dorms?",en:"How many hours do you sleep?"},keywords:['7','8','9','sueño','son','descanso','suficiente','recomendado'],sol:{es:"Lo recomendado son 7-9 horas. Menos de 7 afecta a memoria, coordinación y estado de ánimo.",ca:"7-9 hores.",en:"7-9 hours."}},
+  /* --- Estrés --- */
+  {tipo:'test',grupo:'indiv',q:{es:"¿Qué hormona mantiene la alerta en el estrés prolongado?",ca:"Quina hormona manté l'alerta?",en:"Which hormone maintains alertness?"},ops:{es:["Insulina","Cortisol","Melatonina","Dopamina"],ca:["Insulina","Cortisol","Melatonina","Dopamina"],en:["Insulin","Cortisol","Melatonin","Dopamine"]},correcta:1,sol:{es:"El cortisol.",ca:"El cortisol.",en:"Cortisol."}},
+  {tipo:'test',grupo:'indiv',q:{es:"Un poco de estrés antes de actuar…",ca:"Una mica d'estrès abans d'actuar…",en:"A little stress before performing…"},ops:{es:["Siempre es malo","Mejora el rendimiento","No influye","Bloquea siempre"],ca:["Sempre és dolent","Millora el rendiment","No influeix","Bloqueja sempre"],en:["Always bad","Improves performance","No effect","Always blocks"]},correcta:1,sol:{es:"Un poco de estrés mejora el rendimiento (activación óptima).",ca:"Millora el rendiment.",en:"Improves performance."}},
+  {tipo:'abierta',grupo:'pareja',q:{es:"Describid 3 técnicas fisiológicas para regular el estrés antes de una actuación.",ca:"3 tècniques fisiològiques per regular l'estrès.",en:"3 physiological techniques to regulate stress."},keywords:['respiración','respiracion','diafragmática','diafragmatica','visualización','visualitzacio','calentamiento','relajación','relaxacio'],sol:{es:"Respiración diafragmática, visualización positiva, calentamiento progresivo.",ca:"Respiració, visualització, calfament.",en:"Breathing, imagery, warm-up."}},
+  {tipo:'abierta',grupo:'indiv',q:{es:"¿Cómo distingues tú entre 'nervios buenos' (que te activan) y 'nervios malos' (que te bloquean)? Describe tu experiencia.",ca:"Com distingeixes nervis bons i dolents?",en:"How do you tell good nerves from bad nerves?"},keywords:['energía','energia','concentración','concentracio','bloqueo','temblor','control','activación','activacio'],sol:{es:"Nervios buenos: te activan y te concentran. Nervios malos: te bloquean, tiemblas, olvidas.",ca:"Bons activen, dolents bloquegen.",en:"Good activate, bad block."}},
+  /* --- Dolor --- */
+  {tipo:'test',grupo:'indiv',q:{es:"¿Cuál es la diferencia principal entre dolor agudo y crónico?",ca:"Diferència entre dolor agut i crònic?",en:"Difference between acute and chronic pain?"},ops:{es:["El agudo es más fuerte","El agudo avisa de lesión; el crónico dura más de 3 meses","El crónico no duele","Son iguales"],ca:["L'agut és més fort","L'agut avisa; el crònic dura més de 3 mesos","El crònic no fa mal","Són iguals"],en:["Acute is stronger","Acute warns; chronic lasts >3 months","Chronic doesn't hurt","They're the same"]},correcta:1,sol:{es:"El agudo avisa; el crónico pierde su función de aviso.",ca:"L'agut avisa; el crònic no.",en:"Acute warns; chronic doesn't."}},
+  {tipo:'test',grupo:'indiv',q:{es:"¿Qué sustancias libera el cuerpo para reducir el dolor de forma natural?",ca:"Quines substàncies redueixen el dolor?",en:"Which substances reduce pain naturally?"},ops:{es:["Insulina","Endorfinas","Adrenalina","Tiroxina"],ca:["Insulina","Endorfines","Adrenalina","Tiroxina"],en:["Insulin","Endorphins","Adrenaline","Thyroxine"]},correcta:1,sol:{es:"Las endorfinas.",ca:"Les endorfines.",en:"Endorphins."}},
+  {tipo:'abierta',grupo:'indiv',q:{es:"¿Por qué el dolor agudo es útil y el dolor crónico es problemático? Reflexiona con un ejemplo dancístico.",ca:"Per què el dolor agut és útil?",en:"Why is acute pain useful?"},keywords:['aviso','lesión','lesion','protege','crónico','cronic','persistente','problema'],sol:{es:"El agudo avisa de una lesión (útil). El crónico dura más de 3 meses y pierde su función de aviso.",ca:"L'agut avisa; el crònic perdura.",en:"Acute warns; chronic persists."}},
+  /* --- Calentamiento --- */
+  {tipo:'test',grupo:'indiv',q:{es:"¿Qué efecto tiene el calentamiento sobre el sistema nervioso?",ca:"Quin efecte té el calfament sobre el SN?",en:"What effect does warm-up have on the nervous system?"},ops:{es:["Ninguno","Mejora la conducción nerviosa y la sensibilidad","Solo mejora el músculo","Empeora la coordinación"],ca:["Cap","Millora la conducció i sensibilitat","Només el múscul","Empitjora la coordinació"],en:["None","Improves nerve conduction and sensitivity","Only the muscle","Worsens coordination"]},correcta:1,sol:{es:"Mejora la conducción nerviosa y la sensibilidad.",ca:"Millora conducció i sensibilitat.",en:"Improves conduction and sensitivity."}},
+  {tipo:'test',grupo:'indiv',q:{es:"¿Qué sistema se activa durante el enfriamiento?",ca:"Quin sistema s'activa durant el refredament?",en:"Which system activates during cool-down?"},ops:{es:["Simpático","Parasimpático","Somático","Piramidal"],ca:["Simpàtic","Parasimpàtic","Somàtic","Piramidal"],en:["Sympathetic","Parasympathetic","Somatic","Pyramidal"]},correcta:1,sol:{es:"El parasimpático.",ca:"El parasimpàtic.",en:"Parasympathetic."}},
+  {tipo:'abierta',grupo:'pareja',q:{es:"Diseñad un calentamiento de 10 minutos para una clase de danza clásica. Justificad cada parte con lo que habéis aprendido.",ca:"Dissenyeu un calfament de 10 min.",en:"Design a 10-min warm-up."},keywords:['progresivo','movilidad','articular','cardiovascular','temperatura','específico','especifico','progresivo'],sol:{es:"1) Movilidad articular suave. 2) Actividad cardiovascular progresiva. 3) Movimientos específicos de danza clásica.",ca:"Mobilitat, cardiovascular, específic.",en:"Mobility, cardio, specific."}},
+  /* --- Visualización --- */
+  {tipo:'test',grupo:'indiv',q:{es:"¿Qué áreas cerebrales activa la visualización motora?",ca:"Quines àrees activa la visualització motora?",en:"Which areas does motor imagery activate?"},ops:{es:["Solo la visión","Corteza motora, premotora, cerebelo y ganglios basales","Solo el cerebelo","Ninguna"],ca:["Només la visió","Motora, premotora, cerebel i ganglis","Només el cerebel","Cap"],en:["Only vision","Motor cortex, premotor, cerebellum, basal ganglia","Only cerebellum","None"]},correcta:1,sol:{es:"Activa las mismas áreas que el movimiento real.",ca:"Les mateixes àrees que el moviment real.",en:"Same areas as real movement."}},
+  {tipo:'abierta',grupo:'indiv',q:{es:"¿Has usado alguna vez la visualización antes de bailar? Describe qué hiciste y qué resultado obtuviste. Si no lo has hecho, imagina cómo lo aplicarías.",ca:"Has usat la visualització?",en:"Have you used imagery before dancing?"},keywords:['imaginar','movimiento','moviment','coreografía','coreografia','antes','actuación','actuacio','resultado'],sol:{es:"Respuesta personal. Debe incluir: qué se visualizó, cuándo y qué efecto tuvo.",ca:"Resposta personal.",en:"Personal answer."}},
+  /* --- Neuroplasticidad --- */
+  {tipo:'test',grupo:'indiv',q:{es:"¿A qué edad deja de cambiar el cerebro?",ca:"A quina edat deixa de canviar el cervell?",en:"At what age does the brain stop changing?"},ops:{es:["A los 18","A los 25","A los 40","Nunca deja de cambiar"],ca:["Als 18","Als 25","Als 40","Mai deixa de canviar"],en:["At 18","At 25","At 40","It never stops"]},correcta:3,sol:{es:"La plasticidad se mantiene toda la vida.",ca:"Es manté tota la vida.",en:"It lasts a lifetime."}},
+  {tipo:'test',grupo:'indiv',q:{es:"¿Qué factor REDUCE la neuroplasticidad?",ca:"Quin factor REDUEIX la neuroplasticitat?",en:"Which factor REDUCES neuroplasticity?"},ops:{es:["Dormir bien","Novedad","Estrés crónico","Ejercicio físico"],ca:["Dormir bé","Novetat","Estrès crònic","Exercici físic"],en:["Sleeping well","Novelty","Chronic stress","Exercise"]},correcta:2,sol:{es:"El estrés crónico reduce la plasticidad.",ca:"L'estrès crònic.",en:"Chronic stress."}},
+  {tipo:'abierta',grupo:'grupo',q:{es:"En grupos 2-3, discutid por qué la plasticidad se mantiene toda la vida. Aportad 2 ejemplos de personas mayores que sigan aprendiendo.",ca:"Per què la plasticitat es manté?",en:"Why does plasticity last a lifetime?"},keywords:['sinapsis','corteza','escorça','aprendizaje','aprenentatge','experiencia','experiència','mayores','grans'],sol:{es:"Porque las sinapsis se siguen reforzando con la práctica. Ej: aprender un idioma, un instrumento, una nueva coreografía.",ca:"Les sinapsis es reforcen.",en:"Synapses keep strengthening."}},
+  /* --- Diferencias de sexo y edad --- */
+  {tipo:'test',grupo:'indiv',q:{es:"¿Qué diferencia general suele haber entre hombres y mujeres en cuanto a resistencia?",ca:"Diferència en resistència?",en:"Difference in endurance?"},ops:{es:["Los hombres tienen más resistencia","Las mujeres suelen tener mejor resistencia a la fatiga","Son iguales","Depende solo de la dieta"],ca:["Els homes més","Les dones millor","Són iguals","Només dieta"],en:["Men more","Women better","Same","Only diet"]},correcta:1,sol:{es:"Las mujeres suelen tener mejor resistencia a la fatiga.",ca:"Les dones millor resistència.",en:"Women better endurance."}},
+  {tipo:'abierta',grupo:'indiv',q:{es:"Reflexiona: ¿por qué es importante no comparar el control motor entre personas de distintas edades o sexos? Explica con un ejemplo dancístico.",ca:"Per què no s'ha de comparar?",en:"Why shouldn't we compare motor control?"},keywords:['individual','entrenamiento','entrenament','experiencia','experiència','ritmo','ritme','adaptar','respeto','respecte'],sol:{es:"Porque cada persona tiene su ritmo, su experiencia y su cuerpo. Hay que adaptar el entrenamiento a cada uno.",ca:"Cada persona té el seu ritme.",en:"Everyone has their own pace."}}
+];
+
+let lang='es';
+function normalizar(s){ return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\w\s]/g,' '); }
+function valorarAbierta(texto, keywords){
+  if(!texto || texto.trim().length<10) return {nota:0,encontradas:[],faltan:keywords||[],ratio:0};
+  const tx=normalizar(texto); const enc=[],fal=[];
+  (keywords||[]).forEach(k=>{ const kn=normalizar(k); if(tx.includes(kn)) enc.push(k); else fal.push(k); });
+  let ratio = keywords && keywords.length ? enc.length/keywords.length : 0;
+  let nota = Math.round(ratio*20)/2;
+  if(texto.trim().length<30) nota=Math.min(nota,3); else if(texto.trim().length<60) nota=Math.min(nota,6);
+  return {nota,encontradas:enc,faltan:fal,ratio};
+}
+function renderActividades(){
+  const cont=document.getElementById('contenedorActividades'); if(!cont) return;
+  const data=JSON.parse(localStorage.getItem(STORAGE)||'{}');
+  cont.innerHTML='';
+  const chips={indiv:'Individual',pareja:'Parejas',grupo:'Grupos 2-3'};
+  ACTIVIDADES.forEach((a,i)=>{
+    const id='a'+(i+1); const wrap=document.createElement('div'); wrap.className='actividad';
+    let html=`<h4><span>${i+1}.</span> ${a.q[lang]} <span class="chip ${a.grupo}">${chips[a.grupo]}</span></h4>`;
+    if(a.tipo==='test'){
+      html+=`<div class="opciones">`;
+      a.ops[lang].forEach((op,j)=>{ const checked=data[id]===j?'checked':''; html+=`<label><input type="radio" name="${id}" value="${j}" ${checked} onchange="responder('${id}',${j},${a.correcta})"> ${op}</label>`; });
+      html+=`</div>`;
+    } else { html+=`<textarea id="${id}" placeholder="..." oninput="guardarAbierta('${id}')">${data[id]||''}</textarea>`; }
+    html+=`<div class="feedback" id="fb-${id}"></div>`;
+    html+=`<div class="acciones">${a.tipo==='test'?`<button onclick="comprobar('${id}',${a.correcta})">Comprobar</button>`:`<button onclick="valorar('${id}',${i})">Valorar</button>`}<button onclick="verSolucion('${id}','${(a.sol[lang]||'').replace(/'/g,"\\'")}')">Ver solución</button></div>`;
+    wrap.innerHTML=html; cont.appendChild(wrap);
+    if(a.tipo==='abierta' && data[id] && data[id].trim().length>=10){ setTimeout(()=>valorar(id,i),50); }
+  });
+  actualizarProgreso();
+}
+function responder(id,val,c){ const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); data[id]=val; localStorage.setItem(STORAGE,JSON.stringify(data)); comprobar(id,c); actualizarProgreso(); }
+function guardarAbierta(id){ const ta=document.getElementById(id); const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); data[id]=ta.value; localStorage.setItem(STORAGE,JSON.stringify(data)); const fb=document.getElementById('fb-'+id); fb.className='feedback guardado'; fb.textContent='💾 Guardado'; setTimeout(()=>{if(fb.className.includes('guardado'))fb.className='feedback';},1200); actualizarProgreso(); }
+function comprobar(id,c){ const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); const fb=document.getElementById('fb-'+id); if(data[id]===c){fb.className='feedback ok';fb.textContent='✅ ¡Correcto!';}else{fb.className='feedback ko';fb.textContent='❌ Revisa.';} }
+function valorar(id,idx){ const a=ACTIVIDADES[idx]; const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); const texto=data[id]||''; const fb=document.getElementById('fb-'+id); const r=valorarAbierta(texto,a.keywords); fb.className='feedback guardado'; fb.innerHTML=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;"><span style="background:var(--accent2);color:#0f1226;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-weight:900;">${r.nota}</span><span>${r.encontradas.length}/${(a.keywords||[]).length} puntos clave</span></div><div style="height:8px;background:#0f1226;border-radius:4px;overflow:hidden;margin-bottom:6px;"><div style="height:100%;width:${r.nota*10}%;background:${r.nota>=7?'var(--ok)':r.nota>=5?'var(--warn)':'var(--bad)'};"></div></div><div style="font-size:.82rem;"><span style="color:var(--ok);">✓ ${r.encontradas.join(', ')||'—'}</span><br><span style="color:var(--bad);">✗ ${r.faltan.join(', ')||'—'}</span></div>`; data['nota-'+id]=r.nota; localStorage.setItem(STORAGE,JSON.stringify(data)); actualizarMedia(); }
+function verSolucion(id,sol){ const fb=document.getElementById('fb-'+id); fb.className='feedback guardado'; fb.textContent='📖 '+sol; }
+function actualizarProgreso(){ const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); let c=0; ACTIVIDADES.forEach((a,i)=>{ const id='a'+(i+1); if(a.tipo==='test'){if(data[id]!==undefined)c++;}else{if((data[id]||'').trim().length>=15)c++;} }); document.getElementById('pCompletadas').textContent=c; document.getElementById('pBar').style.width=(c/ACTIVIDADES.length*100)+'%'; actualizarMedia(); }
+function actualizarMedia(){ const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); let s=0,n=0; ACTIVIDADES.forEach((a,i)=>{ const id='a'+(i+1); if(a.tipo==='test' && data[id]!==undefined){s+=(data[id]===a.correcta)?10:0;n++;} else if(a.tipo==='abierta' && typeof data['nota-'+id]==='number'){s+=data['nota-'+id];n++;} }); document.getElementById('notaMedia').textContent = n?(s/n).toFixed(1):'—'; }
+let idx=0; const slides=document.querySelectorAll('.slide');
+function show(i){ slides.forEach(s=>s.classList.remove('active')); slides[i].classList.add('active'); document.getElementById('counter').textContent=`Diapositiva ${i+1} / ${slides.length}`; document.getElementById('progress').style.width=((i+1)/slides.length*100)+'%'; }
+function next(){if(idx<slides.length-1){idx++;show(idx);}}
+function prev(){if(idx>0){idx--;show(idx);}}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')next();if(e.key==='ArrowLeft')prev();});
+function cargarAutoeval(){
+  const data=JSON.parse(localStorage.getItem(STORAGE)||'{}');
+  document.querySelectorAll('[data-autoeval-text]').forEach(ta=>{ if(data['autoeval-text'])ta.value=data['autoeval-text']; ta.oninput=()=>{const d=JSON.parse(localStorage.getItem(STORAGE)||'{}'); d['autoeval-text']=ta.value; localStorage.setItem(STORAGE,JSON.stringify(d));}; });
+  document.querySelectorAll('[data-autoeval-nota]').forEach(inp=>{ if(data['autoeval-nota']!==undefined)inp.value=data['autoeval-nota']; inp.oninput=()=>{const d=JSON.parse(localStorage.getItem(STORAGE)||'{}'); d['autoeval-nota']=inp.value; localStorage.setItem(STORAGE,JSON.stringify(d));}; });
+  document.querySelectorAll('input[type=radio][name="autoeval-rango"]').forEach(r=>{ if(data['autoeval-rango']===r.value)r.checked=true; r.onchange=()=>{const d=JSON.parse(localStorage.getItem(STORAGE)||'{}'); d['autoeval-rango']=r.value; localStorage.setItem(STORAGE,JSON.stringify(d));}; });
+}
+function exportarInforme(){
+  const data=JSON.parse(localStorage.getItem(STORAGE)||'{}');
+  const nombre=prompt('Tu nombre:')||'alumno';
+  const nl=nombre.trim().replace(/\s+/g,'_').replace(/[^\w\-]/g,'')||'alumno';
+  let txt='=========================================\n'+TITULO_BLOQUE[lang]+'\n=========================================\n';
+  txt+='Alumno/a: '+nombre+'\nFecha: '+new Date().toLocaleString()+'\nBloque: '+NUM_BLOQUE+'\n=========================================\n\n';
+  let corr=0,tot=0,sn=0,nn=0;
+  ACTIVIDADES.forEach((a,i)=>{
+    const id='a'+(i+1);
+    txt+=`--- ${i+1}. ${a.q[lang]} ---\n`;
+    if(a.tipo==='test'){ const v=data[id]; txt+=(v!==undefined?a.ops[lang][v]:'(sin respuesta)')+'\n'; if(v===a.correcta){txt+='✅ Correcto\n';corr++;}else if(v!==undefined){txt+='❌ Incorrecto\n';}tot++; }
+    else { txt+=(data[id]||'(sin respuesta)')+'\n'; if(typeof data['nota-'+id]==='number'){txt+=`📊 ${data['nota-'+id]}/10\n`;sn+=data['nota-'+id];nn++;} }
+    txt+=`Solución: ${a.sol[lang]}\n\n`;
+  });
+  txt+='=========================================\nResultado test: '+corr+'/'+tot+'\n';
+  if(nn) txt+='Nota media abiertas: '+(sn/nn).toFixed(1)+'/10\n';
+  if(data['autoeval-rango']||data['autoeval-nota']||data['autoeval-text']){
+    txt+='=========================================\nAUTOEVALUACIÓN\n=========================================\n';
+    txt+='Rango: '+(data['autoeval-rango']||'—')+'\nNota: '+(data['autoeval-nota']||'—')+'/10\nJustificación: '+(data['autoeval-text']||'—')+'\n';
+  }
+  txt+='=========================================\n';
+  const blob=new Blob([txt],{type:'text/plain;charset=utf-8'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`bloque${NUM_BLOQUE}_${nl}_${new Date().toISOString().slice(0,10)}.txt`; a.click();
+}
+function reiniciar(){ if(confirm('¿Borrar las respuestas de este bloque?')){ localStorage.removeItem(STORAGE); renderActividades(); cargarAutoeval(); actualizarMedia(); } }
+function volverIndice(){ window.location.href='index.html'; }
+renderActividades(); cargarAutoeval(); show(0);
+</script>
+</body>
+</html>
