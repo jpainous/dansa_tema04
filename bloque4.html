@@ -11,10 +11,17 @@
   header h1{font-size:1.4rem;color:var(--accent);}
   header .sub{color:var(--muted);font-size:.9rem;margin-top:4px;}
   .controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
-  .controls button,.controls select{background:#252b52;color:var(--accent2);border:1px solid #3a4170;padding:7px 12px;border-radius:8px;cursor:pointer;font-weight:700;font-size:.85rem;}
+  .controls button{background:#252b52;color:var(--accent2);border:1px solid #3a4170;padding:7px 12px;border-radius:8px;cursor:pointer;font-weight:700;font-size:.85rem;}
   .controls button:hover{background:var(--accent2);color:#0f1226;}
   .btn-volver{background:#252b52;color:var(--accent2);border:1px solid #3a4170;padding:7px 12px;border-radius:8px;cursor:pointer;font-weight:700;font-size:.85rem;}
   .btn-volver:hover{background:var(--accent2);color:#0f1226;}
+  .lang-switch{display:flex;gap:4px;background:#1a1f3c;padding:4px;border-radius:8px;border:1px solid #3a4170;}
+  .lang-switch button{background:transparent;color:var(--muted);border:none;padding:5px 11px;border-radius:6px;cursor:pointer;font-weight:800;font-size:.82rem;transition:.15s;}
+  .lang-switch button:hover{background:#252b52;}
+  .lang-switch button.active{background:var(--accent2);color:#0f1226;}
+  .export-group{display:flex;gap:4px;background:#1a1f3c;padding:4px;border-radius:8px;border:1px solid #3a4170;}
+  .export-group button{background:transparent;color:var(--accent2);border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-weight:800;font-size:.82rem;}
+  .export-group button:hover{background:var(--accent2);color:#0f1226;}
   main{max-width:1100px;margin:0 auto;padding:24px 20px 80px;}
   .slide{display:none;padding:40px 60px;border-radius:16px;}
   .slide.active{display:block;animation:fade .3s ease;}
@@ -77,335 +84,667 @@
 <div class="progress" id="progress"></div>
 <header>
   <div>
-    <h1>Bloque 4 · Unión Neuromuscular, Propiocepción y Control Motor</h1>
-    <div class="sub">Fisiología · 1º Danza · Curso 2026-2027 · Cèlia Painous</div>
+    <h1 id="headerTitulo">Bloque 4 · Unión Neuromuscular, Propiocepción y Control Motor</h1>
+    <div class="sub" id="headerSub">Fisiología · 1º Danza · Curso 2026-2027 · Cèlia Painous</div>
   </div>
   <div class="controls">
-    <button class="btn-volver" onclick="volverIndice()">← Índice</button>
-    <select id="langSel"><option value="es">ES</option><option value="ca">CA</option><option value="en">EN</option></select>
-    <button onclick="exportarInforme()">💾 Exportar</button>
-    <button onclick="reiniciar()">🔄 Reiniciar</button>
+    <button class="btn-volver" id="btnVolver" onclick="volverIndice()">← Índice</button>
+    <div class="lang-switch">
+      <button data-lang="es" class="active">ES</button>
+      <button data-lang="ca">CA</button>
+      <button data-lang="en">EN</button>
+    </div>
+    <div class="export-group">
+      <button onclick="exportarTXT()">📄 TXT</button>
+      <button onclick="exportarCSV()">📊 CSV</button>
+      <button onclick="exportarExcel()">📗 Excel</button>
+    </div>
+    <button onclick="reiniciar()" id="btnReset">🔄 Reiniciar</button>
   </div>
 </header>
 <main>
 
 <section class="slide active">
-  <h2>1. Unión neuromuscular y unidad motora</h2>
-  <p>La orden motora llega al músculo a través de la unión neuromuscular: se libera acetilcolina, entra calcio y se produce la contracción.</p>
+  <h2 data-i18n="s1t">1. Unión neuromuscular y unidad motora</h2>
+  <p data-i18n="s1i">La orden motora llega al músculo a través de la unión neuromuscular: se libera acetilcolina, entra calcio y se produce la contracción.</p>
   <div class="grid2">
-    <div class="box">
-      <h3>Unidad motora</h3>
-      <p>Una motoneurona + todas las fibras musculares que inerva.</p>
-    </div>
-    <div class="box" style="border-left-color:var(--accent);">
-      <h3>Reclutamiento</h3>
-      <p>Ante más fuerza necesaria, se reclutan más unidades motoras.</p>
-    </div>
+    <div class="box"><h3 data-i18n="s1h1">Unidad motora</h3><p data-i18n="s1l1">Una motoneurona + todas las fibras musculares que inerva.</p></div>
+    <div class="box" style="border-left-color:var(--accent);"><h3 data-i18n="s1h2">Reclutamiento</h3><p data-i18n="s1l2">Ante más fuerza necesaria, se reclutan más unidades motoras.</p></div>
   </div>
-  <div class="box danza"><b>Conexión danza:</b> un grand jeté requiere reclutar muchas unidades motoras rápido; un adagio recluta solo las necesarias.</div>
+  <div class="box danza" data-i18n="s1d"><b>Conexión danza:</b> un grand jeté requiere reclutar muchas unidades motoras rápido; un adagio recluta solo las necesarias.</div>
 </section>
 
 <section class="slide">
-  <h2>2. Propiocepción: el sexto sentido del bailarín</h2>
+  <h2 data-i18n="s2t">2. Propiocepción: el sexto sentido del bailarín</h2>
   <div class="grid2">
-    <div class="box">
-      <h3>Husos musculares</h3>
-      <p>Detectan el estiramiento y la velocidad de cambio de longitud.</p>
-    </div>
-    <div class="box" style="border-left-color:var(--accent);">
-      <h3>Órganos Tendinosos de Golgi (OTG)</h3>
-      <p>Detectan la tensión muscular para prevenir lesiones y activar la relajación refleja.</p>
-    </div>
+    <div class="box"><h3 data-i18n="s2h1">Husos musculares</h3><p data-i18n="s2l1">Detectan el estiramiento y la velocidad de cambio de longitud.</p></div>
+    <div class="box" style="border-left-color:var(--accent);"><h3 data-i18n="s2h2">Órganos Tendinosos de Golgi (OTG)</h3><p data-i18n="s2l2">Detectan la tensión muscular para prevenir lesiones y activar la relajación refleja.</p></div>
   </div>
-  <div class="box danza"><b>Conexión danza:</b> sin propiocepción no podrías mantener el equilibrio a una pierna con los ojos cerrados. Es la base de la precisión y la prevención de lesiones.</div>
+  <div class="box danza" data-i18n="s2d"><b>Conexión danza:</b> sin propiocepción no podrías mantener el equilibrio a una pierna con los ojos cerrados.</div>
 </section>
 
 <section class="slide">
-  <h2>3. Control motor: de la corteza a la médula</h2>
+  <h2 data-i18n="s3t">3. Control motor: de la corteza a la médula</h2>
   <ul>
-    <li><b>Corteza motora primaria</b>: ejecución.</li>
-    <li><b>Área premotora</b>: preparación del movimiento.</li>
-    <li><b>Área motora suplementaria</b>: secuencias complejas.</li>
-    <li><b>Foco de atención interno vs. externo</b>: dirigir la atención al propio cuerpo o al resultado.</li>
+    <li data-i18n="s3l1"><b>Corteza motora primaria</b>: ejecución.</li>
+    <li data-i18n="s3l2"><b>Área premotora</b>: preparación del movimiento.</li>
+    <li data-i18n="s3l3"><b>Área motora suplementaria</b>: secuencias complejas.</li>
+    <li data-i18n="s3l4"><b>Foco de atención interno vs. externo</b>: dirigir la atención al propio cuerpo o al resultado.</li>
   </ul>
-  <div class="box danza"><b>Conexión danza:</b> un foco externo ("llegar a la esquina") suele dar mejor resultado que un foco interno ("contraer el cuádriceps").</div>
+  <div class="box danza" data-i18n="s3d"><b>Conexión danza:</b> un foco externo ("llegar a la esquina") suele dar mejor resultado que un foco interno ("contraer el cuádriceps").</div>
 </section>
 
 <section class="slide">
-  <h2>4. Integración y resumen final</h2>
-  <div class="box nota"><b>Debriefing:</b> la propiocepción es clave en la prevención de lesiones y en la coordinación de movimientos complejos. ¿Cómo la entrenas en tu práctica diaria?</div>
+  <h2 data-i18n="s4t">4. Integración y resumen final</h2>
+  <div class="box nota" data-i18n="s4b"><b>Debriefing:</b> la propiocepción es clave en la prevención de lesiones y en la coordinación de movimientos complejos.</div>
 </section>
-
-<!-- ============ NUEVAS DIAPOSITIVAS 34-44 ============ -->
 
 <section class="slide">
   <span class="etiqueta-nueva">NUEVA · 34</span>
-  <h2>34. El ciclo de la contracción: actina, miosina y calcio</h2>
-  <p><b>Idea-fuerza:</b> para que un músculo se contraiga, no basta con que llegue la orden. Dentro del músculo tienen que <b>deslizarse unas proteínas</b> para acortar la fibra. El calcio es el interruptor.</p>
-  <div class="box nota"><b>Analogía:</b> imagina que quieres acercar dos libros que están en una estantería. Para moverlos, necesitas <b>tirar de ellos</b> con las manos. En el músculo, las "manos" son la miosina, los "libros" son la actina, y el calcio es la señal que dice "ahora".</div>
-  <h3>Las dos proteínas protagonistas</h3>
+  <h2 data-i18n="s34t">34. El ciclo de la contracción: actina, miosina y calcio</h2>
+  <p data-i18n="s34p1"><b>Idea-fuerza:</b> para que un músculo se contraiga, no basta con que llegue la orden. Dentro del músculo tienen que <b>deslizarse unas proteínas</b> para acortar la fibra.</p>
+  <div class="box nota" data-i18n="s34a"><b>Analogía:</b> imagina que quieres acercar dos libros. Para moverlos necesitas tirar de ellos. Las "manos" son la miosina, los "libros" son la actina, y el calcio es la señal que dice "ahora".</div>
+  <h3 data-i18n="s34h1">Las dos proteínas protagonistas</h3>
   <ul>
-    <li><b>Actina</b>: filamento delgado.</li>
-    <li><b>Miosina</b>: filamento grueso, con "cabezas" que se agarran a la actina.</li>
+    <li data-i18n="s34l1"><b>Actina</b>: filamento delgado.</li>
+    <li data-i18n="s34l2"><b>Miosina</b>: filamento grueso, con "cabezas" que se agarran a la actina.</li>
   </ul>
-  <h3>El ciclo paso a paso</h3>
+  <h3 data-i18n="s34h2">El ciclo paso a paso</h3>
   <ol>
-    <li>Llega la orden motora → se libera <b>acetilcolina</b>.</li>
-    <li>Entra <b>calcio (Ca²⁺)</b> en la fibra muscular.</li>
-    <li>El calcio "mueve" unas proteínas que bloqueaban la actina.</li>
-    <li>La <b>miosina</b> se agarra a la actina y <b>tira de ella</b>.</li>
-    <li>El músculo se <b>acorta</b> → contracción.</li>
-    <li>Cuando deja de llegar la orden, el calcio vuelve a su sitio y el músculo se <b>relaja</b>.</li>
+    <li data-i18n="s34l3">Llega la orden motora → se libera <b>acetilcolina</b>.</li>
+    <li data-i18n="s34l4">Entra <b>calcio (Ca²⁺)</b> en la fibra muscular.</li>
+    <li data-i18n="s34l5">El calcio "mueve" unas proteínas que bloqueaban la actina.</li>
+    <li data-i18n="s34l6">La <b>miosina</b> se agarra a la actina y <b>tira de ella</b>.</li>
+    <li data-i18n="s34l7">El músculo se <b>acorta</b> → contracción.</li>
+    <li data-i18n="s34l8">Cuando deja de llegar la orden, el calcio vuelve a su sitio y el músculo se <b>relaja</b>.</li>
   </ol>
-  <p><b>Qué necesita:</b> ATP (energía), calcio (activación), acetilcolina (inicio).</p>
-  <div class="box danza"><b>Conexión danza:</b> si no hay calcio suficiente, el músculo no se contrae bien (fatiga). Si no hay ATP, el músculo se agarrota (calambre). El calentamiento asegura que el calcio esté disponible.</div>
+  <p data-i18n="s34p2"><b>Qué necesita:</b> ATP (energía), calcio (activación), acetilcolina (inicio).</p>
+  <div class="box danza" data-i18n="s34d"><b>Conexión danza:</b> si no hay calcio suficiente, el músculo no se contrae bien (fatiga). Si no hay ATP, el músculo se agarrota (calambre).</div>
 </section>
 
 <section class="slide">
   <span class="etiqueta-nueva">NUEVA · 35</span>
-  <h2>35. Tipos de contracción: isométrica, concéntrica y excéntrica</h2>
-  <p><b>Idea-fuerza:</b> el músculo no siempre se acorta cuando trabaja. Hay tres formas de contraerse, y cada una tiene una función distinta en la danza.</p>
-  <div class="box nota"><b>Analogía:</b>
-    <ul>
-      <li><b>Isométrica</b>: como empujar una pared. Haces fuerza, pero la pared no se mueve.</li>
-      <li><b>Concéntrica</b>: como subir una escalera. El músculo se acorta.</li>
-      <li><b>Excéntrica</b>: como bajar una escalera. El músculo se alarga mientras frena.</li>
-    </ul>
-  </div>
+  <h2 data-i18n="s35t">35. Tipos de contracción: isométrica, concéntrica y excéntrica</h2>
+  <p data-i18n="s35p1"><b>Idea-fuerza:</b> el músculo no siempre se acorta cuando trabaja. Hay tres formas de contraerse.</p>
+  <div class="box nota" data-i18n="s35a"><b>Analogía:</b> isométrica como empujar una pared; concéntrica como subir una escalera; excéntrica como bajar una escalera.</div>
   <table>
-    <tr><th>Tipo</th><th>Qué pasa</th><th>Ejemplo dancístico</th><th>Fatiga</th></tr>
-    <tr><td><b>Isométrica</b></td><td>Fuerza sin cambiar de longitud</td><td>Mantener un arabesco</td><td>Media</td></tr>
-    <tr><td><b>Concéntrica</b></td><td>El músculo se acorta</td><td>Subir en relevé</td><td>Baja</td></tr>
-    <tr><td><b>Excéntrica</b></td><td>El músculo se alarga frenando</td><td>Bajar de un salto</td><td>Alta</td></tr>
+    <tr><th data-i18n="s35th1">Tipo</th><th data-i18n="s35th2">Qué pasa</th><th data-i18n="s35th3">Ejemplo dancístico</th><th data-i18n="s35th4">Fatiga</th></tr>
+    <tr><td data-i18n="s35r1a"><b>Isométrica</b></td><td data-i18n="s35r1b">Fuerza sin cambiar de longitud</td><td data-i18n="s35r1c">Mantener un arabesco</td><td data-i18n="s35r1d">Media</td></tr>
+    <tr><td data-i18n="s35r2a"><b>Concéntrica</b></td><td data-i18n="s35r2b">El músculo se acorta</td><td data-i18n="s35r2c">Subir en relevé</td><td data-i18n="s35r2d">Baja</td></tr>
+    <tr><td data-i18n="s35r3a"><b>Excéntrica</b></td><td data-i18n="s35r3b">El músculo se alarga frenando</td><td data-i18n="s35r3c">Bajar de un salto</td><td data-i18n="s35r3d">Alta</td></tr>
   </table>
-  <div class="box danza"><b>Conexión danza:</b> el tipo excéntrico es el que más fatiga y más lesiones produce. Es el que más se usa al aterrizar de un salto. Por eso después de un ensayo con muchos saltos duele más que uno con posiciones mantenidas.</div>
+  <div class="box danza" data-i18n="s35d"><b>Conexión danza:</b> el tipo excéntrico es el que más fatiga y más lesiones produce. Es el que más se usa al aterrizar de un salto.</div>
 </section>
 
 <section class="slide">
   <span class="etiqueta-nueva">NUEVA · 36</span>
-  <h2>36. Tipos de fibras musculares: lentas y rápidas</h2>
-  <p><b>Idea-fuerza:</b> no todas las fibras musculares son iguales. Unas resisten mucho tiempo, otras son rapidísimas pero se cansan enseguida.</p>
-  <div class="box nota"><b>Analogía:</b>
-    <ul>
-      <li><b>Fibras lentas</b>: como un coche híbrido. Poca potencia, pero aguanta todo el día.</li>
-      <li><b>Fibras rápidas</b>: como un coche de carreras. Muchísima potencia, pero se queda sin gasolina en pocos minutos.</li>
-    </ul>
-  </div>
+  <h2 data-i18n="s36t">36. Tipos de fibras musculares: lentas y rápidas</h2>
+  <p data-i18n="s36p1"><b>Idea-fuerza:</b> no todas las fibras musculares son iguales. Unas resisten mucho tiempo, otras son rapidísimas pero se cansan enseguida.</p>
+  <div class="box nota" data-i18n="s36a"><b>Analogía:</b> fibras lentas como un coche híbrido (aguanta todo el día); fibras rápidas como un coche de carreras (mucha potencia, poca autonomía).</div>
   <table>
-    <tr><th>Tipo</th><th>Velocidad</th><th>Resistencia</th><th>En danza</th></tr>
-    <tr><td><b>Tipo I (lentas)</b></td><td>Lenta</td><td>Alta</td><td>Mantener posturas, contemporáneo</td></tr>
-    <tr><td><b>Tipo IIa</b></td><td>Rápida</td><td>Media</td><td>Saltos repetidos, coreografías largas</td></tr>
-    <tr><td><b>Tipo IIx</b></td><td>Muy rápida</td><td>Baja</td><td>Grand jeté, saltos explosivos</td></tr>
+    <tr><th data-i18n="s36th1">Tipo</th><th data-i18n="s36th2">Velocidad</th><th data-i18n="s36th3">Resistencia</th><th data-i18n="s36th4">En danza</th></tr>
+    <tr><td data-i18n="s36r1a"><b>Tipo I (lentas)</b></td><td data-i18n="s36r1b">Lenta</td><td data-i18n="s36r1c">Alta</td><td data-i18n="s36r1d">Mantener posturas, contemporáneo</td></tr>
+    <tr><td data-i18n="s36r2a"><b>Tipo IIa</b></td><td data-i18n="s36r2b">Rápida</td><td data-i18n="s36r2c">Media</td><td data-i18n="s36r2d">Saltos repetidos, coreografías largas</td></tr>
+    <tr><td data-i18n="s36r3a"><b>Tipo IIx</b></td><td data-i18n="s36r3b">Muy rápida</td><td data-i18n="s36r3c">Baja</td><td data-i18n="s36r3d">Grand jeté, saltos explosivos</td></tr>
   </table>
-  <p><b>Reclutamiento ordenado:</b> primero las lentas, después las IIa, al final las IIx.</p>
-  <div class="box danza"><b>Conexión danza:</b> un grand jeté usa principalmente fibras IIx. Un adagio usa principalmente fibras I. Por eso el entrenamiento debe ser variado: fuerza, resistencia y potencia.</div>
+  <p data-i18n="s36p2"><b>Reclutamiento ordenado:</b> primero las lentas, después las IIa, al final las IIx.</p>
+  <div class="box danza" data-i18n="s36d"><b>Conexión danza:</b> un grand jeté usa principalmente fibras IIx. Un adagio usa principalmente fibras I.</div>
 </section>
 
 <section class="slide">
   <span class="etiqueta-nueva">NUEVA · 37</span>
-  <h2>37. Huso muscular completo: motoneuronas alfa y gamma</h2>
-  <p><b>Idea-fuerza:</b> el huso muscular no es un simple detector. Está <b>controlado por el propio cerebro</b> para ajustar su sensibilidad.</p>
-  <div class="box nota"><b>Analogía:</b> es como un micrófono con control de volumen: el cerebro decide si el micrófono tiene que estar más o menos sensible. Así se adapta a cada situación.</div>
-  <h3>Dos tipos de fibras dentro del huso</h3>
+  <h2 data-i18n="s37t">37. Huso muscular completo: motoneuronas alfa y gamma</h2>
+  <p data-i18n="s37p1"><b>Idea-fuerza:</b> el huso muscular no es un simple detector. Está <b>controlado por el propio cerebro</b> para ajustar su sensibilidad.</p>
+  <div class="box nota" data-i18n="s37a"><b>Analogía:</b> es como un micrófono con control de volumen: el cerebro decide si el micrófono tiene que estar más o menos sensible.</div>
+  <h3 data-i18n="s37h1">Dos tipos de fibras dentro del huso</h3>
   <ul>
-    <li><b>Fibras extrafusales</b>: las fibras "normales" del músculo, las que producen fuerza.</li>
-    <li><b>Fibras intrafusales</b>: están dentro del huso, detectan el estiramiento.</li>
+    <li data-i18n="s37l1"><b>Fibras extrafusales</b>: las fibras "normales" del músculo, las que producen fuerza.</li>
+    <li data-i18n="s37l2"><b>Fibras intrafusales</b>: están dentro del huso, detectan el estiramiento.</li>
   </ul>
-  <h3>Dos tipos de motoneuronas</h3>
+  <h3 data-i18n="s37h2">Dos tipos de motoneuronas</h3>
   <ul>
-    <li><b>Motoneurona alfa</b>: activa las fibras extrafusales → produce contracción.</li>
-    <li><b>Motoneurona gamma</b>: activa las fibras intrafusales → ajusta la sensibilidad del huso.</li>
+    <li data-i18n="s37l3"><b>Motoneurona alfa</b>: activa las fibras extrafusales → produce contracción.</li>
+    <li data-i18n="s37l4"><b>Motoneurona gamma</b>: activa las fibras intrafusales → ajusta la sensibilidad del huso.</li>
   </ul>
-  <div class="box danza"><b>Conexión danza:</b> en un movimiento lento, el cerebro ajusta el huso con alta sensibilidad. En un movimiento explosivo, baja la sensibilidad para no frenar. Por eso un bailarín puede ser preciso en un adagio y rápido en un salto.</div>
+  <div class="box danza" data-i18n="s37d"><b>Conexión danza:</b> en un movimiento lento, el cerebro ajusta el huso con alta sensibilidad. En un movimiento explosivo, baja la sensibilidad para no frenar.</div>
 </section>
 
 <section class="slide">
   <span class="etiqueta-nueva">NUEVA · 38</span>
-  <h2>38. Reflejo miotático inverso: el freno de seguridad</h2>
-  <p><b>Idea-fuerza:</b> si el reflejo miotático protege ante estiramientos, el <b>reflejo miotático inverso</b> protege ante <b>tensiones excesivas</b>. Es el "freno de seguridad" del músculo.</p>
-  <div class="box nota"><b>Analogía:</b> es como el fusible de una instalación eléctrica: si la corriente es demasiado alta, se corta para evitar daños mayores.</div>
-  <h3>El receptor</h3>
-  <p><b>Órgano tendinoso de Golgi (OTG)</b>: está en el tendón, donde el músculo se une al hueso. Detecta la tensión que soporta el tendón.</p>
-  <h3>Cómo funciona</h3>
+  <h2 data-i18n="s38t">38. Reflejo miotático inverso: el freno de seguridad</h2>
+  <p data-i18n="s38p1"><b>Idea-fuerza:</b> si el reflejo miotático protege ante estiramientos, el <b>reflejo miotático inverso</b> protege ante <b>tensiones excesivas</b>.</p>
+  <div class="box nota" data-i18n="s38a"><b>Analogía:</b> es como el fusible de una instalación eléctrica: si la corriente es demasiado alta, se corta para evitar daños mayores.</div>
+  <h3 data-i18n="s38h1">El receptor</h3>
+  <p data-i18n="s38p2"><b>Órgano tendinoso de Golgi (OTG)</b>: está en el tendón, donde el músculo se une al hueso. Detecta la tensión que soporta el tendón.</p>
+  <h3 data-i18n="s38h2">Cómo funciona</h3>
   <ol>
-    <li>El músculo genera mucha tensión.</li>
-    <li>El OTG lo detecta.</li>
-    <li>Envía una señal a la médula espinal.</li>
-    <li>La médula <b>inhibe</b> la motoneurona alfa.</li>
-    <li>El músculo se <b>relaja</b> para evitar daño.</li>
+    <li data-i18n="s38l1">El músculo genera mucha tensión.</li>
+    <li data-i18n="s38l2">El OTG lo detecta.</li>
+    <li data-i18n="s38l3">Envía una señal a la médula espinal.</li>
+    <li data-i18n="s38l4">La médula <b>inhibe</b> la motoneurona alfa.</li>
+    <li data-i18n="s38l5">El músculo se <b>relaja</b> para evitar daño.</li>
   </ol>
   <table>
-    <tr><th>Reflejo</th><th>Receptor</th><th>Estímulo</th><th>Respuesta</th></tr>
-    <tr><td>Miotático</td><td>Huso muscular</td><td>Estiramiento</td><td>Contracción</td></tr>
-    <tr><td>Miotático inverso</td><td>OTG</td><td>Tensión excesiva</td><td>Relajación</td></tr>
+    <tr><th data-i18n="s38th1">Reflejo</th><th data-i18n="s38th2">Receptor</th><th data-i18n="s38th3">Estímulo</th><th data-i18n="s38th4">Respuesta</th></tr>
+    <tr><td data-i18n="s38r1a">Miotático</td><td data-i18n="s38r1b">Huso muscular</td><td data-i18n="s38r1c">Estiramiento</td><td data-i18n="s38r1d">Contracción</td></tr>
+    <tr><td data-i18n="s38r2a">Miotático inverso</td><td data-i18n="s38r2b">OTG</td><td data-i18n="s38r2c">Tensión excesiva</td><td data-i18n="s38r2d">Relajación</td></tr>
   </table>
-  <div class="box danza"><b>Conexión danza:</b> si levantas demasiado peso en un porté, el OTG activa el reflejo inverso → sueltas. Los estiramientos mantenidos (30-60 s) funcionan mejor que los rebotes porque modulan este reflejo.</div>
+  <div class="box danza" data-i18n="s38d"><b>Conexión danza:</b> si levantas demasiado peso en un porté, el OTG activa el reflejo inverso → sueltas.</div>
 </section>
 
 <section class="slide">
   <span class="etiqueta-nueva">NUEVA · 39</span>
-  <h2>39. Coordinación muscular: agonista, antagonista, sinergista</h2>
-  <p><b>Idea-fuerza:</b> ningún movimiento lo hace un solo músculo. Siempre hay <b>varios músculos</b> trabajando a la vez, con roles distintos.</p>
-  <div class="box nota"><b>Analogía:</b> es como un equipo de fútbol: hay un jugador que marca el gol (agonista), otro que cubre la defensa (antagonista) y otros que apoyan (sinergistas).</div>
+  <h2 data-i18n="s39t">39. Coordinación muscular: agonista, antagonista, sinergista</h2>
+  <p data-i18n="s39p1"><b>Idea-fuerza:</b> ningún movimiento lo hace un solo músculo. Siempre hay <b>varios músculos</b> trabajando a la vez, con roles distintos.</p>
+  <div class="box nota" data-i18n="s39a"><b>Analogía:</b> es como un equipo de fútbol: hay un jugador que marca el gol (agonista), otro que cubre la defensa (antagonista) y otros que apoyan (sinergistas).</div>
   <table>
-    <tr><th>Rol</th><th>Qué hace</th><th>Ejemplo en danza</th></tr>
-    <tr><td><b>Agonista</b></td><td>Ejecuta el movimiento principal</td><td>Cuádriceps al subir en relevé</td></tr>
-    <tr><td><b>Antagonista</b></td><td>Se relaja para permitir el movimiento</td><td>Isquiotibiales al subir</td></tr>
-    <tr><td><b>Sinergista</b></td><td>Ayuda al agonista y estabiliza</td><td>Gemelos y sóleo al estabilizar el tobillo</td></tr>
+    <tr><th data-i18n="s39th1">Rol</th><th data-i18n="s39th2">Qué hace</th><th data-i18n="s39th3">Ejemplo en danza</th></tr>
+    <tr><td data-i18n="s39r1a"><b>Agonista</b></td><td data-i18n="s39r1b">Ejecuta el movimiento principal</td><td data-i18n="s39r1c">Cuádriceps al subir en relevé</td></tr>
+    <tr><td data-i18n="s39r2a"><b>Antagonista</b></td><td data-i18n="s39r2b">Se relaja para permitir el movimiento</td><td data-i18n="s39r2c">Isquiotibiales al subir</td></tr>
+    <tr><td data-i18n="s39r3a"><b>Sinergista</b></td><td data-i18n="s39r3b">Ayuda al agonista y estabiliza</td><td data-i18n="s39r3c">Gemelos y sóleo al estabilizar el tobillo</td></tr>
   </table>
-  <div class="box danza"><b>Conexión danza:</b> un arabesco requiere agonistas, antagonistas y sinergistas. Si el antagonista no se relaja, el movimiento es rígido. Si los sinergistas no estabilizan, hay pérdida de equilibrio.</div>
+  <div class="box danza" data-i18n="s39d"><b>Conexión danza:</b> un arabesco requiere agonistas, antagonistas y sinergistas. Si el antagonista no se relaja, el movimiento es rígido.</div>
 </section>
 
 <section class="slide">
   <span class="etiqueta-nueva">NUEVA · 40</span>
-  <h2>40. Feedback y feedforward en el movimiento</h2>
-  <p><b>Idea-fuerza:</b> el cerebro no solo <b>corrige</b> el movimiento mientras ocurre (feedback). También lo <b>anticipa</b> antes de que ocurra (feedforward).</p>
-  <div class="box nota"><b>Analogía:</b>
-    <ul>
-      <li><b>Feedback</b>: como conducir mirando el retrovisor. Corriges después de ver lo que ha pasado.</li>
-      <li><b>Feedforward</b>: como conducir mirando hacia delante. Anticipas lo que va a pasar.</li>
-    </ul>
-  </div>
+  <h2 data-i18n="s40t">40. Feedback y feedforward en el movimiento</h2>
+  <p data-i18n="s40p1"><b>Idea-fuerza:</b> el cerebro no solo <b>corrige</b> el movimiento mientras ocurre (feedback). También lo <b>anticipa</b> antes de que ocurra (feedforward).</p>
+  <div class="box nota" data-i18n="s40a"><b>Analogía:</b> feedback como conducir mirando el retrovisor; feedforward como conducir mirando hacia delante.</div>
   <table>
-    <tr><th>Mecanismo</th><th>Cuándo actúa</th><th>Ejemplo dancístico</th></tr>
-    <tr><td><b>Feedforward</b></td><td>Antes del movimiento</td><td>Contraer abdominales antes de un salto</td></tr>
-    <tr><td><b>Feedback</b></td><td>Durante y después</td><td>Ajustar el equilibrio si te tambaleas</td></tr>
+    <tr><th data-i18n="s40th1">Mecanismo</th><th data-i18n="s40th2">Cuándo actúa</th><th data-i18n="s40th3">Ejemplo dancístico</th></tr>
+    <tr><td data-i18n="s40r1a"><b>Feedforward</b></td><td data-i18n="s40r1b">Antes del movimiento</td><td data-i18n="s40r1c">Contraer abdominales antes de un salto</td></tr>
+    <tr><td data-i18n="s40r2a"><b>Feedback</b></td><td data-i18n="s40r2b">Durante y después</td><td data-i18n="s40r2c">Ajustar el equilibrio si te tambaleas</td></tr>
   </table>
-  <div class="box danza"><b>Conexión danza:</b> antes de un grand jeté, el cuerpo se prepara con feedforward. Durante el salto, el feedback corrige el eje. Los bailarines expertos tienen más feedforward.</div>
+  <div class="box danza" data-i18n="s40d"><b>Conexión danza:</b> antes de un grand jeté, el cuerpo se prepara con feedforward. Los bailarines expertos tienen más feedforward.</div>
 </section>
 
 <section class="slide">
   <span class="etiqueta-nueva">NUEVA · 41</span>
-  <h2>41. Fatiga neuromuscular: central vs. periférica</h2>
-  <p><b>Idea-fuerza:</b> cuando te cansas, no es solo el músculo el que falla. Hay <b>dos tipos de fatiga</b>: una en el cerebro (central) y otra en el músculo (periférica).</p>
-  <div class="box nota"><b>Analogía:</b>
-    <ul>
-      <li><b>Fatiga central</b>: como quedarte sin batería en el móvil. El aparato funciona, pero no responde.</li>
-      <li><b>Fatiga periférica</b>: como quedarte sin gasolina en el coche. El motor está bien, pero no tiene energía.</li>
-    </ul>
-  </div>
+  <h2 data-i18n="s41t">41. Fatiga neuromuscular: central vs. periférica</h2>
+  <p data-i18n="s41p1"><b>Idea-fuerza:</b> cuando te cansas, no es solo el músculo el que falla. Hay <b>dos tipos de fatiga</b>.</p>
+  <div class="box nota" data-i18n="s41a"><b>Analogía:</b> fatiga central como quedarte sin batería en el móvil; fatiga periférica como quedarte sin gasolina en el coche.</div>
   <table>
-    <tr><th>Tipo</th><th>Dónde ocurre</th><th>Causas</th><th>Síntomas</th></tr>
-    <tr><td><b>Central</b></td><td>SNC</td><td>Agotamiento de neurotransmisores, falta de glucosa, deshidratación</td><td>Falta de concentración, movimientos lentos</td></tr>
-    <tr><td><b>Periférica</b></td><td>Músculo</td><td>Agotamiento de ATP, metabolitos, falta de calcio</td><td>Temblor, debilidad, calambres</td></tr>
+    <tr><th data-i18n="s41th1">Tipo</th><th data-i18n="s41th2">Dónde ocurre</th><th data-i18n="s41th3">Causas</th><th data-i18n="s41th4">Síntomas</th></tr>
+    <tr><td data-i18n="s41r1a"><b>Central</b></td><td data-i18n="s41r1b">SNC</td><td data-i18n="s41r1c">Agotamiento de neurotransmisores, falta de glucosa, deshidratación</td><td data-i18n="s41r1d">Falta de concentración, movimientos lentos</td></tr>
+    <tr><td data-i18n="s41r2a"><b>Periférica</b></td><td data-i18n="s41r2b">Músculo</td><td data-i18n="s41r2c">Agotamiento de ATP, metabolitos, falta de calcio</td><td data-i18n="s41r2d">Temblor, debilidad, calambres</td></tr>
   </table>
-  <div class="box danza"><b>Conexión danza:</b> en un ensayo largo, primero aparece la fatiga central (pierdes concentración). Después, la periférica (los músculos fallan). Por eso conviene descansar entre bloques de ensayo, no solo al final.</div>
+  <div class="box danza" data-i18n="s41d"><b>Conexión danza:</b> en un ensayo largo, primero aparece la fatiga central (pierdes concentración). Después, la periférica (los músculos fallan).</div>
 </section>
 
 <section class="slide">
   <span class="etiqueta-nueva">NUEVA · 42</span>
-  <h2>42. Adaptaciones al entrenamiento dancístico</h2>
-  <p><b>Idea-fuerza:</b> el entrenamiento no solo mejora el músculo. También <b>reorganiza el sistema nervioso</b>. Eso es lo que hace que un bailarín experto se mueva distinto.</p>
-  <div class="box nota"><b>Analogía:</b> es como actualizar un ordenador: no cambias las piezas, pero mejoras el software.</div>
+  <h2 data-i18n="s42t">42. Adaptaciones al entrenamiento dancístico</h2>
+  <p data-i18n="s42p1"><b>Idea-fuerza:</b> el entrenamiento no solo mejora el músculo. También <b>reorganiza el sistema nervioso</b>.</p>
+  <div class="box nota" data-i18n="s42a"><b>Analogía:</b> es como actualizar un ordenador: no cambias las piezas, pero mejoras el software.</div>
   <table>
-    <tr><th>Adaptación</th><th>Qué cambia</th><th>En danza</th></tr>
-    <tr><td><b>Mejora de la propiocepción</b></td><td>Más precisión sensorial</td><td>Mejor equilibrio, menos lesiones</td></tr>
-    <tr><td><b>Mayor eficiencia sináptica</b></td><td>Menos esfuerzo para el mismo movimiento</td><td>Movimientos más fluidos</td></tr>
-    <tr><td><b>Cambios corticales</b></td><td>Más área dedicada al movimiento entrenado</td><td>Más control y precisión</td></tr>
-    <tr><td><b>Mejor coordinación muscular</b></td><td>Menos tensión innecesaria</td><td>Movimientos más económicos</td></tr>
-    <tr><td><b>Mejora del feedforward</b></td><td>Más anticipación</td><td>Movimientos más preparados</td></tr>
+    <tr><th data-i18n="s42th1">Adaptación</th><th data-i18n="s42th2">Qué cambia</th><th data-i18n="s42th3">En danza</th></tr>
+    <tr><td data-i18n="s42r1a"><b>Mejora de la propiocepción</b></td><td data-i18n="s42r1b">Más precisión sensorial</td><td data-i18n="s42r1c">Mejor equilibrio, menos lesiones</td></tr>
+    <tr><td data-i18n="s42r2a"><b>Mayor eficiencia sináptica</b></td><td data-i18n="s42r2b">Menos esfuerzo para el mismo movimiento</td><td data-i18n="s42r2c">Movimientos más fluidos</td></tr>
+    <tr><td data-i18n="s42r3a"><b>Cambios corticales</b></td><td data-i18n="s42r3b">Más área dedicada al movimiento entrenado</td><td data-i18n="s42r3c">Más control y precisión</td></tr>
+    <tr><td data-i18n="s42r4a"><b>Mejor coordinación muscular</b></td><td data-i18n="s42r4b">Menos tensión innecesaria</td><td data-i18n="s42r4c">Movimientos más económicos</td></tr>
+    <tr><td data-i18n="s42r5a"><b>Mejora del feedforward</b></td><td data-i18n="s42r5b">Más anticipación</td><td data-i18n="s42r5c">Movimientos más preparados</td></tr>
   </table>
-  <div class="box danza"><b>Conexión danza:</b> un bailarín experto no recluta más músculos que un principiante: recluta los justos. No piensa cada movimiento: lo tiene automatizado. Por eso el entrenamiento debe ser constante y variado.</div>
+  <div class="box danza" data-i18n="s42d"><b>Conexión danza:</b> un bailarín experto no recluta más músculos que un principiante: recluta los justos.</div>
 </section>
 
 <section class="slide">
   <span class="etiqueta-nueva">NUEVA · 43</span>
-  <h2>43. Control postural: la triple integración en equilibrio</h2>
-  <p><b>Idea-fuerza:</b> mantener una postura no es solo cuestión de fuerza. Es la <b>integración de tres sistemas</b> que trabajan juntos.</p>
-  <div class="box nota"><b>Analogía:</b> es como mantener un plato girando sobre un palo: necesitas verlo, sentirlo y anticipar los movimientos. Si falla una de las tres cosas, el plato se cae.</div>
+  <h2 data-i18n="s43t">43. Control postural: la triple integración en equilibrio</h2>
+  <p data-i18n="s43p1"><b>Idea-fuerza:</b> mantener una postura no es solo cuestión de fuerza. Es la <b>integración de tres sistemas</b>.</p>
+  <div class="box nota" data-i18n="s43a"><b>Analogía:</b> es como mantener un plato girando sobre un palo: necesitas verlo, sentirlo y anticipar los movimientos.</div>
   <table>
-    <tr><th>Sistema</th><th>Qué aporta</th><th>En danza</th></tr>
-    <tr><td><b>Visual</b></td><td>Referencia espacial</td><td>Fijar la mirada en un punto en un giro</td></tr>
-    <tr><td><b>Vestibular</b></td><td>Detección de aceleraciones</td><td>Notar que giras</td></tr>
-    <tr><td><b>Propioceptivo</b></td><td>Posición del cuerpo</td><td>Notar el pie en el suelo</td></tr>
+    <tr><th data-i18n="s43th1">Sistema</th><th data-i18n="s43th2">Qué aporta</th><th data-i18n="s43th3">En danza</th></tr>
+    <tr><td data-i18n="s43r1a"><b>Visual</b></td><td data-i18n="s43r1b">Referencia espacial</td><td data-i18n="s43r1c">Fijar la mirada en un punto en un giro</td></tr>
+    <tr><td data-i18n="s43r2a"><b>Vestibular</b></td><td data-i18n="s43r2b">Detección de aceleraciones</td><td data-i18n="s43r2c">Notar que giras</td></tr>
+    <tr><td data-i18n="s43r3a"><b>Propioceptivo</b></td><td data-i18n="s43r3b">Posición del cuerpo</td><td data-i18n="s43r3c">Notar el pie en el suelo</td></tr>
   </table>
-  <p><b>Dónde se integra:</b> en el cerebelo y el tronco encefálico.</p>
-  <div class="box danza"><b>Conexión danza:</b> un giro, un arabesco y un equilibrio a una pierna usan los tres sistemas. Entrenar con ojos cerrados mejora la propiocepción. Entrenar en superficies inestables mejora el vestibular.</div>
+  <p data-i18n="s43p2"><b>Dónde se integra:</b> en el cerebelo y el tronco encefálico.</p>
+  <div class="box danza" data-i18n="s43d"><b>Conexión danza:</b> un giro, un arabesco y un equilibrio a una pierna usan los tres sistemas.</div>
 </section>
 
 <section class="slide">
   <span class="etiqueta-nueva">NUEVA · 44</span>
-  <h2>44. Aplicación dancística: cómo se traduce todo esto en tu entrenamiento</h2>
-  <p><b>Idea-fuerza:</b> todo lo que has visto en el Bloque 4 tiene una traducción práctica en tu día a día.</p>
-  <h3>1. Cuida la contracción muscular</h3>
+  <h2 data-i18n="s44t">44. Aplicación dancística</h2>
+  <p data-i18n="s44p1"><b>Idea-fuerza:</b> todo lo que has visto en el Bloque 4 tiene una traducción práctica.</p>
+  <h3 data-i18n="s44h1">1. Cuida la contracción muscular</h3>
   <ul>
-    <li>Calienta antes de entrenar (calcio disponible).</li>
-    <li>No hagas muchas contracciones excéntricas seguidas.</li>
-    <li>Alterna tipos de contracción.</li>
+    <li data-i18n="s44l1">Calienta antes de entrenar (calcio disponible).</li>
+    <li data-i18n="s44l2">No hagas muchas contracciones excéntricas seguidas.</li>
+    <li data-i18n="s44l3">Alterna tipos de contracción.</li>
   </ul>
-  <h3>2. Entrena todos los tipos de fibras</h3>
+  <h3 data-i18n="s44h2">2. Entrena todos los tipos de fibras</h3>
   <ul>
-    <li>Resistencia (fibras I).</li>
-    <li>Fuerza y potencia (fibras II).</li>
+    <li data-i18n="s44l4">Resistencia (fibras I).</li>
+    <li data-i18n="s44l5">Fuerza y potencia (fibras II).</li>
   </ul>
-  <h3>3. Entrena la propiocepción</h3>
+  <h3 data-i18n="s44h3">3. Entrena la propiocepción</h3>
   <ul>
-    <li>Ejercicios con ojos cerrados.</li>
-    <li>Superficies inestables.</li>
-    <li>Trabajo descalzo.</li>
+    <li data-i18n="s44l6">Ejercicios con ojos cerrados.</li>
+    <li data-i18n="s44l7">Superficies inestables.</li>
+    <li data-i18n="s44l8">Trabajo descalzo.</li>
   </ul>
-  <h3>4. Aprovecha el feedforward</h3>
+  <h3 data-i18n="s44h4">4. Aprovecha el feedforward</h3>
   <ul>
-    <li>Anticipa el movimiento antes de ejecutarlo.</li>
-    <li>Visualiza antes de bailar.</li>
-    <li>Prepara el cuerpo con la respiración.</li>
+    <li data-i18n="s44l9">Anticipa el movimiento antes de ejecutarlo.</li>
+    <li data-i18n="s44l10">Visualiza antes de bailar.</li>
+    <li data-i18n="s44l11">Prepara el cuerpo con la respiración.</li>
   </ul>
-  <h3>5. Gestiona la fatiga</h3>
+  <h3 data-i18n="s44h5">5. Gestiona la fatiga</h3>
   <ul>
-    <li>Descansa entre bloques de ensayo.</li>
-    <li>Hidrátate y come bien.</li>
-    <li>Duerme lo suficiente.</li>
+    <li data-i18n="s44l12">Descansa entre bloques de ensayo.</li>
+    <li data-i18n="s44l13">Hidrátate y come bien.</li>
+    <li data-i18n="s44l14">Duerme lo suficiente.</li>
   </ul>
-  <h3>6. Confía en la adaptación</h3>
+  <h3 data-i18n="s44h6">6. Confía en la adaptación</h3>
   <ul>
-    <li>La repetición significativa mejora el sistema nervioso.</li>
-    <li>La variabilidad acelera el aprendizaje.</li>
-    <li>El descanso consolida lo aprendido.</li>
+    <li data-i18n="s44l15">La repetición significativa mejora el sistema nervioso.</li>
+    <li data-i18n="s44l16">La variabilidad acelera el aprendizaje.</li>
+    <li data-i18n="s44l17">El descanso consolida lo aprendido.</li>
   </ul>
-  <h3>7. Cuida el equilibrio</h3>
+  <h3 data-i18n="s44h7">7. Cuida el equilibrio</h3>
   <ul>
-    <li>Entrena los tres sistemas.</li>
-    <li>No dependas solo de la vista.</li>
-    <li>Trabaja el equilibrio en distintas condiciones.</li>
+    <li data-i18n="s44l18">Entrena los tres sistemas.</li>
+    <li data-i18n="s44l19">No dependas solo de la vista.</li>
+    <li data-i18n="s44l20">Trabaja el equilibrio en distintas condiciones.</li>
   </ul>
-  <div class="box danza"><b>Analogía final:</b> tu sistema nervioso es como un <b>director de orquesta</b> que coordina músculos, sentidos, emociones y equilibrio. Cuidar tu sistema nervioso es cuidar tu danza.</div>
+  <div class="box danza" data-i18n="s44d"><b>Analogía final:</b> tu sistema nervioso es como un <b>director de orquesta</b>. Cuidar tu sistema nervioso es cuidar tu danza.</div>
 </section>
 
-<!-- ============ ACTIVIDADES ============ -->
 <section class="slide">
-  <h2>Actividades del Bloque 4</h2>
-  <p>15 actividades cortas. Se guardan automáticamente.</p>
+  <h2 id="actTitulo">Actividades del Bloque 4</h2>
+  <p id="actIntro">15 actividades cortas. Se guardan automáticamente.</p>
   <div class="progreso-actividades">
-    <span><b id="pCompletadas">0</b>/15 completadas</span>
+    <span><b id="pCompletadas">0</b>/15 <span id="txtCompl">completadas</span></span>
     <div class="bar"><div class="bar-fill" id="pBar" style="width:0%"></div></div>
-    <span style="color:var(--muted);">Autoguardado</span>
+    <span style="color:var(--muted);" id="txtAuto">Autoguardado</span>
   </div>
   <div id="contenedorActividades"></div>
-  <div class="media-box"><span>📊 Nota media de tus actividades:</span><span class="nota-grande" id="notaMedia">—</span></div>
+  <div class="media-box"><span id="txtMedia">📊 Nota media:</span><span class="nota-grande" id="notaMedia">—</span></div>
   <div class="autoeval-box">
-    <h4>🤔 Autoevaluación del bloque</h4>
-    <p>Después de ver los esquemas y tu nota media, ¿qué nota te pondrías?</p>
+    <h4 id="autoTitulo">🤔 Autoevaluación del bloque</h4>
+    <p id="autoP1">¿Qué nota te pondrías?</p>
     <div class="escala">
-      <label><input type="radio" name="autoeval-rango" value="0-4"><span>Insuficiente (0-4)</span></label>
-      <label><input type="radio" name="autoeval-rango" value="5-6"><span>Suficiente (5-6)</span></label>
-      <label><input type="radio" name="autoeval-rango" value="7-8"><span>Notable (7-8)</span></label>
-      <label><input type="radio" name="autoeval-rango" value="9-10"><span>Excelente (9-10)</span></label>
+      <label><input type="radio" name="autoeval-rango" value="0-4"><span id="aInsuf">Insuficiente (0-4)</span></label>
+      <label><input type="radio" name="autoeval-rango" value="5-6"><span id="aSuf">Suficiente (5-6)</span></label>
+      <label><input type="radio" name="autoeval-rango" value="7-8"><span id="aNot">Notable (7-8)</span></label>
+      <label><input type="radio" name="autoeval-rango" value="9-10"><span id="aExc">Excelente (9-10)</span></label>
     </div>
-    <div class="nota-propia"><span>Nota concreta (0-10):</span><input type="number" min="0" max="10" step="0.5" data-autoeval-nota></div>
-    <p style="margin-top:12px;font-size:.9rem;">Justifica tu nota:</p>
+    <div class="nota-propia"><span id="aNotaTxt">Nota concreta:</span><input type="number" min="0" max="10" step="0.5" data-autoeval-nota></div>
+    <p style="margin-top:12px;font-size:.9rem;" id="aJustTxt">Justifica tu nota:</p>
     <textarea data-autoeval-text placeholder="..."></textarea>
   </div>
-  <div class="acciones" style="margin-top:20px;"><button onclick="exportarInforme()">💾 Descargar informe completo</button></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:20px;">
+    <button onclick="exportarTXT()" style="background:var(--accent2);color:#0f1226;border:none;padding:9px 16px;border-radius:8px;font-weight:800;cursor:pointer;">💾 Descargar TXT</button>
+    <button onclick="exportarCSV()" style="background:#b07cff;color:#fff;border:none;padding:9px 16px;border-radius:8px;font-weight:800;cursor:pointer;">📊 Descargar CSV</button>
+    <button onclick="exportarExcel()" style="background:var(--ok);color:#0f1226;border:none;padding:9px 16px;border-radius:8px;font-weight:800;cursor:pointer;">📗 Descargar Excel</button>
+  </div>
 </section>
 
 </main>
-<div class="counter" id="counter">Diapositiva 1 / 17</div>
-<div class="nav"><button onclick="prev()">← Anterior</button><button onclick="next()">Siguiente →</button></div>
+<div class="counter" id="counter">Diapositiva 1 / 18</div>
+<div class="nav"><button onclick="prev()" id="navPrev">← Anterior</button><button onclick="next()" id="navNext">Siguiente →</button></div>
 
 <script>
 const NUM_BLOQUE = 4;
 const STORAGE = 'bloque4_respuestas_v2';
-const TITULO_BLOQUE = {es:'BLOQUE 4 · UNIÓN NEUROMUSCULAR Y CONTROL MOTOR'};
+const TITULO_BLOQUE = {es:'BLOQUE 4 · UNIÓN NEUROMUSCULAR Y CONTROL MOTOR',ca:'BLOC 4 · UNIÓ NEUROMUSCULAR I CONTROL MOTOR',en:'BLOCK 4 · NEUROMUSCULAR JUNCTION AND MOTOR CONTROL'};
+
+const I18N = {
+  es:{
+    headerTitulo:"Bloque 4 · Unión Neuromuscular, Propiocepción y Control Motor", headerSub:"Fisiología · 1º Danza · Curso 2026-2027 · Cèlia Painous",
+    btnVolver:"← Índice", btnReset:"🔄 Reiniciar", navPrev:"← Anterior", navNext:"Siguiente →",
+    btnComprobar:"Comprobar", btnValorar:"Valorar", btnVer:"Ver solución",
+    fbOk:"✅ ¡Correcto!", fbKo:"❌ Revisa tu respuesta.", fbGuardado:"💾 Guardado.",
+    chipIndiv:"Individual", chipPareja:"Parejas", chipGrupo:"Grupos 2-3",
+    txtCompl:"completadas", txtAuto:"Autoguardado", txtMedia:"📊 Nota media:",
+    autoTitulo:"🤔 Autoevaluación del bloque", autoP1:"¿Qué nota te pondrías?",
+    aInsuf:"Insuficiente (0-4)", aSuf:"Suficiente (5-6)", aNot:"Notable (7-8)", aExc:"Excelente (9-10)",
+    aNotaTxt:"Nota concreta:", aJustTxt:"Justifica tu nota:", placeholder:"Escribe aquí tu respuesta...",
+    actTitulo:"Actividades del Bloque 4", actIntro:"15 actividades cortas. Se guardan automáticamente.",
+    s1t:"1. Unión neuromuscular y unidad motora",
+    s1i:"La orden motora llega al músculo a través de la unión neuromuscular: se libera acetilcolina, entra calcio y se produce la contracción.",
+    s1h1:"Unidad motora", s1l1:"Una motoneurona + todas las fibras musculares que inerva.",
+    s1h2:"Reclutamiento", s1l2:"Ante más fuerza necesaria, se reclutan más unidades motoras.",
+    s1d:"<b>Conexión danza:</b> un grand jeté requiere reclutar muchas unidades motoras rápido; un adagio recluta solo las necesarias.",
+    s2t:"2. Propiocepción: el sexto sentido del bailarín",
+    s2h1:"Husos musculares", s2l1:"Detectan el estiramiento y la velocidad de cambio de longitud.",
+    s2h2:"Órganos Tendinosos de Golgi (OTG)", s2l2:"Detectan la tensión muscular para prevenir lesiones y activar la relajación refleja.",
+    s2d:"<b>Conexión danza:</b> sin propiocepción no podrías mantener el equilibrio a una pierna con los ojos cerrados.",
+    s3t:"3. Control motor: de la corteza a la médula",
+    s3l1:"<b>Corteza motora primaria</b>: ejecución.", s3l2:"<b>Área premotora</b>: preparación del movimiento.",
+    s3l3:"<b>Área motora suplementaria</b>: secuencias complejas.", s3l4:"<b>Foco de atención interno vs. externo</b>: dirigir la atención al propio cuerpo o al resultado.",
+    s3d:"<b>Conexión danza:</b> un foco externo ('llegar a la esquina') suele dar mejor resultado que un foco interno ('contraer el cuádriceps').",
+    s4t:"4. Integración y resumen final", s4b:"<b>Debriefing:</b> la propiocepción es clave en la prevención de lesiones y en la coordinación de movimientos complejos.",
+    s34t:"34. El ciclo de la contracción: actina, miosina y calcio",
+    s34p1:"<b>Idea-fuerza:</b> para que un músculo se contraiga, no basta con que llegue la orden. Dentro del músculo tienen que <b>deslizarse unas proteínas</b> para acortar la fibra.",
+    s34a:"<b>Analogía:</b> imagina que quieres acercar dos libros. Para moverlos necesitas tirar de ellos. Las 'manos' son la miosina, los 'libros' son la actina, y el calcio es la señal que dice 'ahora'.",
+    s34h1:"Las dos proteínas protagonistas", s34l1:"<b>Actina</b>: filamento delgado.", s34l2:"<b>Miosina</b>: filamento grueso, con 'cabezas' que se agarran a la actina.",
+    s34h2:"El ciclo paso a paso",
+    s34l3:"Llega la orden motora → se libera <b>acetilcolina</b>.", s34l4:"Entra <b>calcio (Ca²⁺)</b> en la fibra muscular.",
+    s34l5:"El calcio 'mueve' unas proteínas que bloqueaban la actina.", s34l6:"La <b>miosina</b> se agarra a la actina y <b>tira de ella</b>.",
+    s34l7:"El músculo se <b>acorta</b> → contracción.", s34l8:"Cuando deja de llegar la orden, el calcio vuelve a su sitio y el músculo se <b>relaja</b>.",
+    s34p2:"<b>Qué necesita:</b> ATP (energía), calcio (activación), acetilcolina (inicio).",
+    s34d:"<b>Conexión danza:</b> si no hay calcio suficiente, el músculo no se contrae bien (fatiga). Si no hay ATP, el músculo se agarrota (calambre).",
+    s35t:"35. Tipos de contracción: isométrica, concéntrica y excéntrica",
+    s35p1:"<b>Idea-fuerza:</b> el músculo no siempre se acorta cuando trabaja. Hay tres formas de contraerse.",
+    s35a:"<b>Analogía:</b> isométrica como empujar una pared; concéntrica como subir una escalera; excéntrica como bajar una escalera.",
+    s35th1:"Tipo", s35th2:"Qué pasa", s35th3:"Ejemplo dancístico", s35th4:"Fatiga",
+    s35r1a:"<b>Isométrica</b>", s35r1b:"Fuerza sin cambiar de longitud", s35r1c:"Mantener un arabesco", s35r1d:"Media",
+    s35r2a:"<b>Concéntrica</b>", s35r2b:"El músculo se acorta", s35r2c:"Subir en relevé", s35r2d:"Baja",
+    s35r3a:"<b>Excéntrica</b>", s35r3b:"El músculo se alarga frenando", s35r3c:"Bajar de un salto", s35r3d:"Alta",
+    s35d:"<b>Conexión danza:</b> el tipo excéntrico es el que más fatiga y más lesiones produce. Es el que más se usa al aterrizar de un salto.",
+    s36t:"36. Tipos de fibras musculares: lentas y rápidas",
+    s36p1:"<b>Idea-fuerza:</b> no todas las fibras musculares son iguales. Unas resisten mucho tiempo, otras son rapidísimas pero se cansan enseguida.",
+    s36a:"<b>Analogía:</b> fibras lentas como un coche híbrido; fibras rápidas como un coche de carreras.",
+    s36th1:"Tipo", s36th2:"Velocidad", s36th3:"Resistencia", s36th4:"En danza",
+    s36r1a:"<b>Tipo I (lentas)</b>", s36r1b:"Lenta", s36r1c:"Alta", s36r1d:"Mantener posturas, contemporáneo",
+    s36r2a:"<b>Tipo IIa</b>", s36r2b:"Rápida", s36r2c:"Media", s36r2d:"Saltos repetidos, coreografías largas",
+    s36r3a:"<b>Tipo IIx</b>", s36r3b:"Muy rápida", s36r3c:"Baja", s36r3d:"Grand jeté, saltos explosivos",
+    s36p2:"<b>Reclutamiento ordenado:</b> primero las lentas, después las IIa, al final las IIx.",
+    s36d:"<b>Conexión danza:</b> un grand jeté usa principalmente fibras IIx. Un adagio usa principalmente fibras I.",
+    s37t:"37. Huso muscular completo: motoneuronas alfa y gamma",
+    s37p1:"<b>Idea-fuerza:</b> el huso muscular no es un simple detector. Está <b>controlado por el propio cerebro</b> para ajustar su sensibilidad.",
+    s37a:"<b>Analogía:</b> es como un micrófono con control de volumen: el cerebro decide si el micrófono tiene que estar más o menos sensible.",
+    s37h1:"Dos tipos de fibras dentro del huso",
+    s37l1:"<b>Fibras extrafusales</b>: las fibras 'normales' del músculo, las que producen fuerza.",
+    s37l2:"<b>Fibras intrafusales</b>: están dentro del huso, detectan el estiramiento.",
+    s37h2:"Dos tipos de motoneuronas",
+    s37l3:"<b>Motoneurona alfa</b>: activa las fibras extrafusales → produce contracción.",
+    s37l4:"<b>Motoneurona gamma</b>: activa las fibras intrafusales → ajusta la sensibilidad del huso.",
+    s37d:"<b>Conexión danza:</b> en un movimiento lento, el cerebro ajusta el huso con alta sensibilidad. En un movimiento explosivo, baja la sensibilidad para no frenar.",
+    s38t:"38. Reflejo miotático inverso: el freno de seguridad",
+    s38p1:"<b>Idea-fuerza:</b> si el reflejo miotático protege ante estiramientos, el <b>reflejo miotático inverso</b> protege ante <b>tensiones excesivas</b>.",
+    s38a:"<b>Analogía:</b> es como el fusible de una instalación eléctrica: si la corriente es demasiado alta, se corta para evitar daños mayores.",
+    s38h1:"El receptor", s38p2:"<b>Órgano tendinoso de Golgi (OTG)</b>: está en el tendón, donde el músculo se une al hueso. Detecta la tensión que soporta el tendón.",
+    s38h2:"Cómo funciona",
+    s38l1:"El músculo genera mucha tensión.", s38l2:"El OTG lo detecta.", s38l3:"Envía una señal a la médula espinal.",
+    s38l4:"La médula <b>inhibe</b> la motoneurona alfa.", s38l5:"El músculo se <b>relaja</b> para evitar daño.",
+    s38th1:"Reflejo", s38th2:"Receptor", s38th3:"Estímulo", s38th4:"Respuesta",
+    s38r1a:"Miotático", s38r1b:"Huso muscular", s38r1c:"Estiramiento", s38r1d:"Contracción",
+    s38r2a:"Miotático inverso", s38r2b:"OTG", s38r2c:"Tensión excesiva", s38r2d:"Relajación",
+    s38d:"<b>Conexión danza:</b> si levantas demasiado peso en un porté, el OTG activa el reflejo inverso → sueltas.",
+    s39t:"39. Coordinación muscular: agonista, antagonista, sinergista",
+    s39p1:"<b>Idea-fuerza:</b> ningún movimiento lo hace un solo músculo. Siempre hay <b>varios músculos</b> trabajando a la vez, con roles distintos.",
+    s39a:"<b>Analogía:</b> es como un equipo de fútbol: hay un jugador que marca el gol (agonista), otro que cubre la defensa (antagonista) y otros que apoyan (sinergistas).",
+    s39th1:"Rol", s39th2:"Qué hace", s39th3:"Ejemplo en danza",
+    s39r1a:"<b>Agonista</b>", s39r1b:"Ejecuta el movimiento principal", s39r1c:"Cuádriceps al subir en relevé",
+    s39r2a:"<b>Antagonista</b>", s39r2b:"Se relaja para permitir el movimiento", s39r2c:"Isquiotibiales al subir",
+    s39r3a:"<b>Sinergista</b>", s39r3b:"Ayuda al agonista y estabiliza", s39r3c:"Gemelos y sóleo al estabilizar el tobillo",
+    s39d:"<b>Conexión danza:</b> un arabesco requiere agonistas, antagonistas y sinergistas. Si el antagonista no se relaja, el movimiento es rígido.",
+    s40t:"40. Feedback y feedforward en el movimiento",
+    s40p1:"<b>Idea-fuerza:</b> el cerebro no solo <b>corrige</b> el movimiento mientras ocurre (feedback). También lo <b>anticipa</b> antes de que ocurra (feedforward).",
+    s40a:"<b>Analogía:</b> feedback como conducir mirando el retrovisor; feedforward como conducir mirando hacia delante.",
+    s40th1:"Mecanismo", s40th2:"Cuándo actúa", s40th3:"Ejemplo dancístico",
+    s40r1a:"<b>Feedforward</b>", s40r1b:"Antes del movimiento", s40r1c:"Contraer abdominales antes de un salto",
+    s40r2a:"<b>Feedback</b>", s40r2b:"Durante y después", s40r2c:"Ajustar el equilibrio si te tambaleas",
+    s40d:"<b>Conexión danza:</b> antes de un grand jeté, el cuerpo se prepara con feedforward. Los bailarines expertos tienen más feedforward.",
+    s41t:"41. Fatiga neuromuscular: central vs. periférica",
+    s41p1:"<b>Idea-fuerza:</b> cuando te cansas, no es solo el músculo el que falla. Hay <b>dos tipos de fatiga</b>.",
+    s41a:"<b>Analogía:</b> fatiga central como quedarte sin batería en el móvil; fatiga periférica como quedarte sin gasolina en el coche.",
+    s41th1:"Tipo", s41th2:"Dónde ocurre", s41th3:"Causas", s41th4:"Síntomas",
+    s41r1a:"<b>Central</b>", s41r1b:"SNC", s41r1c:"Agotamiento de neurotransmisores, falta de glucosa, deshidratación", s41r1d:"Falta de concentración, movimientos lentos",
+    s41r2a:"<b>Periférica</b>", s41r2b:"Músculo", s41r2c:"Agotamiento de ATP, metabolitos, falta de calcio", s41r2d:"Temblor, debilidad, calambres",
+    s41d:"<b>Conexión danza:</b> en un ensayo largo, primero aparece la fatiga central (pierdes concentración). Después, la periférica (los músculos fallan).",
+    s42t:"42. Adaptaciones al entrenamiento dancístico",
+    s42p1:"<b>Idea-fuerza:</b> el entrenamiento no solo mejora el músculo. También <b>reorganiza el sistema nervioso</b>.",
+    s42a:"<b>Analogía:</b> es como actualizar un ordenador: no cambias las piezas, pero mejoras el software.",
+    s42th1:"Adaptación", s42th2:"Qué cambia", s42th3:"En danza",
+    s42r1a:"<b>Mejora de la propiocepción</b>", s42r1b:"Más precisión sensorial", s42r1c:"Mejor equilibrio, menos lesiones",
+    s42r2a:"<b>Mayor eficiencia sináptica</b>", s42r2b:"Menos esfuerzo para el mismo movimiento", s42r2c:"Movimientos más fluidos",
+    s42r3a:"<b>Cambios corticales</b>", s42r3b:"Más área dedicada al movimiento entrenado", s42r3c:"Más control y precisión",
+    s42r4a:"<b>Mejor coordinación muscular</b>", s42r4b:"Menos tensión innecesaria", s42r4c:"Movimientos más económicos",
+    s42r5a:"<b>Mejora del feedforward</b>", s42r5b:"Más anticipación", s42r5c:"Movimientos más preparados",
+    s42d:"<b>Conexión danza:</b> un bailarín experto no recluta más músculos que un principiante: recluta los justos.",
+    s43t:"43. Control postural: la triple integración en equilibrio",
+    s43p1:"<b>Idea-fuerza:</b> mantener una postura no es solo cuestión de fuerza. Es la <b>integración de tres sistemas</b>.",
+    s43a:"<b>Analogía:</b> es como mantener un plato girando sobre un palo: necesitas verlo, sentirlo y anticipar los movimientos.",
+    s43th1:"Sistema", s43th2:"Qué aporta", s43th3:"En danza",
+    s43r1a:"<b>Visual</b>", s43r1b:"Referencia espacial", s43r1c:"Fijar la mirada en un punto en un giro",
+    s43r2a:"<b>Vestibular</b>", s43r2b:"Detección de aceleraciones", s43r2c:"Notar que giras",
+    s43r3a:"<b>Propioceptivo</b>", s43r3b:"Posición del cuerpo", s43r3c:"Notar el pie en el suelo",
+    s43p2:"<b>Dónde se integra:</b> en el cerebelo y el tronco encefálico.",
+    s43d:"<b>Conexión danza:</b> un giro, un arabesco y un equilibrio a una pierna usan los tres sistemas.",
+    s44t:"44. Aplicación dancística",
+    s44p1:"<b>Idea-fuerza:</b> todo lo que has visto en el Bloque 4 tiene una traducción práctica.",
+    s44h1:"1. Cuida la contracción muscular", s44l1:"Calienta antes de entrenar (calcio disponible).", s44l2:"No hagas muchas contracciones excéntricas seguidas.", s44l3:"Alterna tipos de contracción.",
+    s44h2:"2. Entrena todos los tipos de fibras", s44l4:"Resistencia (fibras I).", s44l5:"Fuerza y potencia (fibras II).",
+    s44h3:"3. Entrena la propiocepción", s44l6:"Ejercicios con ojos cerrados.", s44l7:"Superficies inestables.", s44l8:"Trabajo descalzo.",
+    s44h4:"4. Aprovecha el feedforward", s44l9:"Anticipa el movimiento antes de ejecutarlo.", s44l10:"Visualiza antes de bailar.", s44l11:"Prepara el cuerpo con la respiración.",
+    s44h5:"5. Gestiona la fatiga", s44l12:"Descansa entre bloques de ensayo.", s44l13:"Hidrátate y come bien.", s44l14:"Duerme lo suficiente.",
+    s44h6:"6. Confía en la adaptación", s44l15:"La repetición significativa mejora el sistema nervioso.", s44l16:"La variabilidad acelera el aprendizaje.", s44l17:"El descanso consolida lo aprendido.",
+    s44h7:"7. Cuida el equilibrio", s44l18:"Entrena los tres sistemas.", s44l19:"No dependas solo de la vista.", s44l20:"Trabaja el equilibrio en distintas condiciones.",
+    s44d:"<b>Analogía final:</b> tu sistema nervioso es como un <b>director de orquesta</b>. Cuidar tu sistema nervioso es cuidar tu danza."
+  },
+  ca:{
+    headerTitulo:"Bloc 4 · Unió Neuromuscular, Propiocepció i Control Motor", headerSub:"Fisiologia · 1r Dansa · Curs 2026-2027 · Cèlia Painous",
+    btnVolver:"← Índex", btnReset:"🔄 Reiniciar", navPrev:"← Anterior", navNext:"Següent →",
+    btnComprobar:"Comprovar", btnValorar:"Valorar", btnVer:"Veure solució",
+    fbOk:"✅ Correcte!", fbKo:"❌ Revisa.", fbGuardado:"💾 Guardat.",
+    chipIndiv:"Individual", chipPareja:"Parelles", chipGrupo:"Grups 2-3",
+    txtCompl:"completades", txtAuto:"Autoguardat", txtMedia:"📊 Nota mitjana:",
+    autoTitulo:"🤔 Autoavaluació", autoP1:"Quina nota et posaries?",
+    aInsuf:"Insuficient (0-4)", aSuf:"Suficient (5-6)", aNot:"Notable (7-8)", aExc:"Excel·lent (9-10)",
+    aNotaTxt:"Nota concreta:", aJustTxt:"Justifica:", placeholder:"Escriu la teva resposta...",
+    actTitulo:"Activitats del Bloc 4", actIntro:"15 activitats curtes.",
+    s1t:"1. Unió neuromuscular i unitat motora", s1i:"La unió neuromuscular allibera acetilcolina i entra calci.",
+    s1h1:"Unitat motora", s1l1:"Motoneurona + fibres.", s1h2:"Reclutament", s1l2:"Més força = més unitats.",
+    s1d:"<b>Connexió dansa:</b> grand jeté vs. adagio.",
+    s2t:"2. Propiocepció", s2h1:"Fusos musculars", s2l1:"Detecten estirament.", s2h2:"Òrgans de Golgi", s2l2:"Detecten tensió.",
+    s2d:"<b>Connexió dansa:</b> equilibri amb ulls tancats.",
+    s3t:"3. Control motor", s3l1:"<b>Escorça motora</b>.", s3l2:"<b>Premotora</b>.", s3l3:"<b>Suplementària</b>.", s3l4:"<b>Focus intern/extern</b>.",
+    s3d:"<b>Connexió dansa:</b> focus extern millor.",
+    s4t:"4. Integració", s4b:"<b>Debriefing:</b> propiocepció i prevenció.",
+    s34t:"34. Cicle de la contracció", s34p1:"<b>Idea-força:</b> actina, miosina i calci.",
+    s34a:"<b>Analogia:</b> dos llibres i mans.",
+    s34h1:"Proteïnes", s34l1:"<b>Actina</b>.", s34l2:"<b>Miosina</b>.",
+    s34h2:"Cicle",
+    s34l3:"Alliberament acetilcolina.", s34l4:"Entra calci.", s34l5:"Es mouen proteïnes.", s34l6:"Miosina tira actina.",
+    s34l7:"Contracció.", s34l8:"Relaxació.",
+    s34p2:"<b>Necessita:</b> ATP, calci, acetilcolina.",
+    s34d:"<b>Connexió dansa:</b> fatiga i calambres.",
+    s35t:"35. Tipus de contracció",
+    s35p1:"<b>Idea-força:</b> tres formes.",
+    s35a:"<b>Analogia:</b> paret, escalera amunt, escalera avall.",
+    s35th1:"Tipus", s35th2:"Què passa", s35th3:"Exemple", s35th4:"Fatiga",
+    s35r1a:"<b>Isomètrica</b>", s35r1b:"Força sense canvi", s35r1c:"Arabesc", s35r1d:"Mitjana",
+    s35r2a:"<b>Concèntrica</b>", s35r2b:"S'acurta", s35r2c:"Relevé", s35r2d:"Baixa",
+    s35r3a:"<b>Excèntrica</b>", s35r3b:"S'allarga frenant", s35r3c:"Aterrar", s35r3d:"Alta",
+    s35d:"<b>Connexió dansa:</b> excèntrica = més fatiga.",
+    s36t:"36. Fibres musculars", s36p1:"<b>Idea-força:</b> lentes i ràpides.",
+    s36a:"<b>Analogia:</b> híbrid vs. carreres.", s36th1:"Tipus", s36th2:"Velocitat", s36th3:"Resistència", s36th4:"En dansa",
+    s36r1a:"<b>Tipus I</b>", s36r1b:"Lenta", s36r1c:"Alta", s36r1d:"Postures",
+    s36r2a:"<b>Tipus IIa</b>", s36r2b:"Ràpida", s36r2c:"Mitjana", s36r2d:"Coreografies llargues",
+    s36r3a:"<b>Tipus IIx</b>", s36r3b:"Molt ràpida", s36r3c:"Baixa", s36r3d:"Grand jeté",
+    s36p2:"<b>Reclutament:</b> I, IIa, IIx.", s36d:"<b>Connexió dansa:</b> cada moviment usa un tipus.",
+    s37t:"37. Huso muscular", s37p1:"<b>Idea-força:</b> controlat pel cervell.",
+    s37a:"<b>Analogia:</b> micròfon amb volum.", s37h1:"Fibres", s37l1:"<b>Extrafusals</b>.", s37l2:"<b>Intrafusals</b>.",
+    s37h2:"Motoneurones", s37l3:"<b>Alfa</b> → contracció.", s37l4:"<b>Gamma</b> → sensibilitat.",
+    s37d:"<b>Connexió dansa:</b> moviment lent vs. explosiu.",
+    s38t:"38. Reflejo miotàtic invers", s38p1:"<b>Idea-força:</b> protecció davant tensió excessiva.",
+    s38a:"<b>Analogia:</b> fusible elèctric.",
+    s38h1:"Receptor", s38p2:"<b>OTG</b> al tendó.",
+    s38h2:"Funcionament",
+    s38l1:"Tensió alta.", s38l2:"OTG detecta.", s38l3:"Senyal a medul·la.", s38l4:"Inhibeix motoneurona.", s38l5:"Relaxació.",
+    s38th1:"Reflex", s38th2:"Receptor", s38th3:"Estímul", s38th4:"Resposta",
+    s38r1a:"Miotàtic", s38r1b:"Fus", s38r1c:"Estirament", s38r1d:"Contracció",
+    s38r2a:"Invers", s38r2b:"OTG", s38r2c:"Tensió", s38r2d:"Relaxació",
+    s38d:"<b>Connexió dansa:</b> porté pesat = deixes anar.",
+    s39t:"39. Coordinació muscular", s39p1:"<b>Idea-força:</b> diversos músculs alhora.",
+    s39a:"<b>Analogia:</b> equip de futbol.",
+    s39th1:"Rol", s39th2:"Què fa", s39th3:"Exemple",
+    s39r1a:"<b>Agonista</b>", s39r1b:"Moviment principal", s39r1c:"Quàdriceps",
+    s39r2a:"<b>Antagonista</b>", s39r2b:"Es relaxa", s39r2c:"Isquiotibials",
+    s39r3a:"<b>Sinergista</b>", s39r3b:"Ajuda i estabilitza", s39r3c:"Bessons i soli",
+    s39d:"<b>Connexió dansa:</b> arabesc.",
+    s40t:"40. Feedback i feedforward", s40p1:"<b>Idea-força:</b> correcció i anticipació.",
+    s40a:"<b>Analogia:</b> retrovisor i parabrisa.",
+    s40th1:"Mecanisme", s40th2:"Quan", s40th3:"Exemple",
+    s40r1a:"<b>Feedforward</b>", s40r1b:"Abans", s40r1c:"Abdominals abans del salt",
+    s40r2a:"<b>Feedback</b>", s40r2b:"Durant", s40r2c:"Ajustar equilibri",
+    s40d:"<b>Connexió dansa:</b> experts tenen més feedforward.",
+    s41t:"41. Fatiga", s41p1:"<b>Idea-força:</b> central i perifèrica.",
+    s41a:"<b>Analogia:</b> mòbil sense bateria vs. cotxe sense gasolina.",
+    s41th1:"Tipus", s41th2:"On", s41th3:"Causes", s41th4:"Símptomes",
+    s41r1a:"<b>Central</b>", s41r1b:"SNC", s41r1c:"Neurotransmissors", s41r1d:"Concentració",
+    s41r2a:"<b>Perifèrica</b>", s41r2b:"Múscul", s41r2c:"ATP", s41r2d:"Tremolor",
+    s41d:"<b>Connexió dansa:</b> primer central, després perifèrica.",
+    s42t:"42. Adaptacions", s42p1:"<b>Idea-força:</b> reorganització del SN.",
+    s42a:"<b>Analogia:</b> actualitzar software.",
+    s42th1:"Adaptació", s42th2:"Què canvia", s42th3:"En dansa",
+    s42r1a:"<b>Propiocepció</b>", s42r1b:"Precisió", s42r1c:"Equilibri",
+    s42r2a:"<b>Eficiència</b>", s42r2b:"Menys esforç", s42r2c:"Fluïdesa",
+    s42r3a:"<b>Cortical</b>", s42r3b:"Més àrea", s42r3c:"Control",
+    s42r4a:"<b>Coordinació</b>", s42r4b:"Menys tensió", s42r4c:"Economia",
+    s42r5a:"<b>Feedforward</b>", s42r5b:"Anticipació", s42r5c:"Preparació",
+    s42d:"<b>Connexió dansa:</b> experts recluten els justos.",
+    s43t:"43. Control postural", s43p1:"<b>Idea-força:</b> triple integració.",
+    s43a:"<b>Analogia:</b> plat sobre pal.",
+    s43th1:"Sistema", s43th2:"Què aporta", s43th3:"En dansa",
+    s43r1a:"<b>Visual</b>", s43r1b:"Referència", s43r1c:"Punt fix",
+    s43r2a:"<b>Vestibular</b>", s43r2b:"Acceleracions", s43r2c:"Gir",
+    s43r3a:"<b>Propioceptiu</b>", s43r3b:"Posició", s43r3c:"Peu a terra",
+    s43p2:"<b>On:</b> cerebel i tronc.",
+    s43d:"<b>Connexió dansa:</b> gir, arabesc, equilibri.",
+    s44t:"44. Aplicació dansística", s44p1:"<b>Idea-força:</b> traducció pràctica.",
+    s44h1:"1. Contracció", s44l1:"Calfa.", s44l2:"Excèntrica amb control.", s44l3:"Alternar tipus.",
+    s44h2:"2. Fibres", s44l4:"Resistència.", s44l5:"Potència.",
+    s44h3:"3. Propiocepció", s44l6:"Ulls tancats.", s44l7:"Superfícies inestables.", s44l8:"Descalç.",
+    s44h4:"4. Feedforward", s44l9:"Anticipa.", s44l10:"Visualitza.", s44l11:"Respira.",
+    s44h5:"5. Fatiga", s44l12:"Descansa.", s44l13:"Hidrata't.", s44l14:"Dorm.",
+    s44h6:"6. Adaptació", s44l15:"Repetició.", s44l16:"Variabilitat.", s44l17:"Descans.",
+    s44h7:"7. Equilibri", s44l18:"Tres sistemes.", s44l19:"No només vista.", s44l20:"Diverses condicions.",
+    s44d:"<b>Analogia final:</b> director d'orquestra."
+  },
+  en:{
+    headerTitulo:"Block 4 · Neuromuscular Junction, Proprioception and Motor Control", headerSub:"Physiology · 1st Dance · 2026-2027 · Cèlia Painous",
+    btnVolver:"← Index", btnReset:"🔄 Reset", navPrev:"← Previous", navNext:"Next →",
+    btnComprobar:"Check", btnValorar:"Score", btnVer:"Show solution",
+    fbOk:"✅ Correct!", fbKo:"❌ Review.", fbGuardado:"💾 Saved.",
+    chipIndiv:"Individual", chipPareja:"Pairs", chipGrupo:"Groups 2-3",
+    txtCompl:"completed", txtAuto:"Auto-saved", txtMedia:"📊 Average grade:",
+    autoTitulo:"🤔 Self-assessment", autoP1:"What grade would you give yourself?",
+    aInsuf:"Insufficient (0-4)", aSuf:"Sufficient (5-6)", aNot:"Good (7-8)", aExc:"Excellent (9-10)",
+    aNotaTxt:"Specific grade:", aJustTxt:"Justify your grade:", placeholder:"Write your answer...",
+    actTitulo:"Block 4 activities", actIntro:"15 short activities.",
+    s1t:"1. Neuromuscular junction and motor unit",
+    s1i:"The motor command reaches the muscle via the neuromuscular junction: acetylcholine release, calcium entry and contraction.",
+    s1h1:"Motor unit", s1l1:"Motoneuron + all innervated muscle fibers.",
+    s1h2:"Recruitment", s1l2:"More force requires more motor units.",
+    s1d:"<b>Dance connection:</b> grand jeté vs. adagio.",
+    s2t:"2. Proprioception", s2h1:"Muscle spindles", s2l1:"Detect stretch.", s2h2:"Golgi tendon organs", s2l2:"Detect tension.",
+    s2d:"<b>Dance connection:</b> balance with eyes closed.",
+    s3t:"3. Motor control",
+    s3l1:"<b>Primary motor cortex</b>.", s3l2:"<b>Premotor area</b>.", s3l3:"<b>Supplementary motor area</b>.", s3l4:"<b>Internal/external focus</b>.",
+    s3d:"<b>Dance connection:</b> external focus works better.",
+    s4t:"4. Integration", s4b:"<b>Debriefing:</b> proprioception and injury prevention.",
+    s34t:"34. The contraction cycle: actin, myosin and calcium",
+    s34p1:"<b>Key idea:</b> proteins must slide to shorten the fiber.",
+    s34a:"<b>Analogy:</b> pulling two books together. Myosin are the hands, actin the books, calcium says 'now'.",
+    s34h1:"The two proteins", s34l1:"<b>Actin</b>: thin filament.", s34l2:"<b>Myosin</b>: thick filament.",
+    s34h2:"Cycle step by step",
+    s34l3:"Command arrives → <b>acetylcholine</b> released.", s34l4:"<b>Calcium (Ca²⁺)</b> enters.",
+    s34l5:"Calcium moves blocking proteins.", s34l6:"<b>Myosin</b> grabs actin and pulls.",
+    s34l7:"Muscle shortens → contraction.", s34l8:"Calcium returns → relaxation.",
+    s34p2:"<b>Needs:</b> ATP, calcium, acetylcholine.",
+    s34d:"<b>Dance connection:</b> no calcium → fatigue; no ATP → cramps.",
+    s35t:"35. Types of contraction",
+    s35p1:"<b>Key idea:</b> three forms of contraction.",
+    s35a:"<b>Analogy:</b> isometric = pushing a wall; concentric = climbing stairs; eccentric = going down stairs.",
+    s35th1:"Type", s35th2:"What happens", s35th3:"Dance example", s35th4:"Fatigue",
+    s35r1a:"<b>Isometric</b>", s35r1b:"Force without length change", s35r1c:"Hold arabesque", s35r1d:"Medium",
+    s35r2a:"<b>Concentric</b>", s35r2b:"Muscle shortens", s35r2c:"Rising in relevé", s35r2d:"Low",
+    s35r3a:"<b>Eccentric</b>", s35r3b:"Muscle lengthens while braking", s35r3c:"Landing a jump", s35r3d:"High",
+    s35d:"<b>Dance connection:</b> eccentric = most fatigue and injury.",
+    s36t:"36. Muscle fiber types",
+    s36p1:"<b>Key idea:</b> slow and fast fibers.",
+    s36a:"<b>Analogy:</b> hybrid car vs. race car.",
+    s36th1:"Type", s36th2:"Speed", s36th3:"Endurance", s36th4:"In dance",
+    s36r1a:"<b>Type I</b>", s36r1b:"Slow", s36r1c:"High", s36r1d:"Holding postures",
+    s36r2a:"<b>Type IIa</b>", s36r2b:"Fast", s36r2c:"Medium", s36r2d:"Long choreographies",
+    s36r3a:"<b>Type IIx</b>", s36r3b:"Very fast", s36r3c:"Low", s36r3d:"Grand jeté",
+    s36p2:"<b>Ordered recruitment:</b> I, IIa, IIx.", s36d:"<b>Dance connection:</b> each movement uses a type.",
+    s37t:"37. Muscle spindle",
+    s37p1:"<b>Key idea:</b> controlled by the brain.",
+    s37a:"<b>Analogy:</b> microphone with volume control.",
+    s37h1:"Fibers", s37l1:"<b>Extrafusal</b>.", s37l2:"<b>Intrafusal</b>.",
+    s37h2:"Motor neurons", s37l3:"<b>Alpha</b> → contraction.", s37l4:"<b>Gamma</b> → sensitivity.",
+    s37d:"<b>Dance connection:</b> slow vs. explosive movement.",
+    s38t:"38. Inverse myotatic reflex",
+    s38p1:"<b>Key idea:</b> protects against excessive tension.",
+    s38a:"<b>Analogy:</b> electrical fuse.",
+    s38h1:"Receptor", s38p2:"<b>GTO</b> in tendon.",
+    s38h2:"How it works",
+    s38l1:"High tension.", s38l2:"GTO detects.", s38l3:"Signal to spinal cord.", s38l4:"Inhibits motor neuron.", s38l5:"Relaxation.",
+    s38th1:"Reflex", s38th2:"Receptor", s38th3:"Stimulus", s38th4:"Response",
+    s38r1a:"Myotatic", s38r1b:"Spindle", s38r1c:"Stretch", s38r1d:"Contraction",
+    s38r2a:"Inverse", s38r2b:"GTO", s38r2c:"Tension", s38r2d:"Relaxation",
+    s38d:"<b>Dance connection:</b> heavy porté = you let go.",
+    s39t:"39. Muscle coordination",
+    s39p1:"<b>Key idea:</b> several muscles at once.",
+    s39a:"<b>Analogy:</b> football team.",
+    s39th1:"Role", s39th2:"What it does", s39th3:"Dance example",
+    s39r1a:"<b>Agonist</b>", s39r1b:"Main movement", s39r1c:"Quadriceps",
+    s39r2a:"<b>Antagonist</b>", s39r2b:"Relaxes", s39r2c:"Hamstrings",
+    s39r3a:"<b>Synergist</b>", s39r3b:"Helps and stabilizes", s39r3c:"Calves and soleus",
+    s39d:"<b>Dance connection:</b> arabesque.",
+    s40t:"40. Feedback and feedforward",
+    s40p1:"<b>Key idea:</b> correction and anticipation.",
+    s40a:"<b>Analogy:</b> rear-view mirror and windshield.",
+    s40th1:"Mechanism", s40th2:"When", s40th3:"Example",
+    s40r1a:"<b>Feedforward</b>", s40r1b:"Before", s40r1c:"Abs before jump",
+    s40r2a:"<b>Feedback</b>", s40r2b:"During", s40r2c:"Adjust balance",
+    s40d:"<b>Dance connection:</b> experts have more feedforward.",
+    s41t:"41. Fatigue",
+    s41p1:"<b>Key idea:</b> central and peripheral.",
+    s41a:"<b>Analogy:</b> phone without battery vs. car without fuel.",
+    s41th1:"Type", s41th2:"Where", s41th3:"Causes", s41th4:"Symptoms",
+    s41r1a:"<b>Central</b>", s41r1b:"CNS", s41r1c:"Neurotransmitters", s41r1d:"Concentration",
+    s41r2a:"<b>Peripheral</b>", s41r2b:"Muscle", s41r2c:"ATP", s41r2d:"Tremor",
+    s41d:"<b>Dance connection:</b> first central, then peripheral.",
+    s42t:"42. Adaptations", s42p1:"<b>Key idea:</b> reorganization of the NS.",
+    s42a:"<b>Analogy:</b> updating software.",
+    s42th1:"Adaptation", s42th2:"What changes", s42th3:"In dance",
+    s42r1a:"<b>Proprioception</b>", s42r1b:"Precision", s42r1c:"Balance",
+    s42r2a:"<b>Efficiency</b>", s42r2b:"Less effort", s42r2c:"Fluidity",
+    s42r3a:"<b>Cortical</b>", s42r3b:"More area", s42r3c:"Control",
+    s42r4a:"<b>Coordination</b>", s42r4b:"Less tension", s42r4c:"Economy",
+    s42r5a:"<b>Feedforward</b>", s42r5b:"Anticipation", s42r5c:"Preparation",
+    s42d:"<b>Dance connection:</b> experts recruit exactly what's needed.",
+    s43t:"43. Postural control",
+    s43p1:"<b>Key idea:</b> triple integration.",
+    s43a:"<b>Analogy:</b> plate spinning on a stick.",
+    s43th1:"System", s43th2:"What it provides", s43th3:"In dance",
+    s43r1a:"<b>Visual</b>", s43r1b:"Reference", s43r1c:"Fixed point",
+    s43r2a:"<b>Vestibular</b>", s43r2b:"Accelerations", s43r2c:"Turn",
+    s43r3a:"<b>Proprioceptive</b>", s43r3b:"Position", s43r3c:"Foot on floor",
+    s43p2:"<b>Where:</b> cerebellum and brainstem.",
+    s43d:"<b>Dance connection:</b> turn, arabesque, balance.",
+    s44t:"44. Dance application",
+    s44p1:"<b>Key idea:</b> practical translation.",
+    s44h1:"1. Contraction", s44l1:"Warm up.", s44l2:"Eccentric with control.", s44l3:"Alternate types.",
+    s44h2:"2. Fibers", s44l4:"Endurance.", s44l5:"Power.",
+    s44h3:"3. Proprioception", s44l6:"Eyes closed.", s44l7:"Unstable surfaces.", s44l8:"Barefoot.",
+    s44h4:"4. Feedforward", s44l9:"Anticipate.", s44l10:"Visualize.", s44l11:"Breathe.",
+    s44h5:"5. Fatigue", s44l12:"Rest.", s44l13:"Hydrate.", s44l14:"Sleep.",
+    s44h6:"6. Adaptation", s44l15:"Repetition.", s44l16:"Variability.", s44l17:"Rest.",
+    s44h7:"7. Balance", s44l18:"Three systems.", s44l19:"Not only sight.", s44l20:"Various conditions.",
+    s44d:"<b>Final analogy:</b> orchestra conductor."
+  }
+};
+
+let lang='es';
+function t(k){ return (I18N[lang] && I18N[lang][k]) || I18N.es[k] || k; }
+function aplicarIdioma(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{ const k=el.dataset.i18n; const v=t(k); if(v) el.innerHTML = v; });
+  const ht=document.getElementById('headerTitulo'); if(ht) ht.textContent = t('headerTitulo');
+  const hs=document.getElementById('headerSub'); if(hs) hs.textContent = t('headerSub');
+  ['btnVolver','btnReset','navPrev','navNext','txtCompl','txtAuto','txtMedia','autoTitulo','autoP1','aInsuf','aSuf','aNot','aExc','aNotaTxt','aJustTxt','actTitulo','actIntro'].forEach(id=>{ const el=document.getElementById(id); if(el) el.textContent = t(id); });
+  document.documentElement.lang = lang;
+  document.querySelectorAll('.lang-switch button').forEach(b=>{ b.classList.toggle('active', b.dataset.lang === lang); });
+  renderActividades(); cargarAutoeval();
+}
+document.querySelectorAll('.lang-switch button').forEach(btn=>{ btn.addEventListener('click', ()=>{ lang = btn.dataset.lang; aplicarIdioma(); }); });
 
 const ACTIVIDADES = [
   {tipo:'test',grupo:'indiv',q:{es:"¿Qué neurotransmisor se libera en la unión neuromuscular?",ca:"Quin neurotransmissor s'allibera?",en:"Which neurotransmitter is released?"},ops:{es:["Glutamato","GABA","Acetilcolina","Dopamina"],ca:["Glutamat","GABA","Acetilcolina","Dopamina"],en:["Glutamate","GABA","Acetylcholine","Dopamine"]},correcta:2,sol:{es:"Acetilcolina.",ca:"Acetilcolina.",en:"Acetylcholine."}},
@@ -425,7 +764,6 @@ const ACTIVIDADES = [
   {tipo:'abierta',grupo:'indiv',q:{es:"¿Cómo entrenarías tu propiocepción como bailarín/a? Propón 3 hábitos.",ca:"3 hàbits per entrenar propiocepció.",en:"3 habits to train proprioception."},keywords:['equilibrio','una pierna','ojos cerrados','inestable','calzado','variado'],sol:{es:"Equilibrios a una pierna, ojos cerrados, superficies inestables, calzado variado.",ca:"Equilibris, ulls tancats, superfícies.",en:"Balance, eyes closed, unstable surfaces."}}
 ];
 
-let lang='es';
 function normalizar(s){ return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\w\s]/g,' '); }
 function valorarAbierta(texto, keywords){
   if(!texto || texto.trim().length<10) return {nota:0,encontradas:[],faltan:keywords||[],ratio:0};
@@ -440,7 +778,7 @@ function renderActividades(){
   const cont=document.getElementById('contenedorActividades'); if(!cont) return;
   const data=JSON.parse(localStorage.getItem(STORAGE)||'{}');
   cont.innerHTML='';
-  const chips={indiv:'Individual',pareja:'Parejas',grupo:'Grupos 2-3'};
+  const chips={indiv:t('chipIndiv'),pareja:t('chipPareja'),grupo:t('chipGrupo')};
   ACTIVIDADES.forEach((a,i)=>{
     const id='a'+(i+1); const wrap=document.createElement('div'); wrap.className='actividad';
     let html=`<h4><span>${i+1}.</span> ${a.q[lang]} <span class="chip ${a.grupo}">${chips[a.grupo]}</span></h4>`;
@@ -448,59 +786,59 @@ function renderActividades(){
       html+=`<div class="opciones">`;
       a.ops[lang].forEach((op,j)=>{ const checked=data[id]===j?'checked':''; html+=`<label><input type="radio" name="${id}" value="${j}" ${checked} onchange="responder('${id}',${j},${a.correcta})"> ${op}</label>`; });
       html+=`</div>`;
-    } else { html+=`<textarea id="${id}" placeholder="..." oninput="guardarAbierta('${id}')">${data[id]||''}</textarea>`; }
+    } else { html+=`<textarea id="${id}" placeholder="${t('placeholder')}" oninput="guardarAbierta('${id}')">${data[id]||''}</textarea>`; }
     html+=`<div class="feedback" id="fb-${id}"></div>`;
-    html+=`<div class="acciones">${a.tipo==='test'?`<button onclick="comprobar('${id}',${a.correcta})">Comprobar</button>`:`<button onclick="valorar('${id}',${i})">Valorar</button>`}<button onclick="verSolucion('${id}','${(a.sol[lang]||'').replace(/'/g,"\\'")}')">Ver solución</button></div>`;
+    html+=`<div class="acciones">${a.tipo==='test'?`<button onclick="comprobar('${id}',${a.correcta})">${t('btnComprobar')}</button>`:`<button onclick="valorar('${id}',${i})">${t('btnValorar')}</button>`}<button onclick="verSolucion('${id}','${(a.sol[lang]||'').replace(/'/g,"\\'")}')">${t('btnVer')}</button></div>`;
     wrap.innerHTML=html; cont.appendChild(wrap);
     if(a.tipo==='abierta' && data[id] && data[id].trim().length>=10){ setTimeout(()=>valorar(id,i),50); }
   });
   actualizarProgreso();
 }
 function responder(id,val,c){ const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); data[id]=val; localStorage.setItem(STORAGE,JSON.stringify(data)); comprobar(id,c); actualizarProgreso(); }
-function guardarAbierta(id){ const ta=document.getElementById(id); const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); data[id]=ta.value; localStorage.setItem(STORAGE,JSON.stringify(data)); const fb=document.getElementById('fb-'+id); fb.className='feedback guardado'; fb.textContent='💾 Guardado'; setTimeout(()=>{if(fb.className.includes('guardado'))fb.className='feedback';},1200); actualizarProgreso(); }
-function comprobar(id,c){ const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); const fb=document.getElementById('fb-'+id); if(data[id]===c){fb.className='feedback ok';fb.textContent='✅ ¡Correcto!';}else{fb.className='feedback ko';fb.textContent='❌ Revisa.';} }
-function valorar(id,idx){ const a=ACTIVIDADES[idx]; const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); const texto=data[id]||''; const fb=document.getElementById('fb-'+id); const r=valorarAbierta(texto,a.keywords); fb.className='feedback guardado'; fb.innerHTML=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;"><span style="background:var(--accent2);color:#0f1226;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-weight:900;">${r.nota}</span><span>${r.encontradas.length}/${(a.keywords||[]).length} puntos clave</span></div><div style="height:8px;background:#0f1226;border-radius:4px;overflow:hidden;margin-bottom:6px;"><div style="height:100%;width:${r.nota*10}%;background:${r.nota>=7?'var(--ok)':r.nota>=5?'var(--warn)':'var(--bad)'};"></div></div><div style="font-size:.82rem;"><span style="color:var(--ok);">✓ ${r.encontradas.join(', ')||'—'}</span><br><span style="color:var(--bad);">✗ ${r.faltan.join(', ')||'—'}</span></div>`; data['nota-'+id]=r.nota; localStorage.setItem(STORAGE,JSON.stringify(data)); actualizarMedia(); }
+function guardarAbierta(id){ const ta=document.getElementById(id); const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); data[id]=ta.value; localStorage.setItem(STORAGE,JSON.stringify(data)); const fb=document.getElementById('fb-'+id); fb.className='feedback guardado'; fb.textContent=t('fbGuardado'); setTimeout(()=>{if(fb.className.includes('guardado'))fb.className='feedback';},1200); actualizarProgreso(); }
+function comprobar(id,c){ const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); const fb=document.getElementById('fb-'+id); if(data[id]===c){fb.className='feedback ok';fb.textContent=t('fbOk');}else{fb.className='feedback ko';fb.textContent=t('fbKo');} }
+function valorar(id,idx){ const a=ACTIVIDADES[idx]; const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); const texto=data[id]||''; const fb=document.getElementById('fb-'+id); const r=valorarAbierta(texto,a.keywords); fb.className='feedback guardado'; fb.innerHTML=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;"><span style="background:var(--accent2);color:#0f1226;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-weight:900;">${r.nota}</span><span>${r.encontradas.length}/${(a.keywords||[]).length}</span></div><div style="height:8px;background:#0f1226;border-radius:4px;overflow:hidden;margin-bottom:6px;"><div style="height:100%;width:${r.nota*10}%;background:${r.nota>=7?'var(--ok)':r.nota>=5?'var(--warn)':'var(--bad)'};"></div></div><div style="font-size:.82rem;"><span style="color:var(--ok);">✓ ${r.encontradas.join(', ')||'—'}</span><br><span style="color:var(--bad);">✗ ${r.faltan.join(', ')||'—'}</span></div>`; data['nota-'+id]=r.nota; localStorage.setItem(STORAGE,JSON.stringify(data)); actualizarMedia(); }
 function verSolucion(id,sol){ const fb=document.getElementById('fb-'+id); fb.className='feedback guardado'; fb.textContent='📖 '+sol; }
 function actualizarProgreso(){ const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); let c=0; ACTIVIDADES.forEach((a,i)=>{ const id='a'+(i+1); if(a.tipo==='test'){if(data[id]!==undefined)c++;}else{if((data[id]||'').trim().length>=15)c++;} }); document.getElementById('pCompletadas').textContent=c; document.getElementById('pBar').style.width=(c/ACTIVIDADES.length*100)+'%'; actualizarMedia(); }
 function actualizarMedia(){ const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); let s=0,n=0; ACTIVIDADES.forEach((a,i)=>{ const id='a'+(i+1); if(a.tipo==='test' && data[id]!==undefined){s+=(data[id]===a.correcta)?10:0;n++;} else if(a.tipo==='abierta' && typeof data['nota-'+id]==='number'){s+=data['nota-'+id];n++;} }); document.getElementById('notaMedia').textContent = n?(s/n).toFixed(1):'—'; }
+
 let idx=0; const slides=document.querySelectorAll('.slide');
 function show(i){ slides.forEach(s=>s.classList.remove('active')); slides[i].classList.add('active'); document.getElementById('counter').textContent=`Diapositiva ${i+1} / ${slides.length}`; document.getElementById('progress').style.width=((i+1)/slides.length*100)+'%'; }
 function next(){if(idx<slides.length-1){idx++;show(idx);}}
 function prev(){if(idx>0){idx--;show(idx);}}
 document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')next();if(e.key==='ArrowLeft')prev();});
+
 function cargarAutoeval(){
   const data=JSON.parse(localStorage.getItem(STORAGE)||'{}');
   document.querySelectorAll('[data-autoeval-text]').forEach(ta=>{ if(data['autoeval-text'])ta.value=data['autoeval-text']; ta.oninput=()=>{const d=JSON.parse(localStorage.getItem(STORAGE)||'{}'); d['autoeval-text']=ta.value; localStorage.setItem(STORAGE,JSON.stringify(d));}; });
   document.querySelectorAll('[data-autoeval-nota]').forEach(inp=>{ if(data['autoeval-nota']!==undefined)inp.value=data['autoeval-nota']; inp.oninput=()=>{const d=JSON.parse(localStorage.getItem(STORAGE)||'{}'); d['autoeval-nota']=inp.value; localStorage.setItem(STORAGE,JSON.stringify(d));}; });
   document.querySelectorAll('input[type=radio][name="autoeval-rango"]').forEach(r=>{ if(data['autoeval-rango']===r.value)r.checked=true; r.onchange=()=>{const d=JSON.parse(localStorage.getItem(STORAGE)||'{}'); d['autoeval-rango']=r.value; localStorage.setItem(STORAGE,JSON.stringify(d));}; });
 }
-function exportarInforme(){
+
+function _obtenerDatos(){
   const data=JSON.parse(localStorage.getItem(STORAGE)||'{}');
   const nombre=prompt('Tu nombre:')||'alumno';
   const nl=nombre.trim().replace(/\s+/g,'_').replace(/[^\w\-]/g,'')||'alumno';
-  let txt='=========================================\n'+TITULO_BLOQUE[lang]+'\n=========================================\n';
-  txt+='Alumno/a: '+nombre+'\nFecha: '+new Date().toLocaleString()+'\nBloque: '+NUM_BLOQUE+'\n=========================================\n\n';
-  let corr=0,tot=0,sn=0,nn=0;
+  const fecha=new Date(); const fechaStr=fecha.toLocaleString(); const fechaISO=fecha.toISOString().slice(0,10);
+  const filas=[]; let corr=0,tot=0,sn=0,nn=0;
   ACTIVIDADES.forEach((a,i)=>{
-    const id='a'+(i+1);
-    txt+=`--- ${i+1}. ${a.q[lang]} ---\n`;
-    if(a.tipo==='test'){ const v=data[id]; txt+=(v!==undefined?a.ops[lang][v]:'(sin respuesta)')+'\n'; if(v===a.correcta){txt+='✅ Correcto\n';corr++;}else if(v!==undefined){txt+='❌ Incorrecto\n';}tot++; }
-    else { txt+=(data[id]||'(sin respuesta)')+'\n'; if(typeof data['nota-'+id]==='number'){txt+=`📊 ${data['nota-'+id]}/10\n`;sn+=data['nota-'+id];nn++;} }
-    txt+=`Solución: ${a.sol[lang]}\n\n`;
+    const id='a'+(i+1); const resp=data[id]; let puntuacion='';
+    if(a.tipo==='test'){ const correcta=data[id]===a.correcta; puntuacion=correcta?10:(resp!==undefined?0:''); if(resp!==undefined){tot++; if(correcta)corr++;} }
+    else { puntuacion=typeof data['nota-'+id]==='number'?data['nota-'+id]:''; if(typeof data['nota-'+id]==='number'){sn+=data['nota-'+id];nn++;} }
+    filas.push({num:i+1,tipo:a.tipo==='test'?'Test':'Abierta',formato:a.grupo==='indiv'?'Individual':a.grupo==='pareja'?'Parejas':'Grupos 2-3',pregunta:a.q[lang],respuesta:a.tipo==='test'?(resp!==undefined?a.ops[lang][resp]:''):(resp||''),solucion:a.sol[lang],puntuacion});
   });
-  txt+='=========================================\nResultado test: '+corr+'/'+tot+'\n';
-  if(nn) txt+='Nota media abiertas: '+(sn/nn).toFixed(1)+'/10\n';
-  if(data['autoeval-rango']||data['autoeval-nota']||data['autoeval-text']){
-    txt+='=========================================\nAUTOEVALUACIÓN\n=========================================\n';
-    txt+='Rango: '+(data['autoeval-rango']||'—')+'\nNota: '+(data['autoeval-nota']||'—')+'/10\nJustificación: '+(data['autoeval-text']||'—')+'\n';
-  }
-  txt+='=========================================\n';
-  const blob=new Blob([txt],{type:'text/plain;charset=utf-8'});
-  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`bloque${NUM_BLOQUE}_${nl}_${new Date().toISOString().slice(0,10)}.txt`; a.click();
+  const autoeval={rango:data['autoeval-rango']||'',nota:data['autoeval-nota']||'',justificacion:data['autoeval-text']||''};
+  const resumen={correctas:corr,totalTest:tot,mediaAbiertas:nn?(sn/nn).toFixed(1):'',nAbiertas:nn};
+  return {nombre,nl,fechaStr,fechaISO,filas,autoeval,resumen};
 }
+function _descargar(c,m,n){ const blob=new Blob([c],{type:m}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=n; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); }
+function exportarTXT(){ const d=_obtenerDatos(); let txt='=========================================\n'+TITULO_BLOQUE[lang]+'\n=========================================\nAlumno/a: '+d.nombre+'\nFecha: '+d.fechaStr+'\nBloque: '+NUM_BLOQUE+'\n=========================================\n\n'; d.filas.forEach(f=>{ txt+=`--- ${f.num}. ${f.pregunta} ---\n[${f.formato}] [${f.tipo}]\n`+(f.respuesta||'(sin respuesta)')+'\n'; if(f.puntuacion!=='')txt+=`📊 ${f.puntuacion}/10\n`; txt+=`Solución: ${f.solucion}\n\n`; }); txt+='=========================================\nRESUMEN\nTest: '+d.resumen.correctas+'/'+d.resumen.totalTest+'\n'; if(d.resumen.nAbiertas)txt+='Media abiertas: '+d.resumen.mediaAbiertas+'/10\n'; if(d.autoeval.rango||d.autoeval.nota)txt+='\nAUTOEVALUACIÓN\nRango: '+(d.autoeval.rango||'—')+'\nNota: '+(d.autoeval.nota||'—')+'/10\nJustificación: '+(d.autoeval.justificacion||'—')+'\n'; _descargar(txt,'text/plain;charset=utf-8',`bloque${NUM_BLOQUE}_${d.nl}_${d.fechaISO}.txt`); }
+function exportarCSV(){ const d=_obtenerDatos(); const esc=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"'; let csv=''; csv+=esc('Alumno')+','+esc('Fecha')+','+esc('Bloque')+','+esc('Idioma')+'\n'+esc(d.nombre)+','+esc(d.fechaStr)+','+esc(NUM_BLOQUE)+','+esc(lang.toUpperCase())+'\n\n'; csv+=['Nº','Tipo','Formato','Pregunta','Respuesta','Solución','Puntuación'].map(esc).join(',')+'\n'; d.filas.forEach(f=>{ csv+=[f.num,f.tipo,f.formato,f.pregunta,f.respuesta,f.solucion,f.puntuacion].map(esc).join(',')+'\n'; }); csv+='\nResumen\n'+esc('Correctas test')+','+esc(d.resumen.correctas+'/'+d.resumen.totalTest)+'\n'; if(d.resumen.nAbiertas)csv+=esc('Media abiertas')+','+esc(d.resumen.mediaAbiertas+'/10')+'\n'; csv+='\nAutoevaluación\n'+esc('Rango')+','+esc(d.autoeval.rango)+'\n'+esc('Nota')+','+esc(d.autoeval.nota+'/10')+'\n'+esc('Justificación')+','+esc(d.autoeval.justificacion)+'\n'; _descargar('\uFEFF'+csv,'text/csv;charset=utf-8',`bloque${NUM_BLOQUE}_${d.nl}_${d.fechaISO}.csv`); }
+function exportarExcel(){ const d=_obtenerDatos(); const esc=v=>String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); let html='<html xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="UTF-8"><style>table{border-collapse:collapse;} th,td{border:1px solid #999;padding:6px 10px;font-family:Arial;font-size:11pt;} th{background:#ddd;font-weight:bold;}</style></head><body>'; html+=`<h2>${esc(TITULO_BLOQUE[lang])}</h2><p><b>Alumno/a:</b> ${esc(d.nombre)}<br><b>Fecha:</b> ${esc(d.fechaStr)}<br><b>Bloque:</b> ${esc(NUM_BLOQUE)}<br><b>Idioma:</b> ${esc(lang.toUpperCase())}</p>`; html+='<table><tr><th>Nº</th><th>Tipo</th><th>Formato</th><th>Pregunta</th><th>Respuesta</th><th>Solución</th><th>Puntuación</th></tr>'; d.filas.forEach(f=>{ html+=`<tr><td>${esc(f.num)}</td><td>${esc(f.tipo)}</td><td>${esc(f.formato)}</td><td>${esc(f.pregunta)}</td><td>${esc(f.respuesta)}</td><td>${esc(f.solucion)}</td><td>${esc(f.puntuacion)}</td></tr>`; }); html+='</table><h3>Resumen</h3><table>'; html+=`<tr><th>Test</th><td>${esc(d.resumen.correctas)}/${esc(d.resumen.totalTest)}</td></tr>`; if(d.resumen.nAbiertas)html+=`<tr><th>Media abiertas</th><td>${esc(d.resumen.mediaAbiertas)}/10</td></tr>`; html+='</table><h3>Autoevaluación</h3><table>'; html+=`<tr><th>Rango</th><td>${esc(d.autoeval.rango||'—')}</td></tr><tr><th>Nota</th><td>${esc(d.autoeval.nota||'—')}/10</td></tr><tr><th>Justificación</th><td>${esc(d.autoeval.justificacion||'—')}</td></tr></table></body></html>`; _descargar(html,'application/vnd.ms-excel;charset=utf-8',`bloque${NUM_BLOQUE}_${d.nl}_${d.fechaISO}.xls`); }
+
 function reiniciar(){ if(confirm('¿Borrar las respuestas de este bloque?')){ localStorage.removeItem(STORAGE); renderActividades(); cargarAutoeval(); actualizarMedia(); } }
 function volverIndice(){ window.location.href='index.html'; }
-renderActividades(); cargarAutoeval(); show(0);
+aplicarIdioma(); show(0);
 </script>
 </body>
 </html>

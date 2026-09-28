@@ -11,10 +11,17 @@
   header h1{font-size:1.4rem;color:var(--accent);}
   header .sub{color:var(--muted);font-size:.9rem;margin-top:4px;}
   .controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
-  .controls button,.controls select{background:#252b52;color:var(--accent2);border:1px solid #3a4170;padding:7px 12px;border-radius:8px;cursor:pointer;font-weight:700;font-size:.85rem;}
+  .controls button{background:#252b52;color:var(--accent2);border:1px solid #3a4170;padding:7px 12px;border-radius:8px;cursor:pointer;font-weight:700;font-size:.85rem;}
   .controls button:hover{background:var(--accent2);color:#0f1226;}
   .btn-volver{background:#252b52;color:var(--accent2);border:1px solid #3a4170;padding:7px 12px;border-radius:8px;cursor:pointer;font-weight:700;font-size:.85rem;}
   .btn-volver:hover{background:var(--accent2);color:#0f1226;}
+  .lang-switch{display:flex;gap:4px;background:#1a1f3c;padding:4px;border-radius:8px;border:1px solid #3a4170;}
+  .lang-switch button{background:transparent;color:var(--muted);border:none;padding:5px 11px;border-radius:6px;cursor:pointer;font-weight:800;font-size:.82rem;transition:.15s;}
+  .lang-switch button:hover{background:#252b52;}
+  .lang-switch button.active{background:var(--accent2);color:#0f1226;}
+  .export-group{display:flex;gap:4px;background:#1a1f3c;padding:4px;border-radius:8px;border:1px solid #3a4170;}
+  .export-group button{background:transparent;color:var(--accent2);border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-weight:800;font-size:.82rem;}
+  .export-group button:hover{background:var(--accent2);color:#0f1226;}
   main{max-width:1100px;margin:0 auto;padding:24px 20px 80px;}
   .slide{display:none;padding:40px 60px;border-radius:16px;}
   .slide.active{display:block;animation:fade .3s ease;}
@@ -77,277 +84,622 @@
 <div class="progress" id="progress"></div>
 <header>
   <div>
-    <h1>Bloque 2 · Organización del Sistema Nervioso Central</h1>
-    <div class="sub">Fisiología · 1º Danza · Curso 2026-2027 · Cèlia Painous</div>
+    <h1 id="headerTitulo">Bloque 2 · Organización del Sistema Nervioso Central</h1>
+    <div class="sub" id="headerSub">Fisiología · 1º Danza · Curso 2026-2027 · Cèlia Painous</div>
   </div>
   <div class="controls">
-    <button class="btn-volver" onclick="volverIndice()">← Índice</button>
-    <select id="langSel"><option value="es">ES</option><option value="ca">CA</option><option value="en">EN</option></select>
-    <button onclick="exportarInforme()">💾 Exportar</button>
-    <button onclick="reiniciar()">🔄 Reiniciar</button>
+    <button class="btn-volver" id="btnVolver" onclick="volverIndice()">← Índice</button>
+    <div class="lang-switch">
+      <button data-lang="es" class="active">ES</button>
+      <button data-lang="ca">CA</button>
+      <button data-lang="en">EN</button>
+    </div>
+    <div class="export-group">
+      <button onclick="exportarTXT()">📄 TXT</button>
+      <button onclick="exportarCSV()">📊 CSV</button>
+      <button onclick="exportarExcel()">📗 Excel</button>
+    </div>
+    <button onclick="reiniciar()" id="btnReset">🔄 Reiniciar</button>
   </div>
 </header>
 <main>
 
 <section class="slide active">
-  <h2>1. Organización general: SNC y SNP</h2>
+  <h2 data-i18n="s1t">1. Organización general: SNC y SNP</h2>
   <div class="grid2">
-    <div class="box"><h3>Sistema Nervioso Central (SNC)</h3><ul><li>Encéfalo</li><li>Médula espinal</li></ul></div>
-    <div class="box" style="border-left-color:var(--accent);"><h3>Sistema Nervioso Periférico (SNP)</h3><ul><li>12 pares de nervios craneales</li><li>31 pares de nervios espinales</li><li>Ganglios</li></ul><p><b>Subdivisiones:</b> somático y autónomo.</p></div>
+    <div class="box"><h3 data-i18n="s1h1">Sistema Nervioso Central (SNC)</h3><ul><li data-i18n="s1l1">Encéfalo</li><li data-i18n="s1l2">Médula espinal</li></ul></div>
+    <div class="box" style="border-left-color:var(--accent);"><h3 data-i18n="s1h2">Sistema Nervioso Periférico (SNP)</h3><ul><li data-i18n="s1l3">12 pares de nervios craneales</li><li data-i18n="s1l4">31 pares de nervios espinales</li><li data-i18n="s1l5">Ganglios</li></ul><p data-i18n="s1l6"><b>Subdivisiones:</b> somático y autónomo.</p></div>
   </div>
-  <div class="box danza"><b>Conexión danza:</b> cuando el profesor te corrige una postura, la información viaja por el SNP hacia el SNC y la respuesta vuelve al músculo.</div>
+  <div class="box danza" data-i18n="s1d"><b>Conexión danza:</b> cuando el profesor te corrige una postura, la información viaja por el SNP hacia el SNC y la respuesta vuelve al músculo.</div>
 </section>
 
 <section class="slide">
-  <h2>2. Estructura del SNC</h2>
+  <h2 data-i18n="s2t">2. Estructura del SNC</h2>
   <table>
-    <tr><th>Componente</th><th>Partes</th></tr>
-    <tr><td>Encéfalo</td><td>Hemisferios cerebrales, diencéfalo, tronco del encéfalo, cerebelo</td></tr>
-    <tr><td>Médula espinal</td><td>Vía de comunicación e integración refleja</td></tr>
+    <tr><th data-i18n="s2th1">Componente</th><th data-i18n="s2th2">Partes</th></tr>
+    <tr><td data-i18n="s2r1a">Encéfalo</td><td data-i18n="s2r1b">Hemisferios cerebrales, diencéfalo, tronco del encéfalo, cerebelo</td></tr>
+    <tr><td data-i18n="s2r2a">Médula espinal</td><td data-i18n="s2r2b">Vía de comunicación e integración refleja</td></tr>
   </table>
 </section>
 
 <section class="slide">
-  <h2>3. Hemisferios cerebrales</h2>
-  <p>Percepción consciente, movimiento voluntario, memoria y toma de decisiones.</p>
+  <h2 data-i18n="s3t">3. Hemisferios cerebrales</h2>
+  <p data-i18n="s3i">Percepción consciente, movimiento voluntario, memoria y toma de decisiones.</p>
   <div class="grid2">
-    <div class="box"><h3>Lóbulos cerebrales</h3>
+    <div class="box"><h3 data-i18n="s3h1">Lóbulos cerebrales</h3>
       <ul>
-        <li><b>Frontal</b>: planificación y motor</li>
-        <li><b>Parietal</b>: sensibilidad y espacio</li>
-        <li><b>Temporal</b>: audición y memoria</li>
-        <li><b>Occipital</b>: visión</li>
+        <li data-i18n="s3l1"><b>Frontal</b>: planificación y motor</li>
+        <li data-i18n="s3l2"><b>Parietal</b>: sensibilidad y espacio</li>
+        <li data-i18n="s3l3"><b>Temporal</b>: audición y memoria</li>
+        <li data-i18n="s3l4"><b>Occipital</b>: visión</li>
       </ul>
     </div>
-    <div class="box" style="border-left-color:var(--accent);"><h3>Control contralateral</h3><p>El hemisferio izquierdo controla el lado derecho y viceversa.</p></div>
+    <div class="box" style="border-left-color:var(--accent);"><h3 data-i18n="s3h2">Control contralateral</h3><p data-i18n="s3l5">El hemisferio izquierdo controla el lado derecho y viceversa.</p></div>
   </div>
-  <div class="box nota"><b>Mito de la lateralización:</b> la idea de personas "de hemisferio creativo o racional" es un mito.</div>
+  <div class="box nota" data-i18n="s3n"><b>Mito de la lateralización:</b> la idea de personas "de hemisferio creativo o racional" es un mito.</div>
 </section>
 
 <section class="slide">
-  <h2>4. Diencéfalo: integración y regulación</h2>
+  <h2 data-i18n="s4t">4. Diencéfalo: integración y regulación</h2>
   <div class="grid2">
-    <div class="box"><h3>Tálamo</h3><p>Redistribución de información sensorial hacia la corteza.</p></div>
-    <div class="box" style="border-left-color:var(--accent);"><h3>Hipotálamo</h3><p>Regulación homeostática: temperatura, hambre, sed, sueño, hormonas.</p></div>
+    <div class="box"><h3 data-i18n="s4h1">Tálamo</h3><p data-i18n="s4l1">Redistribución de información sensorial hacia la corteza.</p></div>
+    <div class="box" style="border-left-color:var(--accent);"><h3 data-i18n="s4h2">Hipotálamo</h3><p data-i18n="s4l2">Regulación homeostática: temperatura, hambre, sed, sueño, hormonas.</p></div>
   </div>
 </section>
 
 <section class="slide">
-  <h2>5. Tronco encefálico</h2>
-  <p>Formado por mesencéfalo, puente y bulbo raquídeo.</p>
-  <p>Funciones: respiración, ritmo cardiovascular, nivel de alerta, control ocular y postural.</p>
+  <h2 data-i18n="s5t">5. Tronco encefálico</h2>
+  <p data-i18n="s5i">Formado por mesencéfalo, puente y bulbo raquídeo.</p>
+  <p data-i18n="s5f">Funciones: respiración, ritmo cardiovascular, nivel de alerta, control ocular y postural.</p>
 </section>
 
 <section class="slide">
-  <h2>6. Cerebelo</h2>
+  <h2 data-i18n="s6t">6. Cerebelo</h2>
   <ul>
-    <li>Equilibrio y postura.</li>
-    <li>Precisión: corrige la diferencia entre movimiento previsto y ejecutado.</li>
-    <li>Aprendizaje motor mediante la práctica.</li>
+    <li data-i18n="s6l1">Equilibrio y postura.</li>
+    <li data-i18n="s6l2">Precisión: corrige la diferencia entre movimiento previsto y ejecutado.</li>
+    <li data-i18n="s6l3">Aprendizaje motor mediante la práctica.</li>
   </ul>
 </section>
 
 <section class="slide">
-  <h2>7. Médula espinal y reflejos</h2>
-  <p>Conexión entre encéfalo y cuerpo mediante vías ascendentes (sensoriales) y descendentes (motoras). Integra reflejos.</p>
-  <div class="box"><b>Reflejos espinales:</b> arco reflejo medular, reflejo miotático e inhibición recíproca.</div>
+  <h2 data-i18n="s7t">7. Médula espinal y reflejos</h2>
+  <p data-i18n="s7i">Conexión entre encéfalo y cuerpo mediante vías ascendentes (sensoriales) y descendentes (motoras). Integra reflejos.</p>
+  <div class="box" data-i18n="s7b"><b>Reflejos espinales:</b> arco reflejo medular, reflejo miotático e inhibición recíproca.</div>
 </section>
-
-<!-- ============ NUEVAS DIAPOSITIVAS 24-32 ============ -->
 
 <section class="slide">
   <span class="etiqueta-nueva">NUEVA · 24</span>
-  <h2>24. El homúnculo: el mapa del cuerpo en el cerebro</h2>
-  <p><b>Idea-fuerza:</b> el cerebro no trata todo el cuerpo por igual. Dedica <b>más espacio</b> a las zonas que necesitan más precisión. Ese mapa se llama <b>homúnculo</b>.</p>
-  <div class="box nota"><b>Analogía:</b> imagina un mapa de metro donde las estaciones importantes ocupan más espacio que las secundarias. El cerebro hace lo mismo con el cuerpo: la mano y la cara tienen "más estaciones" que la espalda.</div>
-  <h3>Dos homúnculos</h3>
+  <h2 data-i18n="s24t">24. El homúnculo: el mapa del cuerpo en el cerebro</h2>
+  <p data-i18n="s24p1"><b>Idea-fuerza:</b> el cerebro no trata todo el cuerpo por igual. Dedica <b>más espacio</b> a las zonas que necesitan más precisión. Ese mapa se llama <b>homúnculo</b>.</p>
+  <div class="box nota" data-i18n="s24a"><b>Analogía:</b> imagina un mapa de metro donde las estaciones importantes ocupan más espacio que las secundarias.</div>
+  <h3 data-i18n="s24h1">Dos homúnculos</h3>
   <ul>
-    <li><b>Homúnculo motor</b>: en la corteza motora. Representa las partes del cuerpo según el control que tenemos sobre ellas.</li>
-    <li><b>Homúnculo sensorial</b>: en la corteza somatosensorial. Representa las partes del cuerpo según la sensibilidad que tienen.</li>
+    <li data-i18n="s24l1"><b>Homúnculo motor</b>: en la corteza motora. Representa las partes del cuerpo según el control que tenemos sobre ellas.</li>
+    <li data-i18n="s24l2"><b>Homúnculo sensorial</b>: en la corteza somatosensorial. Representa las partes del cuerpo según la sensibilidad que tienen.</li>
   </ul>
-  <p><b>Ocupan más espacio:</b> manos, dedos, labios, lengua, cara.</p>
-  <p><b>Ocupan menos espacio:</b> espalda, muslos, tronco.</p>
-  <div class="box danza"><b>Conexión danza:</b> un bailarín tiene un homúnculo más desarrollado en pies, tobillos, manos y cuello. Por eso puede hacer movimientos precisos con los pies que una persona no entrenada no podría.</div>
+  <p data-i18n="s24p2"><b>Ocupan más espacio:</b> manos, dedos, labios, lengua, cara.</p>
+  <p data-i18n="s24p3"><b>Ocupan menos espacio:</b> espalda, muslos, tronco.</p>
+  <div class="box danza" data-i18n="s24d"><b>Conexión danza:</b> un bailarín tiene un homúnculo más desarrollado en pies, tobillos, manos y cuello.</div>
 </section>
 
 <section class="slide">
   <span class="etiqueta-nueva">NUEVA · 25</span>
-  <h2>25. Vías ascendentes: cómo viaja la información sensorial</h2>
-  <p><b>Idea-fuerza:</b> la información sensorial (lo que notas) viaja desde el cuerpo hasta el cerebro por <b>carreteras específicas</b>, no por una sola.</p>
-  <div class="box nota"><b>Analogía:</b> es como el correo: hay un sistema para cartas urgentes (rápido, directo) y otro para paquetes normales (más lento, con más escalas).</div>
+  <h2 data-i18n="s25t">25. Vías ascendentes: cómo viaja la información sensorial</h2>
+  <p data-i18n="s25p1"><b>Idea-fuerza:</b> la información sensorial viaja desde el cuerpo hasta el cerebro por <b>carreteras específicas</b>.</p>
+  <div class="box nota" data-i18n="s25a"><b>Analogía:</b> es como el correo: hay un sistema para cartas urgentes y otro para paquetes normales.</div>
   <table>
-    <tr><th>Vía</th><th>Qué transporta</th><th>Velocidad</th></tr>
-    <tr><td><b>Cordones posteriores</b></td><td>Tacto fino, vibración, posición</td><td>Rápida</td></tr>
-    <tr><td><b>Vía espinotalámica</b></td><td>Dolor, temperatura, tacto grueso</td><td>Más lenta</td></tr>
+    <tr><th data-i18n="s25th1">Vía</th><th data-i18n="s25th2">Qué transporta</th><th data-i18n="s25th3">Velocidad</th></tr>
+    <tr><td data-i18n="s25r1a"><b>Cordones posteriores</b></td><td data-i18n="s25r1b">Tacto fino, vibración, posición</td><td data-i18n="s25r1c">Rápida</td></tr>
+    <tr><td data-i18n="s25r2a"><b>Vía espinotalámica</b></td><td data-i18n="s25r2b">Dolor, temperatura, tacto grueso</td><td data-i18n="s25r2c">Más lenta</td></tr>
   </table>
-  <p><b>Recorrido básico:</b> receptor → médula espinal → vía específica → tálamo → corteza somatosensorial.</p>
-  <div class="box danza"><b>Conexión danza:</b> los cordones posteriores te permiten notar la posición exacta del pie en el suelo. La vía espinotalámica te avisa cuando algo duele.</div>
+  <p data-i18n="s25p2"><b>Recorrido básico:</b> receptor → médula espinal → vía específica → tálamo → corteza somatosensorial.</p>
+  <div class="box danza" data-i18n="s25d"><b>Conexión danza:</b> los cordones posteriores te permiten notar la posición exacta del pie en el suelo.</div>
 </section>
 
 <section class="slide">
   <span class="etiqueta-nueva">NUEVA · 26</span>
-  <h2>26. Vías descendentes: cómo viaja la orden motora</h2>
-  <p><b>Idea-fuerza:</b> la orden de mover un músculo baja desde el cerebro por <b>carreteras específicas</b>. No todas hacen lo mismo.</p>
-  <div class="box nota"><b>Analogía:</b> es como una empresa con varios tipos de mensajeros: uno lleva instrucciones precisas, otro lleva normas generales.</div>
+  <h2 data-i18n="s26t">26. Vías descendentes: cómo viaja la orden motora</h2>
+  <p data-i18n="s26p1"><b>Idea-fuerza:</b> la orden de mover un músculo baja desde el cerebro por <b>carreteras específicas</b>.</p>
+  <div class="box nota" data-i18n="s26a"><b>Analogía:</b> es como una empresa con varios tipos de mensajeros.</div>
   <table>
-    <tr><th>Vía</th><th>Qué controla</th><th>Ejemplo dancístico</th></tr>
-    <tr><td><b>Corticoespinal (piramidal)</b></td><td>Movimiento fino y voluntario</td><td>Colocar la mano en una posición exacta</td></tr>
-    <tr><td><b>Rubroespinal</b></td><td>Tono y postura de extremidades</td><td>Mantener el brazo en posición</td></tr>
-    <tr><td><b>Retículoespinal</b></td><td>Postura global, equilibrio</td><td>Mantener el eje en un giro</td></tr>
-    <tr><td><b>Vestibuloespinal</b></td><td>Equilibrio y orientación</td><td>No caer en un arabesco</td></tr>
-    <tr><td><b>Tectoespinal</b></td><td>Orientación de cabeza y ojos</td><td>Girar la cabeza hacia el público</td></tr>
+    <tr><th data-i18n="s26th1">Vía</th><th data-i18n="s26th2">Qué controla</th><th data-i18n="s26th3">Ejemplo dancístico</th></tr>
+    <tr><td data-i18n="s26r1a"><b>Corticoespinal (piramidal)</b></td><td data-i18n="s26r1b">Movimiento fino y voluntario</td><td data-i18n="s26r1c">Colocar la mano en una posición exacta</td></tr>
+    <tr><td data-i18n="s26r2a"><b>Rubroespinal</b></td><td data-i18n="s26r2b">Tono y postura de extremidades</td><td data-i18n="s26r2c">Mantener el brazo en posición</td></tr>
+    <tr><td data-i18n="s26r3a"><b>Retículoespinal</b></td><td data-i18n="s26r3b">Postura global, equilibrio</td><td data-i18n="s26r3c">Mantener el eje en un giro</td></tr>
+    <tr><td data-i18n="s26r4a"><b>Vestibuloespinal</b></td><td data-i18n="s26r4b">Equilibrio y orientación</td><td data-i18n="s26r4c">No caer en un arabesco</td></tr>
+    <tr><td data-i18n="s26r5a"><b>Tectoespinal</b></td><td data-i18n="s26r5b">Orientación de cabeza y ojos</td><td data-i18n="s26r5c">Girar la cabeza hacia el público</td></tr>
   </table>
-  <div class="box danza"><b>Conexión danza:</b> la vía piramidal te permite hacer movimientos finos. Las extrapiramidales mantienen la postura sin que tengas que pensar en ella.</div>
+  <div class="box danza" data-i18n="s26d"><b>Conexión danza:</b> la vía piramidal te permite hacer movimientos finos. Las extrapiramidales mantienen la postura sin pensar.</div>
 </section>
 
 <section class="slide">
   <span class="etiqueta-nueva">NUEVA · 27</span>
-  <h2>27. El cuerpo calloso: el puente entre hemisferios</h2>
-  <p><b>Idea-fuerza:</b> los dos hemisferios cerebrales no trabajan aislados. Están conectados por una <b>autopista de fibras</b>: el cuerpo calloso.</p>
-  <div class="box nota"><b>Analogía:</b> imagina dos oficinas separadas por un río. Cada una hace su trabajo, pero necesitan comunicarse continuamente. El cuerpo calloso es el puente que las une.</div>
+  <h2 data-i18n="s27t">27. El cuerpo calloso: el puente entre hemisferios</h2>
+  <p data-i18n="s27p1"><b>Idea-fuerza:</b> los dos hemisferios cerebrales no trabajan aislados. Están conectados por una <b>autopista de fibras</b>: el cuerpo calloso.</p>
+  <div class="box nota" data-i18n="s27a"><b>Analogía:</b> imagina dos oficinas separadas por un río. El cuerpo calloso es el puente que las une.</div>
   <ul>
-    <li>Es un <b>haz de fibras nerviosas</b> que conecta hemisferio izquierdo y derecho.</li>
-    <li>Contiene <b>millones de axones</b>.</li>
-    <li>Permite coordinar movimientos que implican ambos lados del cuerpo.</li>
-    <li>Integra información sensorial de los dos lados.</li>
-    <li>Transfiere aprendizajes de un hemisferio al otro.</li>
+    <li data-i18n="s27l1">Es un <b>haz de fibras nerviosas</b> que conecta hemisferio izquierdo y derecho.</li>
+    <li data-i18n="s27l2">Contiene <b>millones de axones</b>.</li>
+    <li data-i18n="s27l3">Permite coordinar movimientos que implican ambos lados del cuerpo.</li>
+    <li data-i18n="s27l4">Integra información sensorial de los dos lados.</li>
+    <li data-i18n="s27l5">Transfiere aprendizajes de un hemisferio al otro.</li>
   </ul>
-  <div class="box danza"><b>Conexión danza:</b> cuando aprendes un paso con la mano derecha, el cuerpo calloso ayuda a que la izquierda lo aprenda también. Si no funcionara, cada lado haría cosas distintas sin coordinación.</div>
+  <div class="box danza" data-i18n="s27d"><b>Conexión danza:</b> cuando aprendes un paso con la mano derecha, el cuerpo calloso ayuda a que la izquierda lo aprenda también.</div>
 </section>
 
 <section class="slide">
   <span class="etiqueta-nueva">NUEVA · 28</span>
-  <h2>28. Formación reticular: el interruptor de tu alerta</h2>
-  <p><b>Idea-fuerza:</b> en el tronco del encéfalo hay una red de neuronas que <b>decide si estás despierto, alerta o dormido</b>. Es la formación reticular.</p>
-  <div class="box nota"><b>Analogía:</b> es como el interruptor general de una casa: cuando lo enciendes, todas las luces se activan. Cuando lo apagas, todo se apaga.</div>
-  <h3>Dos funciones principales</h3>
+  <h2 data-i18n="s28t">28. Formación reticular: el interruptor de tu alerta</h2>
+  <p data-i18n="s28p1"><b>Idea-fuerza:</b> en el tronco del encéfalo hay una red de neuronas que <b>decide si estás despierto, alerta o dormido</b>.</p>
+  <div class="box nota" data-i18n="s28a"><b>Analogía:</b> es como el interruptor general de una casa.</div>
+  <h3 data-i18n="s28h1">Dos funciones principales</h3>
   <ul>
-    <li><b>Sistema activador ascendente (SARA)</b>: mantiene la corteza despierta y alerta.</li>
-    <li><b>Control del sueño</b>: regula cuándo dormimos y cuándo estamos despiertos.</li>
+    <li data-i18n="s28l1"><b>Sistema activador ascendente (SARA)</b>: mantiene la corteza despierta y alerta.</li>
+    <li data-i18n="s28l2"><b>Control del sueño</b>: regula cuándo dormimos y cuándo estamos despiertos.</li>
   </ul>
-  <p><b>Qué la activa:</b> estímulos sensoriales fuertes (luz, sonido, movimiento), noradrenalina, ejercicio físico.</p>
-  <div class="box danza"><b>Conexión danza:</b> antes de una actuación, la formación reticular está muy activa → estás alerta. Si has dormido mal, está menos activa → peor concentración. El calentamiento la activa.</div>
+  <p data-i18n="s28p2"><b>Qué la activa:</b> estímulos sensoriales fuertes, noradrenalina, ejercicio físico.</p>
+  <div class="box danza" data-i18n="s28d"><b>Conexión danza:</b> antes de una actuación, la formación reticular está muy activa. El calentamiento la activa.</div>
 </section>
 
 <section class="slide">
   <span class="etiqueta-nueva">NUEVA · 29</span>
-  <h2>29. Sistema límbico: emoción, memoria y movimiento</h2>
-  <p><b>Idea-fuerza:</b> el movimiento no es solo mecánica. Las <b>emociones</b> y la <b>memoria</b> influyen en cómo te mueves.</p>
-  <div class="box nota"><b>Analogía:</b> es como un director de cine que decide el tono emocional de una escena: no cambia los actores, pero sí cómo se sienten y cómo actúan.</div>
+  <h2 data-i18n="s29t">29. Sistema límbico: emoción, memoria y movimiento</h2>
+  <p data-i18n="s29p1"><b>Idea-fuerza:</b> el movimiento no es solo mecánica. Las <b>emociones</b> y la <b>memoria</b> influyen en cómo te mueves.</p>
+  <div class="box nota" data-i18n="s29a"><b>Analogía:</b> es como un director de cine que decide el tono emocional de una escena.</div>
   <table>
-    <tr><th>Estructura</th><th>Función</th><th>En danza</th></tr>
-    <tr><td>Amígdala</td><td>Emociones, respuesta al estrés</td><td>Miedo escénico</td></tr>
-    <tr><td>Hipotálamo</td><td>Regulación hormonal y autonómica</td><td>Respuesta al esfuerzo</td></tr>
-    <tr><td>Hipocampo</td><td>Memoria y aprendizaje</td><td>Recordar coreografías</td></tr>
-    <tr><td>Cíngulo</td><td>Integración emoción-atención</td><td>Concentración con emoción</td></tr>
-    <tr><td>Núcleo accumbens</td><td>Recompensa y motivación</td><td>Placer de bailar</td></tr>
+    <tr><th data-i18n="s29th1">Estructura</th><th data-i18n="s29th2">Función</th><th data-i18n="s29th3">En danza</th></tr>
+    <tr><td data-i18n="s29r1a">Amígdala</td><td data-i18n="s29r1b">Emociones, respuesta al estrés</td><td data-i18n="s29r1c">Miedo escénico</td></tr>
+    <tr><td data-i18n="s29r2a">Hipotálamo</td><td data-i18n="s29r2b">Regulación hormonal y autonómica</td><td data-i18n="s29r2c">Respuesta al esfuerzo</td></tr>
+    <tr><td data-i18n="s29r3a">Hipocampo</td><td data-i18n="s29r3b">Memoria y aprendizaje</td><td data-i18n="s29r3c">Recordar coreografías</td></tr>
+    <tr><td data-i18n="s29r4a">Cíngulo</td><td data-i18n="s29r4b">Integración emoción-atención</td><td data-i18n="s29r4c">Concentración con emoción</td></tr>
+    <tr><td data-i18n="s29r5a">Núcleo accumbens</td><td data-i18n="s29r5b">Recompensa y motivación</td><td data-i18n="s29r5c">Placer de bailar</td></tr>
   </table>
-  <div class="box danza"><b>Conexión danza:</b> una coreografía que te emociona se ejecuta con más energía. El miedo escénico activa la amígdala → tensión. La memoria motora se consolida con el hipocampo.</div>
+  <div class="box danza" data-i18n="s29d"><b>Conexión danza:</b> una coreografía que te emociona se ejecuta con más energía.</div>
 </section>
 
 <section class="slide">
   <span class="etiqueta-nueva">NUEVA · 30</span>
-  <h2>30. Reflejo miotático: circuito completo paso a paso</h2>
-  <p><b>Idea-fuerza:</b> el reflejo miotático es la respuesta automática más importante para un bailarín. Es lo que protege tus músculos de estiramientos bruscos.</p>
-  <div class="box nota"><b>Analogía:</b> es como el sistema de seguridad de un coche: si detecta un peligro, frena automáticamente sin que el conductor tenga que pensar.</div>
-  <h3>Circuito paso a paso</h3>
+  <h2 data-i18n="s30t">30. Reflejo miotático: circuito completo paso a paso</h2>
+  <p data-i18n="s30p1"><b>Idea-fuerza:</b> el reflejo miotático es la respuesta automática más importante para un bailarín.</p>
+  <div class="box nota" data-i18n="s30a"><b>Analogía:</b> es como el sistema de seguridad de un coche.</div>
+  <h3 data-i18n="s30h1">Circuito paso a paso</h3>
   <ol>
-    <li><b>Estímulo</b>: el músculo se estira bruscamente.</li>
-    <li><b>Receptor</b>: el huso muscular detecta el estiramiento.</li>
-    <li><b>Vía aferente</b>: la señal viaja por una neurona sensorial hasta la médula.</li>
-    <li><b>Centro integrador</b>: en la médula, la neurona sensorial conecta con una motoneurona.</li>
-    <li><b>Vía eferente</b>: la motoneurona envía la orden al músculo.</li>
-    <li><b>Respuesta</b>: el músculo se contrae para resistir el estiramiento.</li>
+    <li data-i18n="s30l1"><b>Estímulo</b>: el músculo se estira bruscamente.</li>
+    <li data-i18n="s30l2"><b>Receptor</b>: el huso muscular detecta el estiramiento.</li>
+    <li data-i18n="s30l3"><b>Vía aferente</b>: la señal viaja por una neurona sensorial hasta la médula.</li>
+    <li data-i18n="s30l4"><b>Centro integrador</b>: en la médula, la neurona sensorial conecta con una motoneurona.</li>
+    <li data-i18n="s30l5"><b>Vía eferente</b>: la motoneurona envía la orden al músculo.</li>
+    <li data-i18n="s30l6"><b>Respuesta</b>: el músculo se contrae para resistir el estiramiento.</li>
   </ol>
-  <div class="box danza"><b>Conexión danza:</b> cuando haces un plié profundo, el reflejo miotático se activa ligeramente para proteger. Los estiramientos mantenidos entrenan la inhibición del reflejo → más flexibilidad.</div>
+  <div class="box danza" data-i18n="s30d"><b>Conexión danza:</b> los estiramientos mantenidos entrenan la inhibición del reflejo → más flexibilidad.</div>
 </section>
 
 <section class="slide">
   <span class="etiqueta-nueva">NUEVA · 31</span>
-  <h2>31. Control del equilibrio: la triple integración</h2>
-  <p><b>Idea-fuerza:</b> mantener el equilibrio no depende de un solo sentido. Depende de la <b>integración de tres sistemas</b>.</p>
-  <div class="box nota"><b>Analogía:</b> es como un trípode: si quitas una pata, el trípode se sostiene con las otras dos, pero con más dificultad.</div>
+  <h2 data-i18n="s31t">31. Control del equilibrio: la triple integración</h2>
+  <p data-i18n="s31p1"><b>Idea-fuerza:</b> mantener el equilibrio depende de la <b>integración de tres sistemas</b>.</p>
+  <div class="box nota" data-i18n="s31a"><b>Analogía:</b> es como un trípode: si quitas una pata, se sostiene con más dificultad.</div>
   <table>
-    <tr><th>Sistema</th><th>Qué aporta</th><th>En danza</th></tr>
-    <tr><td><b>Visual</b></td><td>Referencia espacial</td><td>Punto fijo en un giro</td></tr>
-    <tr><td><b>Vestibular</b></td><td>Aceleraciones y gravedad</td><td>Notar que giras</td></tr>
-    <tr><td><b>Propioceptivo</b></td><td>Posición del cuerpo</td><td>Notar el pie en el suelo</td></tr>
+    <tr><th data-i18n="s31th1">Sistema</th><th data-i18n="s31th2">Qué aporta</th><th data-i18n="s31th3">En danza</th></tr>
+    <tr><td data-i18n="s31r1a"><b>Visual</b></td><td data-i18n="s31r1b">Referencia espacial</td><td data-i18n="s31r1c">Punto fijo en un giro</td></tr>
+    <tr><td data-i18n="s31r2a"><b>Vestibular</b></td><td data-i18n="s31r2b">Aceleraciones y gravedad</td><td data-i18n="s31r2c">Notar que giras</td></tr>
+    <tr><td data-i18n="s31r3a"><b>Propioceptivo</b></td><td data-i18n="s31r3b">Posición del cuerpo</td><td data-i18n="s31r3c">Notar el pie en el suelo</td></tr>
   </table>
-  <p><b>Dónde se integra:</b> en el cerebelo y el tronco encefálico.</p>
-  <div class="box danza"><b>Conexión danza:</b> un giro usa los tres sistemas. Entrenar con ojos cerrados mejora la propiocepción. Entrenar en superficies inestables mejora el vestibular.</div>
+  <p data-i18n="s31p2"><b>Dónde se integra:</b> en el cerebelo y el tronco encefálico.</p>
+  <div class="box danza" data-i18n="s31d"><b>Conexión danza:</b> un giro usa los tres sistemas. Entrenar con ojos cerrados mejora la propiocepción.</div>
 </section>
 
 <section class="slide">
   <span class="etiqueta-nueva">NUEVA · 32</span>
-  <h2>32. Aplicación dancística: cómo se traduce todo esto en tu entrenamiento</h2>
-  <p><b>Idea-fuerza:</b> todo lo que has visto en el Bloque 2 tiene una traducción práctica en tu día a día.</p>
-  <h3>1. Entrena la propiocepción</h3>
+  <h2 data-i18n="s32t">32. Aplicación dancística</h2>
+  <p data-i18n="s32p1"><b>Idea-fuerza:</b> todo lo que has visto en el Bloque 2 tiene una traducción práctica.</p>
+  <h3 data-i18n="s32h1">1. Entrena la propiocepción</h3>
   <ul>
-    <li>Ejercicios con ojos cerrados.</li>
-    <li>Superficies inestables (cojines, tablas).</li>
-    <li>Trabajo descalzo para notar mejor el suelo.</li>
+    <li data-i18n="s32l1">Ejercicios con ojos cerrados.</li>
+    <li data-i18n="s32l2">Superficies inestables.</li>
+    <li data-i18n="s32l3">Trabajo descalzo.</li>
   </ul>
-  <h3>2. Cuida tu equilibrio</h3>
+  <h3 data-i18n="s32h2">2. Cuida tu equilibrio</h3>
   <ul>
-    <li>Entrena los tres sistemas.</li>
-    <li>Haz pausas si te marea girar mucho.</li>
-    <li>Usa un punto fijo en los giros.</li>
+    <li data-i18n="s32l4">Entrena los tres sistemas.</li>
+    <li data-i18n="s32l5">Haz pausas si te marea girar mucho.</li>
+    <li data-i18n="s32l6">Usa un punto fijo en los giros.</li>
   </ul>
-  <h3>3. Gestiona tus emociones</h3>
+  <h3 data-i18n="s32h3">3. Gestiona tus emociones</h3>
   <ul>
-    <li>Antes de actuar, respira y visualiza para calmar la amígdala.</li>
-    <li>Baila piezas que te emocionen: se ejecutan mejor.</li>
+    <li data-i18n="s32l7">Antes de actuar, respira y visualiza para calmar la amígdala.</li>
+    <li data-i18n="s32l8">Baila piezas que te emocionen.</li>
   </ul>
-  <h3>4. Aprovecha el cuerpo calloso</h3>
+  <h3 data-i18n="s32h4">4. Aprovecha el cuerpo calloso</h3>
   <ul>
-    <li>Practica movimientos con los dos lados del cuerpo.</li>
-    <li>Aprende un paso con un lado y transfiérelo al otro.</li>
-    <li>Entrena coordinaciones cruzadas.</li>
+    <li data-i18n="s32l9">Practica movimientos con los dos lados del cuerpo.</li>
+    <li data-i18n="s32l10">Aprende un paso con un lado y transfiérelo al otro.</li>
+    <li data-i18n="s32l11">Entrena coordinaciones cruzadas.</li>
   </ul>
-  <h3>5. Cuida tu alerta</h3>
+  <h3 data-i18n="s32h5">5. Cuida tu alerta</h3>
   <ul>
-    <li>Duerme bien: la formación reticular necesita descanso.</li>
-    <li>Calienta antes de entrenar.</li>
+    <li data-i18n="s32l12">Duerme bien: la formación reticular necesita descanso.</li>
+    <li data-i18n="s32l13">Calienta antes de entrenar.</li>
   </ul>
-  <div class="box danza"><b>Analogía final:</b> tu SNC es como una <b>empresa bien organizada</b>: hay departamentos, hay comunicación entre ellos, hay un director, hay un sistema de emergencia y hay un estado de ánimo general. Cuando todo funciona bien, el movimiento es fluido.</div>
+  <div class="box danza" data-i18n="s32d"><b>Analogía final:</b> tu SNC es como una <b>empresa bien organizada</b>.</div>
 </section>
 
-<!-- ============ ACTIVIDADES ============ -->
 <section class="slide">
-  <h2>Actividades del Bloque 2</h2>
-  <p>15 actividades cortas. Se guardan automáticamente.</p>
+  <h2 id="actTitulo">Actividades del Bloque 2</h2>
+  <p id="actIntro">15 actividades cortas. Se guardan automáticamente.</p>
   <div class="progreso-actividades">
-    <span><b id="pCompletadas">0</b>/15 completadas</span>
+    <span><b id="pCompletadas">0</b>/15 <span id="txtCompl">completadas</span></span>
     <div class="bar"><div class="bar-fill" id="pBar" style="width:0%"></div></div>
-    <span style="color:var(--muted);">Autoguardado</span>
+    <span style="color:var(--muted);" id="txtAuto">Autoguardado</span>
   </div>
   <div id="contenedorActividades"></div>
-  <div class="media-box"><span>📊 Nota media de tus actividades:</span><span class="nota-grande" id="notaMedia">—</span></div>
+  <div class="media-box"><span id="txtMedia">📊 Nota media:</span><span class="nota-grande" id="notaMedia">—</span></div>
   <div class="autoeval-box">
-    <h4>🤔 Autoevaluación del bloque</h4>
-    <p>Después de ver los esquemas y tu nota media, ¿qué nota te pondrías?</p>
+    <h4 id="autoTitulo">🤔 Autoevaluación del bloque</h4>
+    <p id="autoP1">¿Qué nota te pondrías?</p>
     <div class="escala">
-      <label><input type="radio" name="autoeval-rango" value="0-4"><span>Insuficiente (0-4)</span></label>
-      <label><input type="radio" name="autoeval-rango" value="5-6"><span>Suficiente (5-6)</span></label>
-      <label><input type="radio" name="autoeval-rango" value="7-8"><span>Notable (7-8)</span></label>
-      <label><input type="radio" name="autoeval-rango" value="9-10"><span>Excelente (9-10)</span></label>
+      <label><input type="radio" name="autoeval-rango" value="0-4"><span id="aInsuf">Insuficiente (0-4)</span></label>
+      <label><input type="radio" name="autoeval-rango" value="5-6"><span id="aSuf">Suficiente (5-6)</span></label>
+      <label><input type="radio" name="autoeval-rango" value="7-8"><span id="aNot">Notable (7-8)</span></label>
+      <label><input type="radio" name="autoeval-rango" value="9-10"><span id="aExc">Excelente (9-10)</span></label>
     </div>
-    <div class="nota-propia"><span>Nota concreta (0-10):</span><input type="number" min="0" max="10" step="0.5" data-autoeval-nota></div>
-    <p style="margin-top:12px;font-size:.9rem;">Justifica tu nota:</p>
+    <div class="nota-propia"><span id="aNotaTxt">Nota concreta:</span><input type="number" min="0" max="10" step="0.5" data-autoeval-nota></div>
+    <p style="margin-top:12px;font-size:.9rem;" id="aJustTxt">Justifica tu nota:</p>
     <textarea data-autoeval-text placeholder="..."></textarea>
   </div>
-  <div class="acciones" style="margin-top:20px;"><button onclick="exportarInforme()">💾 Descargar informe completo</button></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:20px;">
+    <button onclick="exportarTXT()" style="background:var(--accent2);color:#0f1226;border:none;padding:9px 16px;border-radius:8px;font-weight:800;cursor:pointer;">💾 Descargar TXT</button>
+    <button onclick="exportarCSV()" style="background:#b07cff;color:#fff;border:none;padding:9px 16px;border-radius:8px;font-weight:800;cursor:pointer;">📊 Descargar CSV</button>
+    <button onclick="exportarExcel()" style="background:var(--ok);color:#0f1226;border:none;padding:9px 16px;border-radius:8px;font-weight:800;cursor:pointer;">📗 Descargar Excel</button>
+  </div>
 </section>
 
 </main>
 <div class="counter" id="counter">Diapositiva 1 / 17</div>
-<div class="nav"><button onclick="prev()">← Anterior</button><button onclick="next()">Siguiente →</button></div>
+<div class="nav"><button onclick="prev()" id="navPrev">← Anterior</button><button onclick="next()" id="navNext">Siguiente →</button></div>
 
 <script>
 const NUM_BLOQUE = 2;
 const STORAGE = 'bloque2_respuestas_v2';
-const TITULO_BLOQUE = {es:'BLOQUE 2 · ORGANIZACIÓN DEL SNC'};
+const TITULO_BLOQUE = {es:'BLOQUE 2 · ORGANIZACIÓN DEL SNC',ca:'BLOC 2 · ORGANITZACIÓ SNC',en:'BLOCK 2 · CNS ORGANIZATION'};
 
+/* ============ IDIOMA ============ */
+const I18N = {
+  es:{
+    headerTitulo:"Bloque 2 · Organización del Sistema Nervioso Central", headerSub:"Fisiología · 1º Danza · Curso 2026-2027 · Cèlia Painous",
+    btnVolver:"← Índice", btnReset:"🔄 Reiniciar", navPrev:"← Anterior", navNext:"Siguiente →",
+    btnComprobar:"Comprobar", btnValorar:"Valorar", btnVer:"Ver solución",
+    fbOk:"✅ ¡Correcto!", fbKo:"❌ Revisa tu respuesta.", fbGuardado:"💾 Guardado.",
+    chipIndiv:"Individual", chipPareja:"Parejas", chipGrupo:"Grupos 2-3",
+    txtCompl:"completadas", txtAuto:"Autoguardado", txtMedia:"📊 Nota media:",
+    autoTitulo:"🤔 Autoevaluación del bloque", autoP1:"¿Qué nota te pondrías?",
+    aInsuf:"Insuficiente (0-4)", aSuf:"Suficiente (5-6)", aNot:"Notable (7-8)", aExc:"Excelente (9-10)",
+    aNotaTxt:"Nota concreta:", aJustTxt:"Justifica tu nota:", placeholder:"Escribe aquí tu respuesta...",
+    actTitulo:"Actividades del Bloque 2", actIntro:"15 actividades cortas. Se guardan automáticamente.",
+    s1t:"1. Organización general: SNC y SNP", s1h1:"Sistema Nervioso Central (SNC)", s1l1:"Encéfalo", s1l2:"Médula espinal",
+    s1h2:"Sistema Nervioso Periférico (SNP)", s1l3:"12 pares de nervios craneales", s1l4:"31 pares de nervios espinales", s1l5:"Ganglios",
+    s1l6:"<b>Subdivisiones:</b> somático y autónomo.",
+    s1d:"<b>Conexión danza:</b> cuando el profesor te corrige una postura, la información viaja por el SNP hacia el SNC y la respuesta vuelve al músculo.",
+    s2t:"2. Estructura del SNC", s2th1:"Componente", s2th2:"Partes", s2r1a:"Encéfalo", s2r1b:"Hemisferios cerebrales, diencéfalo, tronco del encéfalo, cerebelo", s2r2a:"Médula espinal", s2r2b:"Vía de comunicación e integración refleja",
+    s3t:"3. Hemisferios cerebrales", s3i:"Percepción consciente, movimiento voluntario, memoria y toma de decisiones.",
+    s3h1:"Lóbulos cerebrales", s3l1:"<b>Frontal</b>: planificación y motor", s3l2:"<b>Parietal</b>: sensibilidad y espacio", s3l3:"<b>Temporal</b>: audición y memoria", s3l4:"<b>Occipital</b>: visión",
+    s3h2:"Control contralateral", s3l5:"El hemisferio izquierdo controla el lado derecho y viceversa.",
+    s3n:"<b>Mito de la lateralización:</b> la idea de personas 'de hemisferio creativo o racional' es un mito.",
+    s4t:"4. Diencéfalo: integración y regulación", s4h1:"Tálamo", s4l1:"Redistribución de información sensorial hacia la corteza.", s4h2:"Hipotálamo", s4l2:"Regulación homeostática: temperatura, hambre, sed, sueño, hormonas.",
+    s5t:"5. Tronco encefálico", s5i:"Formado por mesencéfalo, puente y bulbo raquídeo.", s5f:"Funciones: respiración, ritmo cardiovascular, nivel de alerta, control ocular y postural.",
+    s6t:"6. Cerebelo", s6l1:"Equilibrio y postura.", s6l2:"Precisión: corrige la diferencia entre movimiento previsto y ejecutado.", s6l3:"Aprendizaje motor mediante la práctica.",
+    s7t:"7. Médula espinal y reflejos", s7i:"Conexión entre encéfalo y cuerpo mediante vías ascendentes y descendentes. Integra reflejos.",
+    s7b:"<b>Reflejos espinales:</b> arco reflejo medular, reflejo miotático e inhibición recíproca.",
+    s24t:"24. El homúnculo: el mapa del cuerpo en el cerebro",
+    s24p1:"<b>Idea-fuerza:</b> el cerebro no trata todo el cuerpo por igual. Dedica <b>más espacio</b> a las zonas que necesitan más precisión.",
+    s24a:"<b>Analogía:</b> imagina un mapa de metro donde las estaciones importantes ocupan más espacio.",
+    s24h1:"Dos homúnculos",
+    s24l1:"<b>Homúnculo motor</b>: en la corteza motora. Representa las partes del cuerpo según el control que tenemos sobre ellas.",
+    s24l2:"<b>Homúnculo sensorial</b>: en la corteza somatosensorial. Representa las partes del cuerpo según la sensibilidad que tienen.",
+    s24p2:"<b>Ocupan más espacio:</b> manos, dedos, labios, lengua, cara.",
+    s24p3:"<b>Ocupan menos espacio:</b> espalda, muslos, tronco.",
+    s24d:"<b>Conexión danza:</b> un bailarín tiene un homúnculo más desarrollado en pies, tobillos, manos y cuello.",
+    s25t:"25. Vías ascendentes: cómo viaja la información sensorial",
+    s25p1:"<b>Idea-fuerza:</b> la información sensorial viaja desde el cuerpo hasta el cerebro por <b>carreteras específicas</b>.",
+    s25a:"<b>Analogía:</b> es como el correo: hay un sistema para cartas urgentes y otro para paquetes normales.",
+    s25th1:"Vía", s25th2:"Qué transporta", s25th3:"Velocidad",
+    s25r1a:"<b>Cordones posteriores</b>", s25r1b:"Tacto fino, vibración, posición", s25r1c:"Rápida",
+    s25r2a:"<b>Vía espinotalámica</b>", s25r2b:"Dolor, temperatura, tacto grueso", s25r2c:"Más lenta",
+    s25p2:"<b>Recorrido básico:</b> receptor → médula espinal → vía específica → tálamo → corteza somatosensorial.",
+    s25d:"<b>Conexión danza:</b> los cordones posteriores te permiten notar la posición exacta del pie en el suelo.",
+    s26t:"26. Vías descendentes: cómo viaja la orden motora",
+    s26p1:"<b>Idea-fuerza:</b> la orden de mover un músculo baja desde el cerebro por <b>carreteras específicas</b>.",
+    s26a:"<b>Analogía:</b> es como una empresa con varios tipos de mensajeros.",
+    s26th1:"Vía", s26th2:"Qué controla", s26th3:"Ejemplo dancístico",
+    s26r1a:"<b>Corticoespinal (piramidal)</b>", s26r1b:"Movimiento fino y voluntario", s26r1c:"Colocar la mano en una posición exacta",
+    s26r2a:"<b>Rubroespinal</b>", s26r2b:"Tono y postura de extremidades", s26r2c:"Mantener el brazo en posición",
+    s26r3a:"<b>Retículoespinal</b>", s26r3b:"Postura global, equilibrio", s26r3c:"Mantener el eje en un giro",
+    s26r4a:"<b>Vestibuloespinal</b>", s26r4b:"Equilibrio y orientación", s26r4c:"No caer en un arabesco",
+    s26r5a:"<b>Tectoespinal</b>", s26r5b:"Orientación de cabeza y ojos", s26r5c:"Girar la cabeza hacia el público",
+    s26d:"<b>Conexión danza:</b> la vía piramidal te permite hacer movimientos finos. Las extrapiramidales mantienen la postura sin pensar.",
+    s27t:"27. El cuerpo calloso: el puente entre hemisferios",
+    s27p1:"<b>Idea-fuerza:</b> los dos hemisferios cerebrales no trabajan aislados. Están conectados por una <b>autopista de fibras</b>: el cuerpo calloso.",
+    s27a:"<b>Analogía:</b> imagina dos oficinas separadas por un río. El cuerpo calloso es el puente que las une.",
+    s27l1:"Es un <b>haz de fibras nerviosas</b> que conecta hemisferio izquierdo y derecho.",
+    s27l2:"Contiene <b>millones de axones</b>.",
+    s27l3:"Permite coordinar movimientos que implican ambos lados del cuerpo.",
+    s27l4:"Integra información sensorial de los dos lados.",
+    s27l5:"Transfiere aprendizajes de un hemisferio al otro.",
+    s27d:"<b>Conexión danza:</b> cuando aprendes un paso con la mano derecha, el cuerpo calloso ayuda a que la izquierda lo aprenda también.",
+    s28t:"28. Formación reticular: el interruptor de tu alerta",
+    s28p1:"<b>Idea-fuerza:</b> en el tronco del encéfalo hay una red de neuronas que <b>decide si estás despierto, alerta o dormido</b>.",
+    s28a:"<b>Analogía:</b> es como el interruptor general de una casa.",
+    s28h1:"Dos funciones principales",
+    s28l1:"<b>Sistema activador ascendente (SARA)</b>: mantiene la corteza despierta y alerta.",
+    s28l2:"<b>Control del sueño</b>: regula cuándo dormimos y cuándo estamos despiertos.",
+    s28p2:"<b>Qué la activa:</b> estímulos sensoriales fuertes, noradrenalina, ejercicio físico.",
+    s28d:"<b>Conexión danza:</b> antes de una actuación, la formación reticular está muy activa. El calentamiento la activa.",
+    s29t:"29. Sistema límbico: emoción, memoria y movimiento",
+    s29p1:"<b>Idea-fuerza:</b> el movimiento no es solo mecánica. Las <b>emociones</b> y la <b>memoria</b> influyen en cómo te mueves.",
+    s29a:"<b>Analogía:</b> es como un director de cine que decide el tono emocional de una escena.",
+    s29th1:"Estructura", s29th2:"Función", s29th3:"En danza",
+    s29r1a:"Amígdala", s29r1b:"Emociones, respuesta al estrés", s29r1c:"Miedo escénico",
+    s29r2a:"Hipotálamo", s29r2b:"Regulación hormonal y autonómica", s29r2c:"Respuesta al esfuerzo",
+    s29r3a:"Hipocampo", s29r3b:"Memoria y aprendizaje", s29r3c:"Recordar coreografías",
+    s29r4a:"Cíngulo", s29r4b:"Integración emoción-atención", s29r4c:"Concentración con emoción",
+    s29r5a:"Núcleo accumbens", s29r5b:"Recompensa y motivación", s29r5c:"Placer de bailar",
+    s29d:"<b>Conexión danza:</b> una coreografía que te emociona se ejecuta con más energía.",
+    s30t:"30. Reflejo miotático: circuito completo paso a paso",
+    s30p1:"<b>Idea-fuerza:</b> el reflejo miotático es la respuesta automática más importante para un bailarín.",
+    s30a:"<b>Analogía:</b> es como el sistema de seguridad de un coche.",
+    s30h1:"Circuito paso a paso",
+    s30l1:"<b>Estímulo</b>: el músculo se estira bruscamente.",
+    s30l2:"<b>Receptor</b>: el huso muscular detecta el estiramiento.",
+    s30l3:"<b>Vía aferente</b>: la señal viaja por una neurona sensorial hasta la médula.",
+    s30l4:"<b>Centro integrador</b>: en la médula, la neurona sensorial conecta con una motoneurona.",
+    s30l5:"<b>Vía eferente</b>: la motoneurona envía la orden al músculo.",
+    s30l6:"<b>Respuesta</b>: el músculo se contrae para resistir el estiramiento.",
+    s30d:"<b>Conexión danza:</b> los estiramientos mantenidos entrenan la inhibición del reflejo → más flexibilidad.",
+    s31t:"31. Control del equilibrio: la triple integración",
+    s31p1:"<b>Idea-fuerza:</b> mantener el equilibrio depende de la <b>integración de tres sistemas</b>.",
+    s31a:"<b>Analogía:</b> es como un trípode: si quitas una pata, se sostiene con más dificultad.",
+    s31th1:"Sistema", s31th2:"Qué aporta", s31th3:"En danza",
+    s31r1a:"<b>Visual</b>", s31r1b:"Referencia espacial", s31r1c:"Punto fijo en un giro",
+    s31r2a:"<b>Vestibular</b>", s31r2b:"Aceleraciones y gravedad", s31r2c:"Notar que giras",
+    s31r3a:"<b>Propioceptivo</b>", s31r3b:"Posición del cuerpo", s31r3c:"Notar el pie en el suelo",
+    s31p2:"<b>Dónde se integra:</b> en el cerebelo y el tronco encefálico.",
+    s31d:"<b>Conexión danza:</b> un giro usa los tres sistemas. Entrenar con ojos cerrados mejora la propiocepción.",
+    s32t:"32. Aplicación dancística",
+    s32p1:"<b>Idea-fuerza:</b> todo lo que has visto en el Bloque 2 tiene una traducción práctica.",
+    s32h1:"1. Entrena la propiocepción", s32l1:"Ejercicios con ojos cerrados.", s32l2:"Superficies inestables.", s32l3:"Trabajo descalzo.",
+    s32h2:"2. Cuida tu equilibrio", s32l4:"Entrena los tres sistemas.", s32l5:"Haz pausas si te marea girar mucho.", s32l6:"Usa un punto fijo en los giros.",
+    s32h3:"3. Gestiona tus emociones", s32l7:"Antes de actuar, respira y visualiza para calmar la amígdala.", s32l8:"Baila piezas que te emocionen.",
+    s32h4:"4. Aprovecha el cuerpo calloso", s32l9:"Practica movimientos con los dos lados del cuerpo.", s32l10:"Aprende un paso con un lado y transfiérelo al otro.", s32l11:"Entrena coordinaciones cruzadas.",
+    s32h5:"5. Cuida tu alerta", s32l12:"Duerme bien: la formación reticular necesita descanso.", s32l13:"Calienta antes de entrenar.",
+    s32d:"<b>Analogía final:</b> tu SNC es como una <b>empresa bien organizada</b>."
+  },
+  ca:{
+    headerTitulo:"Bloc 2 · Organització del Sistema Nerviós Central", headerSub:"Fisiologia · 1r Dansa · Curs 2026-2027 · Cèlia Painous",
+    btnVolver:"← Índex", btnReset:"🔄 Reiniciar", navPrev:"← Anterior", navNext:"Següent →",
+    btnComprobar:"Comprovar", btnValorar:"Valorar", btnVer:"Veure solució",
+    fbOk:"✅ Correcte!", fbKo:"❌ Revisa la resposta.", fbGuardado:"💾 Guardat.",
+    chipIndiv:"Individual", chipPareja:"Parelles", chipGrupo:"Grups 2-3",
+    txtCompl:"completades", txtAuto:"Autoguardat", txtMedia:"📊 Nota mitjana:",
+    autoTitulo:"🤔 Autoavaluació del bloc", autoP1:"Quina nota et posaries?",
+    aInsuf:"Insuficient (0-4)", aSuf:"Suficient (5-6)", aNot:"Notable (7-8)", aExc:"Excel·lent (9-10)",
+    aNotaTxt:"Nota concreta:", aJustTxt:"Justifica la teva nota:", placeholder:"Escriu aquí la teva resposta...",
+    actTitulo:"Activitats del Bloc 2", actIntro:"15 activitats curtes.",
+    s1t:"1. Organització general: SNC i SNP", s1h1:"Sistema Nerviós Central (SNC)", s1l1:"Encèfal", s1l2:"Medul·la espinal",
+    s1h2:"Sistema Nerviós Perifèric (SNP)", s1l3:"12 parells de nervis cranials", s1l4:"31 parells de nervis espinals", s1l5:"Ganglis",
+    s1l6:"<b>Subdivisions:</b> somàtic i autònom.",
+    s1d:"<b>Connexió dansa:</b> quan el professor et corregeix una postura, la informació viatja pel SNP cap al SNC.",
+    s2t:"2. Estructura del SNC", s2th1:"Component", s2th2:"Parts", s2r1a:"Encèfal", s2r1b:"Hemisferis, diencèfal, tronc encefàlic, cerebel", s2r2a:"Medul·la espinal", s2r2b:"Comunicació i integració reflexa",
+    s3t:"3. Hemisferis cerebrals", s3i:"Percepció conscient, moviment voluntari, memòria i presa de decisions.",
+    s3h1:"Lòbuls cerebrals", s3l1:"<b>Frontal</b>: planificació i motor", s3l2:"<b>Parietal</b>: sensibilitat i espai", s3l3:"<b>Temporal</b>: audició i memòria", s3l4:"<b>Occipital</b>: visió",
+    s3h2:"Control contralateral", s3l5:"L'hemisferi esquerre controla el costat dret.",
+    s3n:"<b>Mite de la lateralització:</b> la idea de persones 'de hemisferi creatiu o racional' és un mite.",
+    s4t:"4. Diencèfal: integració i regulació", s4h1:"Tàlem", s4l1:"Redistribució d'informació sensorial.", s4h2:"Hipotàlem", s4l2:"Regulació homeostàtica.",
+    s5t:"5. Tronc encefàlic", s5i:"Format per mesencèfal, pont i bulb raquidi.", s5f:"Funcions: respiració, ritme cardiovascular, alerta, control ocular i postural.",
+    s6t:"6. Cerebel", s6l1:"Equilibri i postura.", s6l2:"Precisió: corregeix la diferència entre moviment previst i executat.", s6l3:"Aprenentatge motor.",
+    s7t:"7. Medul·la espinal i reflexos", s7i:"Connexió entre encèfal i cos. Integra reflexos.",
+    s7b:"<b>Reflexos espinals:</b> arc reflex, reflex miotàtic i inhibició recíproca.",
+    s24t:"24. L'homuncle: el mapa del cos al cervell", s24p1:"<b>Idea-força:</b> el cervell dedica més espai a les zones de més precisió.",
+    s24a:"<b>Analogia:</b> com un mapa de metro on les estacions importants ocupen més espai.",
+    s24h1:"Dos homuncles", s24l1:"<b>Homuncle motor</b>.", s24l2:"<b>Homuncle sensorial</b>.",
+    s24p2:"<b>Ocupen més espai:</b> mans, dits, llavis, llengua, cara.", s24p3:"<b>Ocupen menys espai:</b> esquena, cuixes, tronc.",
+    s24d:"<b>Connexió dansa:</b> un ballarí té un homuncle més desenvolupat en peus, turmells, mans i coll.",
+    s25t:"25. Vies ascendents", s25p1:"<b>Idea-força:</b> la informació sensorial viatja per carreteres específiques.",
+    s25a:"<b>Analogia:</b> com el correu: cartes urgents i paquets normals.",
+    s25th1:"Via", s25th2:"Què transporta", s25th3:"Velocitat",
+    s25r1a:"<b>Cordons posteriors</b>", s25r1b:"Tacte fi, vibració, posició", s25r1c:"Ràpida",
+    s25r2a:"<b>Via espinotalàmica</b>", s25r2b:"Dolor, temperatura, tacte gruixut", s25r2c:"Més lenta",
+    s25p2:"<b>Recorregut:</b> receptor → medul·la → via → tàlem → escorça.",
+    s25d:"<b>Connexió dansa:</b> els cordons posteriors permeten notar el peu al terra.",
+    s26t:"26. Vies descendents", s26p1:"<b>Idea-força:</b> l'ordre motora baixa per carreteres específiques.",
+    s26a:"<b>Analogia:</b> com una empresa amb diferents missatgers.",
+    s26th1:"Via", s26th2:"Què controla", s26th3:"Exemple dansístic",
+    s26r1a:"<b>Corticoespinal</b>", s26r1b:"Moviment fi", s26r1c:"Col·locar la mà",
+    s26r2a:"<b>Rubroespinal</b>", s26r2b:"Tó i postura", s26r2c:"Mantenir el braç",
+    s26r3a:"<b>Retículoespinal</b>", s26r3b:"Postura global", s26r3c:"Mantenir l'eix",
+    s26r4a:"<b>Vestibuloespinal</b>", s26r4b:"Equilibri", s26r4c:"No caure",
+    s26r5a:"<b>Tectoespinal</b>", s26r5b:"Cap i ulls", s26r5c:"Girar el cap",
+    s26d:"<b>Connexió dansa:</b> la via piramidal permet moviments fins.",
+    s27t:"27. El cos callós", s27p1:"<b>Idea-força:</b> els hemisferis estan connectats pel cos callós.",
+    s27a:"<b>Analogia:</b> dues oficines separades per un riu.",
+    s27l1:"<b>Feix de fibres nervioses.</b>", s27l2:"<b>Milions d'axons.</b>", s27l3:"Coordina moviments.", s27l4:"Integra informació.", s27l5:"Transfereix aprenentatges.",
+    s27d:"<b>Connexió dansa:</b> ajuda a transferir aprenentatges entre mans.",
+    s28t:"28. Formació reticular", s28p1:"<b>Idea-força:</b> xarxa de neurones que decideix si estàs despert o adormit.",
+    s28a:"<b>Analogia:</b> l'interruptor general d'una casa.",
+    s28h1:"Dues funcions", s28l1:"<b>SARA</b>: manté l'escorça desperta.", s28l2:"<b>Control del son.</b>",
+    s28p2:"<b>Què l'activa:</b> estímuls forts, noradrenalina, exercici.",
+    s28d:"<b>Connexió dansa:</b> el calfament l'activa.",
+    s29t:"29. Sistema límbic", s29p1:"<b>Idea-força:</b> les emocions i la memòria influeixen en el moviment.",
+    s29a:"<b>Analogia:</b> director de cinema.",
+    s29th1:"Estructura", s29th2:"Funció", s29th3:"En dansa",
+    s29r1a:"Amígdala", s29r1b:"Emocions", s29r1c:"Por escènica",
+    s29r2a:"Hipotàlem", s29r2b:"Regulació", s29r2c:"Esforç",
+    s29r3a:"Hipocamp", s29r3b:"Memòria", s29r3c:"Recordar coreografies",
+    s29r4a:"Cíngol", s29r4b:"Integració", s29r4c:"Concentració",
+    s29r5a:"Nucli accumbens", s29r5b:"Recompensa", s29r5c:"Plaer de ballar",
+    s29d:"<b>Connexió dansa:</b> una coreografia emotiva s'executa amb més energia.",
+    s30t:"30. Reflex miotàtic", s30p1:"<b>Idea-força:</b> és la resposta automàtica més important.",
+    s30a:"<b>Analogia:</b> sistema de seguretat.",
+    s30h1:"Circuit",
+    s30l1:"<b>Estímul</b>: estirament sobtat.", s30l2:"<b>Receptor</b>: fus muscular.", s30l3:"<b>Via aferent.</b>",
+    s30l4:"<b>Centre integrador.</b>", s30l5:"<b>Via eferent.</b>", s30l6:"<b>Resposta</b>: contracció.",
+    s30d:"<b>Connexió dansa:</b> estiraments mantinguts → més flexibilitat.",
+    s31t:"31. Control de l'equilibri", s31p1:"<b>Idea-força:</b> tres sistemes integrats.",
+    s31a:"<b>Analogia:</b> trípode.",
+    s31th1:"Sistema", s31th2:"Què aporta", s31th3:"En dansa",
+    s31r1a:"<b>Visual</b>", s31r1b:"Referència espacial", s31r1c:"Punt fix",
+    s31r2a:"<b>Vestibular</b>", s31r2b:"Acceleracions", s31r2c:"Notar el gir",
+    s31r3a:"<b>Propioceptiu</b>", s31r3b:"Posició del cos", s31r3c:"Notar el peu",
+    s31p2:"<b>On s'integra:</b> cerebel i tronc.",
+    s31d:"<b>Connexió dansa:</b> un gir usa els tres sistemes.",
+    s32t:"32. Aplicació dansística", s32p1:"<b>Idea-força:</b> tot té traducció pràctica.",
+    s32h1:"1. Entrena la propiocepció", s32l1:"Ulls tancats.", s32l2:"Superfícies inestables.", s32l3:"Descalç.",
+    s32h2:"2. Cuida l'equilibri", s32l4:"Tres sistemes.", s32l5:"Pauses.", s32l6:"Punt fix.",
+    s32h3:"3. Gestiona les emocions", s32l7:"Respira i visualitza.", s32l8:"Balla peces emotives.",
+    s32h4:"4. Aprofita el cos callós", s32l9:"Dos costats.", s32l10:"Transferir.", s32l11:"Coordinacions creuades.",
+    s32h5:"5. Cuida l'alerta", s32l12:"Dorm bé.", s32l13:"Calfa't.",
+    s32d:"<b>Analogia final:</b> el SNC és com una <b>empresa ben organitzada</b>."
+  },
+  en:{
+    headerTitulo:"Block 2 · Organization of the Central Nervous System", headerSub:"Physiology · 1st Dance · 2026-2027 · Cèlia Painous",
+    btnVolver:"← Index", btnReset:"🔄 Reset", navPrev:"← Previous", navNext:"Next →",
+    btnComprobar:"Check", btnValorar:"Score", btnVer:"Show solution",
+    fbOk:"✅ Correct!", fbKo:"❌ Review your answer.", fbGuardado:"💾 Saved.",
+    chipIndiv:"Individual", chipPareja:"Pairs", chipGrupo:"Groups 2-3",
+    txtCompl:"completed", txtAuto:"Auto-saved", txtMedia:"📊 Average grade:",
+    autoTitulo:"🤔 Self-assessment", autoP1:"What grade would you give yourself?",
+    aInsuf:"Insufficient (0-4)", aSuf:"Sufficient (5-6)", aNot:"Good (7-8)", aExc:"Excellent (9-10)",
+    aNotaTxt:"Specific grade:", aJustTxt:"Justify your grade:", placeholder:"Write your answer here...",
+    actTitulo:"Block 2 activities", actIntro:"15 short activities. Auto-saved.",
+    s1t:"1. General organization: CNS and PNS", s1h1:"Central Nervous System (CNS)", s1l1:"Brain", s1l2:"Spinal cord",
+    s1h2:"Peripheral Nervous System (PNS)", s1l3:"12 pairs of cranial nerves", s1l4:"31 pairs of spinal nerves", s1l5:"Ganglia",
+    s1l6:"<b>Subdivisions:</b> somatic and autonomic.",
+    s1d:"<b>Dance connection:</b> when the teacher corrects your posture, information travels via PNS to CNS and back.",
+    s2t:"2. CNS structure", s2th1:"Component", s2th2:"Parts", s2r1a:"Brain", s2r1b:"Hemispheres, diencephalon, brainstem, cerebellum", s2r2a:"Spinal cord", s2r2b:"Communication and reflex integration",
+    s3t:"3. Cerebral hemispheres", s3i:"Conscious perception, voluntary movement, memory and decision making.",
+    s3h1:"Cerebral lobes", s3l1:"<b>Frontal</b>: planning and motor", s3l2:"<b>Parietal</b>: sensitivity and space", s3l3:"<b>Temporal</b>: hearing and memory", s3l4:"<b>Occipital</b>: vision",
+    s3h2:"Contralateral control", s3l5:"The left hemisphere controls the right side and vice versa.",
+    s3n:"<b>Lateralization myth:</b> the idea of 'creative or rational hemisphere' people is a myth.",
+    s4t:"4. Diencephalon: integration and regulation", s4h1:"Thalamus", s4l1:"Redistribution of sensory information.", s4h2:"Hypothalamus", s4l2:"Homeostatic regulation: temperature, hunger, thirst, sleep, hormones.",
+    s5t:"5. Brainstem", s5i:"Made up of midbrain, pons and medulla.", s5f:"Functions: breathing, cardiovascular rhythm, alertness, ocular and postural control.",
+    s6t:"6. Cerebellum", s6l1:"Balance and posture.", s6l2:"Precision: corrects the difference between intended and executed movement.", s6l3:"Motor learning through practice.",
+    s7t:"7. Spinal cord and reflexes", s7i:"Connection between brain and body via ascending and descending pathways. Integrates reflexes.",
+    s7b:"<b>Spinal reflexes:</b> reflex arc, myotatic reflex and reciprocal inhibition.",
+    s24t:"24. The homunculus: the body map in the brain",
+    s24p1:"<b>Key idea:</b> the brain does not treat the whole body equally. It gives <b>more space</b> to areas that need more precision.",
+    s24a:"<b>Analogy:</b> like a subway map where important stations take up more space.",
+    s24h1:"Two homunculi",
+    s24l1:"<b>Motor homunculus</b>: in the motor cortex. Represents body parts by the control we have over them.",
+    s24l2:"<b>Sensory homunculus</b>: in the somatosensory cortex. Represents body parts by their sensitivity.",
+    s24p2:"<b>Take up more space:</b> hands, fingers, lips, tongue, face.",
+    s24p3:"<b>Take up less space:</b> back, thighs, trunk.",
+    s24d:"<b>Dance connection:</b> a dancer has a more developed homunculus in feet, ankles, hands and neck.",
+    s25t:"25. Ascending pathways: how sensory information travels",
+    s25p1:"<b>Key idea:</b> sensory information travels from the body to the brain via <b>specific highways</b>.",
+    s25a:"<b>Analogy:</b> like the mail: one system for urgent letters, another for regular packages.",
+    s25th1:"Pathway", s25th2:"What it carries", s25th3:"Speed",
+    s25r1a:"<b>Dorsal columns</b>", s25r1b:"Fine touch, vibration, position", s25r1c:"Fast",
+    s25r2a:"<b>Spinothalamic pathway</b>", s25r2b:"Pain, temperature, coarse touch", s25r2c:"Slower",
+    s25p2:"<b>Basic route:</b> receptor → spinal cord → specific pathway → thalamus → somatosensory cortex.",
+    s25d:"<b>Dance connection:</b> dorsal columns let you feel the exact position of your foot on the floor.",
+    s26t:"26. Descending pathways: how the motor command travels",
+    s26p1:"<b>Key idea:</b> the command to move a muscle descends from the brain via <b>specific highways</b>.",
+    s26a:"<b>Analogy:</b> like a company with different types of messengers.",
+    s26th1:"Pathway", s26th2:"What it controls", s26th3:"Dance example",
+    s26r1a:"<b>Corticospinal (pyramidal)</b>", s26r1b:"Fine voluntary movement", s26r1c:"Placing the hand in an exact position",
+    s26r2a:"<b>Rubrospinal</b>", s26r2b:"Limb tone and posture", s26r2c:"Holding the arm in position",
+    s26r3a:"<b>Reticulospinal</b>", s26r3b:"Global posture, balance", s26r3c:"Keeping the axis in a turn",
+    s26r4a:"<b>Vestibulospinal</b>", s26r4b:"Balance and orientation", s26r4c:"Not falling in an arabesque",
+    s26r5a:"<b>Tectospinal</b>", s26r5b:"Head and eye orientation", s26r5c:"Turning the head to the audience",
+    s26d:"<b>Dance connection:</b> the pyramidal pathway allows fine movements. The extrapyramidal ones keep posture without thinking.",
+    s27t:"27. The corpus callosum: the bridge between hemispheres",
+    s27p1:"<b>Key idea:</b> the two hemispheres don't work in isolation. They're connected by a <b>highway of fibers</b>: the corpus callosum.",
+    s27a:"<b>Analogy:</b> imagine two offices separated by a river. The corpus callosum is the bridge that connects them.",
+    s27l1:"It's a <b>bundle of nerve fibers</b> connecting left and right hemispheres.",
+    s27l2:"Contains <b>millions of axons</b>.",
+    s27l3:"Coordinates movements involving both sides of the body.",
+    s27l4:"Integrates sensory information from both sides.",
+    s27l5:"Transfers learning from one hemisphere to the other.",
+    s27d:"<b>Dance connection:</b> when you learn a step with the right hand, the corpus callosum helps the left hand learn it too.",
+    s28t:"28. Reticular formation: the switch of your alertness",
+    s28p1:"<b>Key idea:</b> in the brainstem there's a network of neurons that <b>decides if you're awake, alert or asleep</b>.",
+    s28a:"<b>Analogy:</b> like the main switch of a house.",
+    s28h1:"Two main functions",
+    s28l1:"<b>Ascending activating system (SARA)</b>: keeps the cortex awake and alert.",
+    s28l2:"<b>Sleep control</b>: regulates when we sleep and when we're awake.",
+    s28p2:"<b>What activates it:</b> strong sensory stimuli, noradrenaline, physical exercise.",
+    s28d:"<b>Dance connection:</b> before a performance, the reticular formation is very active. Warm-up activates it.",
+    s29t:"29. Limbic system: emotion, memory and movement",
+    s29p1:"<b>Key idea:</b> movement isn't just mechanics. <b>Emotions</b> and <b>memory</b> influence how you move.",
+    s29a:"<b>Analogy:</b> like a film director deciding the emotional tone of a scene.",
+    s29th1:"Structure", s29th2:"Function", s29th3:"In dance",
+    s29r1a:"Amygdala", s29r1b:"Emotions, stress response", s29r1c:"Stage fright",
+    s29r2a:"Hypothalamus", s29r2b:"Hormonal and autonomic regulation", s29r2c:"Response to effort",
+    s29r3a:"Hippocampus", s29r3b:"Memory and learning", s29r3c:"Remembering choreographies",
+    s29r4a:"Cingulate", s29r4b:"Emotion-attention integration", s29r4c:"Focused concentration",
+    s29r5a:"Nucleus accumbens", s29r5b:"Reward and motivation", s29r5c:"Pleasure of dancing",
+    s29d:"<b>Dance connection:</b> a choreography that moves you is performed with more energy.",
+    s30t:"30. Myotatic reflex: full circuit step by step",
+    s30p1:"<b>Key idea:</b> the myotatic reflex is the most important automatic response for a dancer.",
+    s30a:"<b>Analogy:</b> like a car's safety system.",
+    s30h1:"Circuit step by step",
+    s30l1:"<b>Stimulus</b>: the muscle stretches suddenly.",
+    s30l2:"<b>Receptor</b>: the muscle spindle detects the stretch.",
+    s30l3:"<b>Afferent pathway</b>: the signal travels via a sensory neuron to the spinal cord.",
+    s30l4:"<b>Integration center</b>: in the spinal cord, the sensory neuron connects to a motor neuron.",
+    s30l5:"<b>Efferent pathway</b>: the motor neuron sends the command to the muscle.",
+    s30l6:"<b>Response</b>: the muscle contracts to resist the stretch.",
+    s30d:"<b>Dance connection:</b> sustained stretches train the inhibition of the reflex → more flexibility.",
+    s31t:"31. Balance control: the triple integration",
+    s31p1:"<b>Key idea:</b> maintaining balance depends on the <b>integration of three systems</b>.",
+    s31a:"<b>Analogy:</b> like a tripod: if you remove one leg, it stands with more difficulty.",
+    s31th1:"System", s31th2:"What it provides", s31th3:"In dance",
+    s31r1a:"<b>Visual</b>", s31r1b:"Spatial reference", s31r1c:"Fixed point in a turn",
+    s31r2a:"<b>Vestibular</b>", s31r2b:"Accelerations and gravity", s31r2c:"Feeling the turn",
+    s31r3a:"<b>Proprioceptive</b>", s31r3b:"Body position", s31r3c:"Feeling the foot on the floor",
+    s31p2:"<b>Where it's integrated:</b> in the cerebellum and brainstem.",
+    s31d:"<b>Dance connection:</b> a turn uses all three systems. Training with eyes closed improves proprioception.",
+    s32t:"32. Dance application",
+    s32p1:"<b>Key idea:</b> everything you've seen in Block 2 has a practical translation.",
+    s32h1:"1. Train proprioception", s32l1:"Eyes-closed exercises.", s32l2:"Unstable surfaces.", s32l3:"Barefoot work.",
+    s32h2:"2. Take care of your balance", s32l4:"Train the three systems.", s32l5:"Take breaks if turning makes you dizzy.", s32l6:"Use a fixed point in turns.",
+    s32h3:"3. Manage your emotions", s32l7:"Before performing, breathe and visualize to calm the amygdala.", s32l8:"Dance pieces that move you.",
+    s32h4:"4. Use the corpus callosum", s32l9:"Practice movements with both sides.", s32l10:"Learn a step with one side and transfer it.", s32l11:"Train cross-coordinations.",
+    s32h5:"5. Take care of your alertness", s32l12:"Sleep well: the reticular formation needs rest.", s32l13:"Warm up before training.",
+    s32d:"<b>Final analogy:</b> your CNS is like a <b>well-organized company</b>."
+  }
+};
+
+let lang='es';
+function t(k){ return (I18N[lang] && I18N[lang][k]) || I18N.es[k] || k; }
+
+function aplicarIdioma(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k = el.dataset.i18n;
+    const v = t(k);
+    if(v) el.innerHTML = v;
+  });
+  const ht = document.getElementById('headerTitulo');
+  if(ht) ht.textContent = t('headerTitulo');
+  const hs = document.getElementById('headerSub');
+  if(hs) hs.textContent = t('headerSub');
+  ['btnVolver','btnReset','navPrev','navNext','txtCompl','txtAuto','txtMedia','autoTitulo','autoP1','aInsuf','aSuf','aNot','aExc','aNotaTxt','aJustTxt','actTitulo','actIntro'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.textContent = t(id);
+  });
+  document.documentElement.lang = lang;
+  document.querySelectorAll('.lang-switch button').forEach(b=>{
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+  renderActividades();
+  cargarAutoeval();
+}
+
+document.querySelectorAll('.lang-switch button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{ lang = btn.dataset.lang; aplicarIdioma(); });
+});
+
+/* ============ ACTIVIDADES ============ */
 const ACTIVIDADES = [
   {tipo:'test',grupo:'indiv',q:{es:"¿Qué forman el encéfalo y la médula espinal?",ca:"Què formen encèfal i medul·la?",en:"What do brain and spinal cord form?"},ops:{es:["SNP","SNC","SNA","SNS"],ca:["SNP","SNC","SNA","SNS"],en:["PNS","CNS","ANS","SNS"]},correcta:1,sol:{es:"El SNC.",ca:"El SNC.",en:"The CNS."}},
   {tipo:'test',grupo:'indiv',q:{es:"¿Cuántos pares de nervios craneales hay?",ca:"Quants parells cranials?",en:"How many cranial pairs?"},ops:{es:["10","12","31","5"],ca:["10","12","31","5"],en:["10","12","31","5"]},correcta:1,sol:{es:"12 pares.",ca:"12.",en:"12."}},
@@ -360,13 +712,12 @@ const ACTIVIDADES = [
   {tipo:'abierta',grupo:'pareja',q:{es:"¿Por qué el cerebelo es clave para un giro?",ca:"Per què el cerebel és clau en un gir?",en:"Why is the cerebellum key for a turn?"},keywords:['cerebelo','error','previsto','ejecutado','comparar','ajuste','aprendizaje','giro'],sol:{es:"Compara el movimiento previsto con el ejecutado y ajusta.",ca:"Compara previst i executat.",en:"Compares intended and executed movement."}},
   {tipo:'abierta',grupo:'pareja',q:{es:"Describid qué es la inhibición recíproca y cómo se aplica a la flexibilidad.",ca:"Descriu la inhibició recíproca.",en:"Describe reciprocal inhibition."},keywords:['inhibición','inibicion','recíproca','reciproca','contrario','relajar','contraer','flexibilidad'],sol:{es:"Cuando un músculo se contrae, el contrario se relaja.",ca:"Un múscul es contreu i el contrari es relaxa.",en:"One muscle contracts, the opposite relaxes."}},
   {tipo:'abierta',grupo:'grupo',q:{es:"En grupos 2-3, haced una lista de 5 movimientos dancísticos y asignad qué estructura del SNC participa más en cada uno.",ca:"Llista de 5 moviments i estructures.",en:"List 5 dance movements and assign CNS structures."},keywords:['cerebelo','corteza','ganglios','tronco','límbico','limbico','giro','salto','equilibrio','música','musica'],sol:{es:"Giro → cerebelo; salto → corteza + cerebelo; equilibrio → tronco; expresión → límbico.",ca:"Gir, salt, equilibri, expressió, música.",en:"Turn, jump, balance, expression, music."}},
-  {tipo:'abierta',grupo:'grupo',q:{es:"En grupos 2-3, discutid por qué el mito de la lateralización es falso.",ca:"Per què el mite és fals?",en:"Why is the lateralization myth false?"},keywords:['hemisferio','redes','cuerpo calloso','complejo','creatividad','integración','integracio'],sol:{es:"Funciones complejas requieren redes de ambos hemisferios conectadas por el cuerpo calloso.",ca:"Requereixen xarxes.",en:"Complex functions require networks."}},
+  {tipo:'abierta',grupo:'grupo',q:{es:"En grupos 2-3, discutid por qué el mito de la lateralización es falso.",ca:"Per què el mite és fals?",en:"Why is the lateralization myth false?"},keywords:['hemisferio','redes','cuerpo calloso','complejo','creatividad','integración','integracio'],sol:{es:"Funciones complejas requieren redes de ambos hemisferios.",ca:"Requereixen xarxes.",en:"Complex functions require networks."}},
   {tipo:'abierta',grupo:'indiv',q:{es:"Reflexiona: ¿qué función del tronco encefálico te parece más importante para un bailarín?",ca:"Quina funció del tronc és més important?",en:"Which brainstem function matters most?"},keywords:['postura','equilibrio','respiración','respiracion','ritmo','alerta','resistencia'],sol:{es:"El control postural y del ritmo respiratorio.",ca:"Control postural i respiració.",en:"Postural control and breathing."}},
   {tipo:'abierta',grupo:'indiv',q:{es:"Explica con tus palabras qué es un reflejo espinal y por qué es útil en danza.",ca:"Què és un reflex espinal?",en:"What is a spinal reflex?"},keywords:['automática','automatica','rápida','rapida','corteza','protege','estiramiento','lesión','lesion'],sol:{es:"Respuesta automática rápida sin pasar por la corteza.",ca:"Resposta automàtica ràpida.",en:"Fast automatic response."}},
   {tipo:'abierta',grupo:'indiv',q:{es:"¿Qué tres estructuras del SNC intervienen cuando escuchas la música, decides un paso y lo ejecutas?",ca:"Quines tres estructures intervenen?",en:"Which three CNS structures intervene?"},keywords:['temporal','frontal','corteza','motora','cerebelo','orden','música','musica'],sol:{es:"Temporal → frontal → corteza motora + cerebelo.",ca:"Temporal → frontal → motora.",en:"Temporal → frontal → motor/cerebellum."}}
 ];
 
-let lang='es';
 function normalizar(s){ return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\w\s]/g,' '); }
 function valorarAbierta(texto, keywords){
   if(!texto || texto.trim().length<10) return {nota:0,encontradas:[],faltan:keywords||[],ratio:0};
@@ -381,7 +732,7 @@ function renderActividades(){
   const cont=document.getElementById('contenedorActividades'); if(!cont) return;
   const data=JSON.parse(localStorage.getItem(STORAGE)||'{}');
   cont.innerHTML='';
-  const chips={indiv:'Individual',pareja:'Parejas',grupo:'Grupos 2-3'};
+  const chips={indiv:t('chipIndiv'),pareja:t('chipPareja'),grupo:t('chipGrupo')};
   ACTIVIDADES.forEach((a,i)=>{
     const id='a'+(i+1); const wrap=document.createElement('div'); wrap.className='actividad';
     let html=`<h4><span>${i+1}.</span> ${a.q[lang]} <span class="chip ${a.grupo}">${chips[a.grupo]}</span></h4>`;
@@ -389,59 +740,117 @@ function renderActividades(){
       html+=`<div class="opciones">`;
       a.ops[lang].forEach((op,j)=>{ const checked=data[id]===j?'checked':''; html+=`<label><input type="radio" name="${id}" value="${j}" ${checked} onchange="responder('${id}',${j},${a.correcta})"> ${op}</label>`; });
       html+=`</div>`;
-    } else { html+=`<textarea id="${id}" placeholder="..." oninput="guardarAbierta('${id}')">${data[id]||''}</textarea>`; }
+    } else { html+=`<textarea id="${id}" placeholder="${t('placeholder')}" oninput="guardarAbierta('${id}')">${data[id]||''}</textarea>`; }
     html+=`<div class="feedback" id="fb-${id}"></div>`;
-    html+=`<div class="acciones">${a.tipo==='test'?`<button onclick="comprobar('${id}',${a.correcta})">Comprobar</button>`:`<button onclick="valorar('${id}',${i})">Valorar</button>`}<button onclick="verSolucion('${id}','${(a.sol[lang]||'').replace(/'/g,"\\'")}')">Ver solución</button></div>`;
+    html+=`<div class="acciones">${a.tipo==='test'?`<button onclick="comprobar('${id}',${a.correcta})">${t('btnComprobar')}</button>`:`<button onclick="valorar('${id}',${i})">${t('btnValorar')}</button>`}<button onclick="verSolucion('${id}','${(a.sol[lang]||'').replace(/'/g,"\\'")}')">${t('btnVer')}</button></div>`;
     wrap.innerHTML=html; cont.appendChild(wrap);
     if(a.tipo==='abierta' && data[id] && data[id].trim().length>=10){ setTimeout(()=>valorar(id,i),50); }
   });
   actualizarProgreso();
 }
 function responder(id,val,c){ const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); data[id]=val; localStorage.setItem(STORAGE,JSON.stringify(data)); comprobar(id,c); actualizarProgreso(); }
-function guardarAbierta(id){ const ta=document.getElementById(id); const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); data[id]=ta.value; localStorage.setItem(STORAGE,JSON.stringify(data)); const fb=document.getElementById('fb-'+id); fb.className='feedback guardado'; fb.textContent='💾 Guardado'; setTimeout(()=>{if(fb.className.includes('guardado'))fb.className='feedback';},1200); actualizarProgreso(); }
-function comprobar(id,c){ const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); const fb=document.getElementById('fb-'+id); if(data[id]===c){fb.className='feedback ok';fb.textContent='✅ ¡Correcto!';}else{fb.className='feedback ko';fb.textContent='❌ Revisa.';} }
-function valorar(id,idx){ const a=ACTIVIDADES[idx]; const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); const texto=data[id]||''; const fb=document.getElementById('fb-'+id); const r=valorarAbierta(texto,a.keywords); fb.className='feedback guardado'; fb.innerHTML=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;"><span style="background:var(--accent2);color:#0f1226;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-weight:900;">${r.nota}</span><span>${r.encontradas.length}/${(a.keywords||[]).length} puntos clave</span></div><div style="height:8px;background:#0f1226;border-radius:4px;overflow:hidden;margin-bottom:6px;"><div style="height:100%;width:${r.nota*10}%;background:${r.nota>=7?'var(--ok)':r.nota>=5?'var(--warn)':'var(--bad)'};"></div></div><div style="font-size:.82rem;"><span style="color:var(--ok);">✓ ${r.encontradas.join(', ')||'—'}</span><br><span style="color:var(--bad);">✗ ${r.faltan.join(', ')||'—'}</span></div>`; data['nota-'+id]=r.nota; localStorage.setItem(STORAGE,JSON.stringify(data)); actualizarMedia(); }
+function guardarAbierta(id){ const ta=document.getElementById(id); const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); data[id]=ta.value; localStorage.setItem(STORAGE,JSON.stringify(data)); const fb=document.getElementById('fb-'+id); fb.className='feedback guardado'; fb.textContent=t('fbGuardado'); setTimeout(()=>{if(fb.className.includes('guardado'))fb.className='feedback';},1200); actualizarProgreso(); }
+function comprobar(id,c){ const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); const fb=document.getElementById('fb-'+id); if(data[id]===c){fb.className='feedback ok';fb.textContent=t('fbOk');}else{fb.className='feedback ko';fb.textContent=t('fbKo');} }
+function valorar(id,idx){ const a=ACTIVIDADES[idx]; const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); const texto=data[id]||''; const fb=document.getElementById('fb-'+id); const r=valorarAbierta(texto,a.keywords); fb.className='feedback guardado'; fb.innerHTML=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;"><span style="background:var(--accent2);color:#0f1226;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-weight:900;">${r.nota}</span><span>${r.encontradas.length}/${(a.keywords||[]).length}</span></div><div style="height:8px;background:#0f1226;border-radius:4px;overflow:hidden;margin-bottom:6px;"><div style="height:100%;width:${r.nota*10}%;background:${r.nota>=7?'var(--ok)':r.nota>=5?'var(--warn)':'var(--bad)'};"></div></div><div style="font-size:.82rem;"><span style="color:var(--ok);">✓ ${r.encontradas.join(', ')||'—'}</span><br><span style="color:var(--bad);">✗ ${r.faltan.join(', ')||'—'}</span></div>`; data['nota-'+id]=r.nota; localStorage.setItem(STORAGE,JSON.stringify(data)); actualizarMedia(); }
 function verSolucion(id,sol){ const fb=document.getElementById('fb-'+id); fb.className='feedback guardado'; fb.textContent='📖 '+sol; }
 function actualizarProgreso(){ const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); let c=0; ACTIVIDADES.forEach((a,i)=>{ const id='a'+(i+1); if(a.tipo==='test'){if(data[id]!==undefined)c++;}else{if((data[id]||'').trim().length>=15)c++;} }); document.getElementById('pCompletadas').textContent=c; document.getElementById('pBar').style.width=(c/ACTIVIDADES.length*100)+'%'; actualizarMedia(); }
 function actualizarMedia(){ const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); let s=0,n=0; ACTIVIDADES.forEach((a,i)=>{ const id='a'+(i+1); if(a.tipo==='test' && data[id]!==undefined){s+=(data[id]===a.correcta)?10:0;n++;} else if(a.tipo==='abierta' && typeof data['nota-'+id]==='number'){s+=data['nota-'+id];n++;} }); document.getElementById('notaMedia').textContent = n?(s/n).toFixed(1):'—'; }
+
 let idx=0; const slides=document.querySelectorAll('.slide');
 function show(i){ slides.forEach(s=>s.classList.remove('active')); slides[i].classList.add('active'); document.getElementById('counter').textContent=`Diapositiva ${i+1} / ${slides.length}`; document.getElementById('progress').style.width=((i+1)/slides.length*100)+'%'; }
 function next(){if(idx<slides.length-1){idx++;show(idx);}}
 function prev(){if(idx>0){idx--;show(idx);}}
 document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')next();if(e.key==='ArrowLeft')prev();});
+
 function cargarAutoeval(){
   const data=JSON.parse(localStorage.getItem(STORAGE)||'{}');
   document.querySelectorAll('[data-autoeval-text]').forEach(ta=>{ if(data['autoeval-text'])ta.value=data['autoeval-text']; ta.oninput=()=>{const d=JSON.parse(localStorage.getItem(STORAGE)||'{}'); d['autoeval-text']=ta.value; localStorage.setItem(STORAGE,JSON.stringify(d));}; });
   document.querySelectorAll('[data-autoeval-nota]').forEach(inp=>{ if(data['autoeval-nota']!==undefined)inp.value=data['autoeval-nota']; inp.oninput=()=>{const d=JSON.parse(localStorage.getItem(STORAGE)||'{}'); d['autoeval-nota']=inp.value; localStorage.setItem(STORAGE,JSON.stringify(d));}; });
   document.querySelectorAll('input[type=radio][name="autoeval-rango"]').forEach(r=>{ if(data['autoeval-rango']===r.value)r.checked=true; r.onchange=()=>{const d=JSON.parse(localStorage.getItem(STORAGE)||'{}'); d['autoeval-rango']=r.value; localStorage.setItem(STORAGE,JSON.stringify(d));}; });
 }
-function exportarInforme(){
-  const data=JSON.parse(localStorage.getItem(STORAGE)||'{}');
-  const nombre=prompt('Tu nombre:')||'alumno';
-  const nl=nombre.trim().replace(/\s+/g,'_').replace(/[^\w\-]/g,'')||'alumno';
-  let txt='=========================================\n'+TITULO_BLOQUE[lang]+'\n=========================================\n';
-  txt+='Alumno/a: '+nombre+'\nFecha: '+new Date().toLocaleString()+'\nBloque: '+NUM_BLOQUE+'\n=========================================\n\n';
-  let corr=0,tot=0,sn=0,nn=0;
+
+/* ============ EXPORTACIÓN MÚLTIPLE ============ */
+function _obtenerDatos(){
+  const data = JSON.parse(localStorage.getItem(STORAGE) || '{}');
+  const nombre = prompt('Tu nombre:') || 'alumno';
+  const nl = nombre.trim().replace(/\s+/g,'_').replace(/[^\w\-]/g,'') || 'alumno';
+  const fecha = new Date();
+  const fechaStr = fecha.toLocaleString();
+  const fechaISO = fecha.toISOString().slice(0,10);
+  const filas = [];
+  let corr = 0, tot = 0, sn = 0, nn = 0;
   ACTIVIDADES.forEach((a,i)=>{
-    const id='a'+(i+1);
-    txt+=`--- ${i+1}. ${a.q[lang]} ---\n`;
-    if(a.tipo==='test'){ const v=data[id]; txt+=(v!==undefined?a.ops[lang][v]:'(sin respuesta)')+'\n'; if(v===a.correcta){txt+='✅ Correcto\n';corr++;}else if(v!==undefined){txt+='❌ Incorrecto\n';}tot++; }
-    else { txt+=(data[id]||'(sin respuesta)')+'\n'; if(typeof data['nota-'+id]==='number'){txt+=`📊 ${data['nota-'+id]}/10\n`;sn+=data['nota-'+id];nn++;} }
-    txt+=`Solución: ${a.sol[lang]}\n\n`;
+    const id = 'a'+(i+1);
+    const resp = data[id];
+    let puntuacion = '';
+    if(a.tipo === 'test'){
+      const correcta = data[id] === a.correcta;
+      puntuacion = correcta ? 10 : (resp !== undefined ? 0 : '');
+      if(resp !== undefined){ tot++; if(correcta) corr++; }
+    } else {
+      puntuacion = typeof data['nota-'+id] === 'number' ? data['nota-'+id] : '';
+      if(typeof data['nota-'+id] === 'number'){ sn += data['nota-'+id]; nn++; }
+    }
+    filas.push({num:i+1, tipo:a.tipo==='test'?'Test':'Abierta', formato:a.grupo==='indiv'?'Individual':a.grupo==='pareja'?'Parejas':'Grupos 2-3', pregunta:a.q[lang], respuesta:a.tipo==='test'?(resp!==undefined?a.ops[lang][resp]:''):(resp||''), solucion:a.sol[lang], puntuacion});
   });
-  txt+='=========================================\nResultado test: '+corr+'/'+tot+'\n';
-  if(nn) txt+='Nota media abiertas: '+(sn/nn).toFixed(1)+'/10\n';
-  if(data['autoeval-rango']||data['autoeval-nota']||data['autoeval-text']){
-    txt+='=========================================\nAUTOEVALUACIÓN\n=========================================\n';
-    txt+='Rango: '+(data['autoeval-rango']||'—')+'\nNota: '+(data['autoeval-nota']||'—')+'/10\nJustificación: '+(data['autoeval-text']||'—')+'\n';
-  }
-  txt+='=========================================\n';
-  const blob=new Blob([txt],{type:'text/plain;charset=utf-8'});
-  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`bloque${NUM_BLOQUE}_${nl}_${new Date().toISOString().slice(0,10)}.txt`; a.click();
+  const autoeval = {rango:data['autoeval-rango']||'', nota:data['autoeval-nota']||'', justificacion:data['autoeval-text']||''};
+  const resumen = {correctas:corr, totalTest:tot, mediaAbiertas:nn?(sn/nn).toFixed(1):'', nAbiertas:nn};
+  return {nombre, nl, fechaStr, fechaISO, filas, autoeval, resumen};
 }
+function _descargar(contenido, mime, nombre){ const blob=new Blob([contenido],{type:mime}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=nombre; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); }
+
+function exportarTXT(){
+  const d=_obtenerDatos();
+  let txt='=========================================\n'+TITULO_BLOQUE[lang]+'\n=========================================\n';
+  txt+='Alumno/a: '+d.nombre+'\nFecha: '+d.fechaStr+'\nBloque: '+NUM_BLOQUE+'\n=========================================\n\n';
+  d.filas.forEach(f=>{
+    txt+=`--- ${f.num}. ${f.pregunta} ---\n[${f.formato}] [${f.tipo}]\n`;
+    txt+=(f.respuesta||'(sin respuesta)')+'\n';
+    if(f.puntuacion!=='') txt+=`📊 Puntuación: ${f.puntuacion}/10\n`;
+    txt+=`Solución: ${f.solucion}\n\n`;
+  });
+  txt+='=========================================\nRESUMEN\n=========================================\n';
+  txt+=`Test: ${d.resumen.correctas}/${d.resumen.totalTest}\n`;
+  if(d.resumen.nAbiertas) txt+=`Media abiertas: ${d.resumen.mediaAbiertas}/10\n`;
+  if(d.autoeval.rango||d.autoeval.nota){ txt+='\nAUTOEVALUACIÓN\nRango: '+(d.autoeval.rango||'—')+'\nNota: '+(d.autoeval.nota||'—')+'/10\nJustificación: '+(d.autoeval.justificacion||'—')+'\n'; }
+  txt+='=========================================\n';
+  _descargar(txt,'text/plain;charset=utf-8',`bloque${NUM_BLOQUE}_${d.nl}_${d.fechaISO}.txt`);
+}
+function exportarCSV(){
+  const d=_obtenerDatos();
+  const esc=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"';
+  let csv='';
+  csv+=esc('Alumno')+','+esc('Fecha')+','+esc('Bloque')+','+esc('Idioma')+'\n';
+  csv+=esc(d.nombre)+','+esc(d.fechaStr)+','+esc(NUM_BLOQUE)+','+esc(lang.toUpperCase())+'\n\n';
+  csv+=['Nº','Tipo','Formato','Pregunta','Respuesta','Solución','Puntuación'].map(esc).join(',')+'\n';
+  d.filas.forEach(f=>{ csv+=[f.num,f.tipo,f.formato,f.pregunta,f.respuesta,f.solucion,f.puntuacion].map(esc).join(',')+'\n'; });
+  csv+='\nResumen\n';
+  csv+=esc('Correctas test')+','+esc(d.resumen.correctas+'/'+d.resumen.totalTest)+'\n';
+  if(d.resumen.nAbiertas) csv+=esc('Media abiertas')+','+esc(d.resumen.mediaAbiertas+'/10')+'\n';
+  csv+='\nAutoevaluación\n';
+  csv+=esc('Rango')+','+esc(d.autoeval.rango)+'\n';
+  csv+=esc('Nota')+','+esc(d.autoeval.nota+'/10')+'\n';
+  csv+=esc('Justificación')+','+esc(d.autoeval.justificacion)+'\n';
+  _descargar('\uFEFF'+csv,'text/csv;charset=utf-8',`bloque${NUM_BLOQUE}_${d.nl}_${d.fechaISO}.csv`);
+}
+function exportarExcel(){
+  const d=_obtenerDatos();
+  const esc=v=>String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  let html='<html xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="UTF-8"><style>table{border-collapse:collapse;} th,td{border:1px solid #999;padding:6px 10px;font-family:Arial;font-size:11pt;} th{background:#ddd;font-weight:bold;}</style></head><body>';
+  html+=`<h2>${esc(TITULO_BLOQUE[lang])}</h2><p><b>Alumno/a:</b> ${esc(d.nombre)}<br><b>Fecha:</b> ${esc(d.fechaStr)}<br><b>Bloque:</b> ${esc(NUM_BLOQUE)}<br><b>Idioma:</b> ${esc(lang.toUpperCase())}</p>`;
+  html+='<table><tr><th>Nº</th><th>Tipo</th><th>Formato</th><th>Pregunta</th><th>Respuesta</th><th>Solución</th><th>Puntuación</th></tr>';
+  d.filas.forEach(f=>{ html+=`<tr><td>${esc(f.num)}</td><td>${esc(f.tipo)}</td><td>${esc(f.formato)}</td><td>${esc(f.pregunta)}</td><td>${esc(f.respuesta)}</td><td>${esc(f.solucion)}</td><td>${esc(f.puntuacion)}</td></tr>`; });
+  html+='</table><h3>Resumen</h3><table>';
+  html+=`<tr><th>Test</th><td>${esc(d.resumen.correctas)}/${esc(d.resumen.totalTest)}</td></tr>`;
+  if(d.resumen.nAbiertas) html+=`<tr><th>Media abiertas</th><td>${esc(d.resumen.mediaAbiertas)}/10</td></tr>`;
+  html+='</table><h3>Autoevaluación</h3><table>';
+  html+=`<tr><th>Rango</th><td>${esc(d.autoeval.rango||'—')}</td></tr><tr><th>Nota</th><td>${esc(d.autoeval.nota||'—')}/10</td></tr><tr><th>Justificación</th><td>${esc(d.autoeval.justificacion||'—')}</td></tr></table></body></html>`;
+  _descargar(html,'application/vnd.ms-excel;charset=utf-8',`bloque${NUM_BLOQUE}_${d.nl}_${d.fechaISO}.xls`);
+}
+
 function reiniciar(){ if(confirm('¿Borrar las respuestas de este bloque?')){ localStorage.removeItem(STORAGE); renderActividades(); cargarAutoeval(); actualizarMedia(); } }
 function volverIndice(){ window.location.href='index.html'; }
-renderActividades(); cargarAutoeval(); show(0);
+aplicarIdioma(); show(0);
 </script>
 </body>
 </html>

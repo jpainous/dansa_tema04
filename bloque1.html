@@ -15,6 +15,13 @@
   .controls button:hover{background:var(--accent2);color:#0f1226;}
   .btn-volver{background:#252b52;color:var(--accent2);border:1px solid #3a4170;padding:7px 12px;border-radius:8px;cursor:pointer;font-weight:700;font-size:.85rem;}
   .btn-volver:hover{background:var(--accent2);color:#0f1226;}
+  .lang-switch{display:flex;gap:4px;background:#1a1f3c;padding:4px;border-radius:8px;border:1px solid #3a4170;}
+  .lang-switch button{background:transparent;color:var(--muted);border:none;padding:5px 11px;border-radius:6px;cursor:pointer;font-weight:800;font-size:.82rem;transition:.15s;}
+  .lang-switch button:hover{background:#252b52;}
+  .lang-switch button.active{background:var(--accent2);color:#0f1226;}
+  .export-group{display:flex;gap:4px;background:#1a1f3c;padding:4px;border-radius:8px;border:1px solid #3a4170;}
+  .export-group button{background:transparent;color:var(--accent2);border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-weight:800;font-size:.82rem;}
+  .export-group button:hover{background:var(--accent2);color:#0f1226;}
   main{max-width:1100px;margin:0 auto;padding:24px 20px 80px;}
   .slide{display:none;padding:40px 60px;border-radius:16px;}
   .slide.active{display:block;animation:fade .3s ease;}
@@ -26,7 +33,6 @@
   .box{background:var(--card);border-radius:12px;padding:14px 18px;margin:10px 0;border-left:5px solid var(--accent2);}
   .box.danza{background:#2a1f3d;border-left-color:var(--accent);}
   .box.nota{background:#3a2f10;border-left-color:var(--notas);color:#ffe9b0;font-size:.92rem;}
-  .box.nueva{background:#1a2a1a;border-left-color:var(--ok);}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
   .nav{position:fixed;bottom:16px;right:20px;display:flex;gap:8px;z-index:50;}
   .nav button{background:var(--accent);color:#0f1226;border:none;padding:9px 16px;border-radius:8px;font-weight:800;cursor:pointer;}
@@ -71,6 +77,7 @@
   .nota-propia span{color:#ffd166;font-weight:700;}
   .media-box{background:#1a2540;border:1px solid var(--accent2);border-radius:10px;padding:12px 18px;margin:14px 0;display:flex;justify-content:space-between;align-items:center;}
   .media-box .nota-grande{font-size:1.8rem;font-weight:900;color:var(--accent2);}
+  .etiqueta-nueva{display:inline-block;background:var(--ok);color:#0f1226;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:.5px;margin-bottom:10px;}
   @media(max-width:700px){.grid2{grid-template-columns:1fr;}.slide{padding:20px;}}
 </style>
 </head>
@@ -79,20 +86,27 @@
 
 <header>
   <div>
-    <h1>Bloque 1 · Fisiología Neuronal y Señalización</h1>
-    <div class="sub">Fisiología · 1º Danza · Curso 2026-2027 · Cèlia Painous</div>
+    <h1 id="headerTitulo">Bloque 1 · Fisiología Neuronal y Señalización</h1>
+    <div class="sub" id="headerSub">Fisiología · 1º Danza · Curso 2026-2027 · Cèlia Painous</div>
   </div>
   <div class="controls">
-    <button class="btn-volver" onclick="volverIndice()">← Índice</button>
-    <select id="langSel"><option value="es">ES</option><option value="ca">CA</option><option value="en">EN</option></select>
-    <button onclick="exportarInforme()">💾 Exportar</button>
-    <button onclick="reiniciar()">🔄 Reiniciar</button>
+    <button class="btn-volver" id="btnVolver" onclick="volverIndice()">← Índice</button>
+    <div class="lang-switch">
+      <button data-lang="es" class="active">ES</button>
+      <button data-lang="ca">CA</button>
+      <button data-lang="en">EN</button>
+    </div>
+    <div class="export-group">
+      <button onclick="exportarTXT()" title="Exportar como texto plano">📄 TXT</button>
+      <button onclick="exportarCSV()" title="Exportar como CSV">📊 CSV</button>
+      <button onclick="exportarExcel()" title="Exportar como Excel">📗 Excel</button>
+    </div>
+    <button onclick="reiniciar()" id="btnReset">🔄 Reiniciar</button>
   </div>
 </header>
 
 <main>
 
-<!-- ============ DIAPOSITIVAS ORIGINALES ============ -->
 <section class="slide active">
   <h2>1. La neurona: unidad funcional del sistema nervioso</h2>
   <p>El sistema nervioso es el director de orquesta del movimiento dancístico. Todo empieza en la neurona: una célula especializada en recibir, procesar e integrar información mediante señales eléctricas y químicas.</p>
@@ -164,186 +178,240 @@
   </div>
 </section>
 
-<!-- ============ NUEVAS DIAPOSITIVAS 14-21 ============ -->
-
 <section class="slide">
-  <span class="tag" style="background:var(--ok);color:#0f1226;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:.5px;">NUEVA · 14</span>
-  <h2>14. Cómo funciona un canal iónico: la puerta que se abre y se cierra</h2>
-  <p><b>Idea-fuerza:</b> la membrana de la neurona no es una pared sólida; tiene <b>puertas</b> que se abren y se cierran según lo que ocurre dentro y fuera de la célula.</p>
-  <div class="box nota"><b>Analogía:</b> imagina una discoteca con puertas que solo se abren cuando hay suficiente ruido. Dentro hay mucha gente (K⁺) y fuera hay otra esperando (Na⁺). Las puertas están cerradas hasta que llega el "aviso".</div>
-  <h3>Qué es un canal iónico</h3>
+  <span class="etiqueta-nueva">NUEVA · 14</span>
+  <h2>14. Cómo funciona un canal iónico</h2>
+  <p><b>Idea-fuerza:</b> la membrana de la neurona no es una pared sólida; tiene puertas que se abren y se cierran.</p>
+  <div class="box nota"><b>Analogía:</b> imagina una discoteca con puertas que solo se abren cuando hay suficiente ruido.</div>
   <ul>
     <li>Es una <b>proteína</b> incrustada en la membrana.</li>
-    <li>Tiene un <b>agujero</b> por donde pasan iones.</li>
-    <li>Algunos están <b>siempre abiertos</b> (canales de fuga).</li>
-    <li>Otros se abren <b>según el voltaje</b> (voltaje-dependientes).</li>
-    <li>Otros se abren <b>al unirse una molécula</b> (ligando-dependientes).</li>
+    <li>Algunos están siempre abiertos (canales de fuga).</li>
+    <li>Otros se abren según el voltaje.</li>
+    <li>Otros se abren al unirse una molécula.</li>
   </ul>
-  <table>
-    <tr><th>Ion</th><th>Dónde está más concentrado</th><th>Qué hace al entrar/salir</th></tr>
-    <tr><td><b>Na⁺ (sodio)</b></td><td>Fuera de la célula</td><td>Al entrar, <b>despolariza</b> (activa)</td></tr>
-    <tr><td><b>K⁺ (potasio)</b></td><td>Dentro de la célula</td><td>Al salir, <b>repolariza</b> (calma)</td></tr>
-  </table>
-  <div class="box danza"><b>Conexión danza:</b> cada vez que decides mover un brazo, se abren miles de canales de Na⁺ en las neuronas motoras. Si esos canales no funcionaran, la orden no llegaría al músculo.</div>
+  <div class="box danza"><b>Conexión danza:</b> cada vez que decides mover un brazo, se abren miles de canales de Na⁺.</div>
 </section>
 
 <section class="slide">
-  <span class="tag" style="background:var(--ok);color:#0f1226;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:.5px;">NUEVA · 15</span>
+  <span class="etiqueta-nueva">NUEVA · 15</span>
   <h2>15. La bomba Na⁺/K⁺: el motor que gasta energía</h2>
-  <p><b>Idea-fuerza:</b> para que las puertas funcionen bien, dentro y fuera de la célula tiene que haber distintas concentraciones de iones. La neurona las mantiene gastando energía.</p>
-  <div class="box nota"><b>Analogía:</b> como una piscina con agua muy salada y otra con agua dulce separadas por un muro. El agua tiende a mezclarse, pero tú quieres mantenerlas separadas. Para lograrlo necesitas una bomba que trabaje continuamente y gaste electricidad.</div>
-  <h3>Cómo funciona</h3>
+  <p><b>Idea-fuerza:</b> la neurona gasta energía para mantener las concentraciones de iones.</p>
+  <div class="box nota"><b>Analogía:</b> como dos piscinas con agua salada y dulce separadas por un muro: necesitas una bomba que trabaje continuamente.</div>
   <ul>
-    <li>La <b>bomba Na⁺/K⁺-ATPasa</b> está en la membrana.</li>
-    <li><b>Saca 3 Na⁺</b> hacia fuera y <b>mete 2 K⁺</b> hacia dentro.</li>
-    <li>Consume <b>ATP</b> (energía).</li>
-    <li>Resultado: el interior queda <b>negativo</b> respecto al exterior.</li>
+    <li>Saca 3 Na⁺ hacia fuera y mete 2 K⁺ hacia dentro.</li>
+    <li>Consume ATP.</li>
+    <li>Resultado: interior negativo.</li>
   </ul>
-  <div class="box danza"><b>Conexión danza:</b> toda la actividad neuronal consume energía. Si no has desayunado bien antes de entrenar, la bomba funciona peor → peor concentración y peor coordinación. Por eso conviene comer bien antes de clase o actuación.</div>
+  <div class="box danza"><b>Conexión danza:</b> si no has desayunado bien, la bomba funciona peor → peor concentración.</div>
 </section>
 
 <section class="slide">
-  <span class="tag" style="background:var(--ok);color:#0f1226;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:.5px;">NUEVA · 16</span>
-  <h2>16. Período refractario: por qué una neurona no dispara sin parar</h2>
-  <p><b>Idea-fuerza:</b> después de disparar un potencial de acción, la neurona necesita un momento para "recargarse". Eso limita la velocidad máxima con la que puede enviar mensajes.</p>
-  <div class="box nota"><b>Analogía:</b> como una cámara de fotos antigua: después de hacer una foto, tienes que esperar un instante para la siguiente. No puedes hacer 100 fotos en un segundo.</div>
-  <h3>Dos tipos</h3>
+  <span class="etiqueta-nueva">NUEVA · 16</span>
+  <h2>16. Período refractario</h2>
+  <p><b>Idea-fuerza:</b> después de disparar, la neurona necesita recargarse.</p>
+  <div class="box nota"><b>Analogía:</b> como una cámara antigua: hay que esperar entre foto y foto.</div>
   <ul>
-    <li><b>Período refractario absoluto</b>: la neurona <b>no puede</b> disparar, pase lo que pase. Dura 1-2 ms.</li>
-    <li><b>Período refractario relativo</b>: la neurona <b>puede</b> disparar, pero solo si el estímulo es más fuerte de lo normal.</li>
+    <li><b>Absoluto</b>: no puede disparar (1-2 ms).</li>
+    <li><b>Relativo</b>: puede disparar si el estímulo es más fuerte.</li>
   </ul>
-  <div class="box danza"><b>Conexión danza:</b> cuando aprendes un paso nuevo, tu cerebro envía muchas órdenes a la vez. Si el sistema está saturado, hay errores. Por eso conviene aprender poco a poco, no atiborrar de información en una sola sesión.</div>
+  <div class="box danza"><b>Conexión danza:</b> no satures de información al aprender un paso nuevo.</div>
 </section>
 
 <section class="slide">
-  <span class="tag" style="background:var(--ok);color:#0f1226;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:.5px;">NUEVA · 17</span>
-  <h2>17. Sumación: cómo el soma decide si dispara o no</h2>
-  <p><b>Idea-fuerza:</b> una neurona recibe miles de señales a la vez. El soma tiene que <b>sumarlas</b> y decidir si la suma supera el umbral.</p>
-  <div class="box nota"><b>Analogía:</b> imagina que estás en una sala con 20 personas hablándote a la vez. Tu cerebro suma todas las voces y decide si hay suficiente "ruido" para reaccionar.</div>
-  <h3>Dos tipos de sumación</h3>
+  <span class="etiqueta-nueva">NUEVA · 17</span>
+  <h2>17. Sumación</h2>
+  <p><b>Idea-fuerza:</b> el soma suma miles de señales y decide si dispara.</p>
+  <div class="box nota"><b>Analogía:</b> como estar en una sala con 20 personas hablándote a la vez.</div>
   <ul>
-    <li><b>Sumación espacial</b>: señales que llegan desde distintos lugares a la vez.</li>
-    <li><b>Sumación temporal</b>: señales que llegan desde el mismo lugar, muy seguidas.</li>
+    <li><b>Espacial</b>: señales de distintos lugares.</li>
+    <li><b>Temporal</b>: señales seguidas en el tiempo.</li>
   </ul>
-  <p><b>Regla del umbral:</b> si la suma supera el umbral (~-55 mV), la neurona dispara. Si no, no dispara.</p>
-  <div class="box danza"><b>Conexión danza:</b> para que un bailarín reaccione al cambio de música, varias señales sensoriales (oído, vista, propiocepción) tienen que sumarse. Si una sola llega débil, no reacciona.</div>
+  <div class="box danza"><b>Conexión danza:</b> para reaccionar a un cambio de música, varias señales deben sumarse.</div>
 </section>
 
 <section class="slide">
-  <span class="tag" style="background:var(--ok);color:#0f1226;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:.5px;">NUEVA · 18</span>
-  <h2>18. Más allá de PEPS y PIPS: neuromoduladores</h2>
-  <p><b>Idea-fuerza:</b> no todo es "excitación o inhibición". Existen sustancias que <b>modulan</b> la actividad del sistema nervioso.</p>
-  <div class="box nota"><b>Analogía:</b> en una orquesta, los instrumentos suenan y hacen la melodía (PEPS/PIPS). Pero además hay un <b>director</b> que decide si tocan fuerte o suave. Los neuromoduladores son ese director.</div>
+  <span class="etiqueta-nueva">NUEVA · 18</span>
+  <h2>18. Neuromoduladores</h2>
+  <p><b>Idea-fuerza:</b> no todo es excitación o inhibición. Hay sustancias que modulan el sistema.</p>
+  <div class="box nota"><b>Analogía:</b> el director de una orquesta decide si se toca fuerte o suave.</div>
   <table>
     <tr><th>Neuromodulador</th><th>Función</th><th>En danza</th></tr>
-    <tr><td>Dopamina</td><td>Motivación, control motor</td><td>Ganas de bailar</td></tr>
-    <tr><td>Serotonina</td><td>Estado de ánimo</td><td>Buen humor antes de actuar</td></tr>
-    <tr><td>Noradrenalina</td><td>Alerta, atención</td><td>Concentración antes de salir</td></tr>
-    <tr><td>Acetilcolina</td><td>Atención, memoria, contracción</td><td>Aprender y ejecutar pasos</td></tr>
-    <tr><td>Endorfinas</td><td>Bienestar, analgesia</td><td>Sensación tras bailar</td></tr>
-    <tr><td>Cortisol</td><td>Respuesta al estrés</td><td>Nervios antes de actuar</td></tr>
+    <tr><td>Dopamina</td><td>Motivación</td><td>Ganas de bailar</td></tr>
+    <tr><td>Serotonina</td><td>Ánimo</td><td>Buen humor</td></tr>
+    <tr><td>Noradrenalina</td><td>Alerta</td><td>Concentración</td></tr>
+    <tr><td>Acetilcolina</td><td>Memoria, contracción</td><td>Aprender pasos</td></tr>
+    <tr><td>Endorfinas</td><td>Bienestar</td><td>Sensación tras bailar</td></tr>
+    <tr><td>Cortisol</td><td>Estrés</td><td>Nervios antes de actuar</td></tr>
   </table>
-  <div class="box danza"><b>Conexión danza:</b> antes de actuar, la noradrenalina te mantiene alerta. Si te pasas, el cortisol te bloquea. Si terminas contento, las endorfinas te dan esa sensación de placer que engancha a la danza.</div>
 </section>
 
 <section class="slide">
-  <span class="tag" style="background:var(--ok);color:#0f1226;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:.5px;">NUEVA · 19</span>
-  <h2>19. Plasticidad sináptica: por qué el cerebro aprende con la práctica</h2>
-  <p><b>Idea-fuerza:</b> las sinapsis no son fijas. Con la repetición, se <b>refuerzan</b> o se <b>debilitan</b>. Esto es la base del aprendizaje motor.</p>
-  <div class="box nota"><b>Analogía:</b> imagina un camino en el bosque. La primera vez apenas se nota. Si lo cruzas todos los días, se hace más ancho. Si dejas de pasar, la hierba lo cubre otra vez.</div>
-  <h3>Dos procesos</h3>
+  <span class="etiqueta-nueva">NUEVA · 19</span>
+  <h2>19. Plasticidad sináptica</h2>
+  <p><b>Idea-fuerza:</b> las sinapsis se refuerzan o debilitan con la práctica.</p>
+  <div class="box nota"><b>Analogía:</b> como un camino en el bosque: si lo cruzas a diario, se hace más ancho.</div>
   <ul>
-    <li><b>LTP (potenciación a largo plazo)</b>: la sinapsis se refuerza → se aprende.</li>
-    <li><b>LTD (depresión a largo plazo)</b>: la sinapsis se debilita → se olvida.</li>
+    <li><b>LTP</b>: la sinapsis se refuerza → se aprende.</li>
+    <li><b>LTD</b>: la sinapsis se debilita → se olvida.</li>
+    <li>El calcio es clave en el proceso.</li>
   </ul>
-  <h3>Cómo se produce</h3>
-  <ol>
-    <li>La neurona presináptica libera <b>glutamato</b>.</li>
-    <li>La postsináptica recibe la señal.</li>
-    <li>Si es repetida y suficiente, entra <b>Ca²⁺</b>.</li>
-    <li>El calcio activa proteínas que refuerzan la sinapsis.</li>
-  </ol>
-  <div class="box danza"><b>Conexión danza:</b> la primera vez que haces un paso, la sinapsis es débil. Con la repetición se refuerza → el paso se automatiza. La <b>práctica distribuida</b> (poco cada día) es mejor que la <b>masiva</b> (todo de golpe).</div>
+  <div class="box danza"><b>Conexión danza:</b> la práctica distribuida es mejor que la masiva.</div>
 </section>
 
 <section class="slide">
-  <span class="tag" style="background:var(--ok);color:#0f1226;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:.5px;">NUEVA · 20</span>
+  <span class="etiqueta-nueva">NUEVA · 20</span>
   <h2>20. Factores que modifican la velocidad de conducción</h2>
-  <p><b>Idea-fuerza:</b> no todos los axones conducen igual de rápido. La velocidad depende de varios factores.</p>
-  <div class="box nota"><b>Analogía:</b> es como comparar una carretera comarcal con una autopista. La comarcal es lenta (axón sin mielina, delgado); la autopista es rápida (axón con mielina, grueso).</div>
-  <table>
-    <tr><th>Factor</th><th>Qué hace</th></tr>
-    <tr><td>Más diámetro</td><td>Menos resistencia</td></tr>
-    <tr><td>Más mielina</td><td>Saltos entre nodos</td></tr>
-    <tr><td>Temperatura óptima</td><td>Los canales funcionan mejor</td></tr>
-    <tr><td>Salud del axón</td><td>Conducción normal</td></tr>
-  </table>
-  <p><b>Factores que reducen la velocidad:</b> falta de mielina, axones delgados, frío extremo, fatiga neuronal.</p>
-  <div class="box danza"><b>Conexión danza:</b> el calentamiento sube la temperatura y mejora la conducción → los movimientos se sienten más fáciles. El frío entumece los dedos. La fatiga reduce la velocidad de reacción.</div>
+  <p><b>Idea-fuerza:</b> no todos los axones conducen igual de rápido.</p>
+  <div class="box nota"><b>Analogía:</b> comparar una carretera comarcal con una autopista.</div>
+  <ul>
+    <li>Más diámetro = menos resistencia.</li>
+    <li>Más mielina = saltos entre nodos.</li>
+    <li>Temperatura óptima = mejor conducción.</li>
+    <li>Salud del axón = conducción normal.</li>
+  </ul>
+  <div class="box danza"><b>Conexión danza:</b> el calentamiento sube la temperatura y mejora la conducción.</div>
 </section>
 
 <section class="slide">
-  <span class="tag" style="background:var(--ok);color:#0f1226;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:.5px;">NUEVA · 21</span>
-  <h2>21. Aplicación dancística: cómo se traduce todo esto en tu entrenamiento</h2>
-  <p><b>Idea-fuerza:</b> todo lo que has visto en el Bloque 1 tiene una traducción práctica en tu día a día.</p>
+  <span class="etiqueta-nueva">NUEVA · 21</span>
+  <h2>21. Aplicación dancística</h2>
+  <p><b>Idea-fuerza:</b> todo lo que has visto en el Bloque 1 tiene una traducción práctica.</p>
   <h3>Antes de entrenar</h3>
   <ul>
-    <li><b>Calienta 10-15 min</b> → sube la temperatura, mejora la conducción.</li>
+    <li><b>Calienta 10-15 min</b> → sube la temperatura.</li>
     <li><b>Come bien</b> → la bomba Na⁺/K⁺ necesita glucosa.</li>
     <li><b>Duerme</b> → la plasticidad sináptica se consolida durante el sueño.</li>
   </ul>
   <h3>Durante el entrenamiento</h3>
   <ul>
-    <li><b>No satures</b>: la neurona tiene límites (período refractario, fatiga).</li>
+    <li><b>No satures</b>: la neurona tiene límites.</li>
     <li><b>Repite poco y bien</b> → LTP se activa con repetición significativa.</li>
     <li><b>Alterna descansos</b> → la consolidación necesita tiempo.</li>
   </ul>
   <h3>Después de entrenar</h3>
   <ul>
-    <li><b>Descansa</b> → el olvido se combate con repaso al día siguiente.</li>
+    <li><b>Descansa</b> → el olvido se combate con repaso.</li>
     <li><b>Duerme bien</b> → la memoria motora se consolida en el sueño.</li>
     <li><b>Hidrátate</b> → los iones necesitan equilibrio.</li>
   </ul>
-  <div class="box danza"><b>Analogía final:</b> tu cerebro no es un músculo que se cansa y ya está. Es un <b>jardín</b> que hay que regar todos los días: poco, pero constante.</div>
+  <div class="box danza"><b>Analogía final:</b> tu cerebro no es un músculo que se cansa y ya está. Es un jardín que hay que regar todos los días: poco, pero constante.</div>
 </section>
 
-<!-- ============ ACTIVIDADES ============ -->
 <section class="slide">
-  <h2>Actividades del Bloque 1</h2>
-  <p>15 actividades cortas. Cada una indica el formato recomendado. Se guardan automáticamente.</p>
+  <h2 id="actTitulo">Actividades del Bloque 1</h2>
+  <p id="actIntro">15 actividades cortas. Cada una indica el formato recomendado. Se guardan automáticamente.</p>
   <div class="progreso-actividades">
-    <span><b id="pCompletadas">0</b>/15 completadas</span>
+    <span><b id="pCompletadas">0</b>/15 <span id="txtCompl">completadas</span></span>
     <div class="bar"><div class="bar-fill" id="pBar" style="width:0%"></div></div>
-    <span style="color:var(--muted);">Autoguardado</span>
+    <span style="color:var(--muted);" id="txtAuto">Autoguardado</span>
   </div>
   <div id="contenedorActividades"></div>
-  <div class="media-box"><span>📊 Nota media de tus actividades:</span><span class="nota-grande" id="notaMedia">—</span></div>
+  <div class="media-box"><span id="txtMedia">📊 Nota media de tus actividades:</span><span class="nota-grande" id="notaMedia">—</span></div>
   <div class="autoeval-box">
-    <h4>🤔 Autoevaluación del bloque</h4>
-    <p>Después de ver los esquemas y tu nota media, ¿qué nota te pondrías?</p>
+    <h4 id="autoTitulo">🤔 Autoevaluación del bloque</h4>
+    <p id="autoP1">Después de ver los esquemas y tu nota media, ¿qué nota te pondrías?</p>
     <div class="escala">
-      <label><input type="radio" name="autoeval-rango" value="0-4"><span>Insuficiente (0-4)</span></label>
-      <label><input type="radio" name="autoeval-rango" value="5-6"><span>Suficiente (5-6)</span></label>
-      <label><input type="radio" name="autoeval-rango" value="7-8"><span>Notable (7-8)</span></label>
-      <label><input type="radio" name="autoeval-rango" value="9-10"><span>Excelente (9-10)</span></label>
+      <label><input type="radio" name="autoeval-rango" value="0-4"><span id="aInsuf">Insuficiente (0-4)</span></label>
+      <label><input type="radio" name="autoeval-rango" value="5-6"><span id="aSuf">Suficiente (5-6)</span></label>
+      <label><input type="radio" name="autoeval-rango" value="7-8"><span id="aNot">Notable (7-8)</span></label>
+      <label><input type="radio" name="autoeval-rango" value="9-10"><span id="aExc">Excelente (9-10)</span></label>
     </div>
-    <div class="nota-propia"><span>Nota concreta (0-10):</span><input type="number" min="0" max="10" step="0.5" data-autoeval-nota></div>
-    <p style="margin-top:12px;font-size:.9rem;">Justifica tu nota:</p>
+    <div class="nota-propia"><span id="aNotaTxt">Nota concreta (0-10):</span><input type="number" min="0" max="10" step="0.5" data-autoeval-nota></div>
+    <p style="margin-top:12px;font-size:.9rem;" id="aJustTxt">Justifica tu nota:</p>
     <textarea data-autoeval-text placeholder="..."></textarea>
   </div>
-  <div class="acciones" style="margin-top:20px;"><button onclick="exportarInforme()">💾 Descargar informe completo</button></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:20px;">
+    <button onclick="exportarTXT()" style="background:var(--accent2);color:#0f1226;border:none;padding:9px 16px;border-radius:8px;font-weight:800;cursor:pointer;">💾 Descargar TXT</button>
+    <button onclick="exportarCSV()" style="background:#b07cff;color:#fff;border:none;padding:9px 16px;border-radius:8px;font-weight:800;cursor:pointer;">📊 Descargar CSV</button>
+    <button onclick="exportarExcel()" style="background:var(--ok);color:#0f1226;border:none;padding:9px 16px;border-radius:8px;font-weight:800;cursor:pointer;">📗 Descargar Excel</button>
+  </div>
 </section>
 
 </main>
 
-<div class="counter" id="counter">Diapositiva 1 / 14</div>
-<div class="nav"><button onclick="prev()">← Anterior</button><button onclick="next()">Siguiente →</button></div>
+<div class="counter" id="counter">Diapositiva 1 / 15</div>
+<div class="nav"><button onclick="prev()" id="navPrev">← Anterior</button><button onclick="next()" id="navNext">Siguiente →</button></div>
 
 <script>
 const NUM_BLOQUE = 1;
 const STORAGE = 'bloque1_respuestas_v2';
 const TITULO_BLOQUE = {es:'BLOQUE 1 · FISIOLOGÍA NEURONAL Y SEÑALIZACIÓN',ca:'BLOC 1 · FISIOLOGIA NEURONAL',en:'BLOCK 1 · NEURONAL PHYSIOLOGY'};
 
+/* ============ SISTEMA DE IDIOMA ============ */
+const I18N = {
+  es:{
+    btnVolver:"← Índice", btnReset:"🔄 Reiniciar",
+    navPrev:"← Anterior", navNext:"Siguiente →",
+    btnComprobar:"Comprobar", btnValorar:"Valorar", btnVer:"Ver solución",
+    fbOk:"✅ ¡Correcto!", fbKo:"❌ Revisa tu respuesta.", fbGuardado:"💾 Guardado.",
+    chipIndiv:"Individual", chipPareja:"Parejas", chipGrupo:"Grupos 2-3",
+    txtCompl:"completadas", txtAuto:"Autoguardado", txtMedia:"📊 Nota media de tus actividades:",
+    autoTitulo:"🤔 Autoevaluación del bloque",
+    autoP1:"Después de ver los esquemas y tu nota media, ¿qué nota te pondrías?",
+    aInsuf:"Insuficiente (0-4)", aSuf:"Suficiente (5-6)", aNot:"Notable (7-8)", aExc:"Excelente (9-10)",
+    aNotaTxt:"Nota concreta (0-10):", aJustTxt:"Justifica tu nota:",
+    placeholder:"Escribe aquí tu respuesta...",
+    actTitulo:"Actividades del Bloque 1",
+    actIntro:"15 actividades cortas. Cada una indica el formato recomendado. Se guardan automáticamente."
+  },
+  ca:{
+    btnVolver:"← Índex", btnReset:"🔄 Reiniciar",
+    navPrev:"← Anterior", navNext:"Següent →",
+    btnComprobar:"Comprovar", btnValorar:"Valorar", btnVer:"Veure solució",
+    fbOk:"✅ Correcte!", fbKo:"❌ Revisa la resposta.", fbGuardado:"💾 Guardat.",
+    chipIndiv:"Individual", chipPareja:"Parelles", chipGrupo:"Grups 2-3",
+    txtCompl:"completades", txtAuto:"Autoguardat", txtMedia:"📊 Nota mitjana:",
+    autoTitulo:"🤔 Autoavaluació del bloc",
+    autoP1:"Després de veure els esquemes i la nota mitjana, quina nota et posaries?",
+    aInsuf:"Insuficient (0-4)", aSuf:"Suficient (5-6)", aNot:"Notable (7-8)", aExc:"Excel·lent (9-10)",
+    aNotaTxt:"Nota concreta (0-10):", aJustTxt:"Justifica la teva nota:",
+    placeholder:"Escriu aquí la teva resposta...",
+    actTitulo:"Activitats del Bloc 1",
+    actIntro:"15 activitats curtes. Cadascuna indica el format recomanat."
+  },
+  en:{
+    btnVolver:"← Index", btnReset:"🔄 Reset",
+    navPrev:"← Previous", navNext:"Next →",
+    btnComprobar:"Check", btnValorar:"Score", btnVer:"Show solution",
+    fbOk:"✅ Correct!", fbKo:"❌ Review your answer.", fbGuardado:"💾 Saved.",
+    chipIndiv:"Individual", chipPareja:"Pairs", chipGrupo:"Groups 2-3",
+    txtCompl:"completed", txtAuto:"Auto-saved", txtMedia:"📊 Average grade:",
+    autoTitulo:"🤔 Self-assessment",
+    autoP1:"After seeing the outlines and your average grade, what grade would you give yourself?",
+    aInsuf:"Insufficient (0-4)", aSuf:"Sufficient (5-6)", aNot:"Good (7-8)", aExc:"Excellent (9-10)",
+    aNotaTxt:"Specific grade (0-10):", aJustTxt:"Justify your grade:",
+    placeholder:"Write your answer here...",
+    actTitulo:"Block 1 activities",
+    actIntro:"15 short activities. Each one shows the recommended format."
+  }
+};
+
+let lang = 'es';
+function t(k){ return (I18N[lang] && I18N[lang][k]) || I18N.es[k] || k; }
+
+function aplicarIdioma(){
+  ['btnVolver','btnReset','navPrev','navNext','txtCompl','txtAuto','txtMedia',
+   'autoTitulo','autoP1','aInsuf','aSuf','aNot','aExc','aNotaTxt','aJustTxt','actTitulo','actIntro']
+  .forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.textContent = t(id);
+  });
+  document.documentElement.lang = lang;
+  document.querySelectorAll('.lang-switch button').forEach(b=>{
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+  renderActividades();
+  cargarAutoeval();
+}
+
+document.querySelectorAll('.lang-switch button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    lang = btn.dataset.lang;
+    aplicarIdioma();
+  });
+});
+
+/* ============ ACTIVIDADES ============ */
 const ACTIVIDADES = [
   {tipo:'test',grupo:'indiv',q:{es:"¿Qué parte de la neurona recibe las señales?",ca:"Quina part rep els senyals?",en:"Which part receives signals?"},ops:{es:["Axón","Dendritas","Soma","Mielina"],ca:["Axó","Dendrites","Soma","Mielina"],en:["Axon","Dendrites","Soma","Myelin"]},correcta:1,sol:{es:"Las dendritas.",ca:"Les dendrites.",en:"Dendrites."}},
   {tipo:'test',grupo:'indiv',q:{es:"¿Qué célula glial forma mielina en el SNP?",ca:"Quina cèl·lula forma mielina al SNP?",en:"Which glial cell forms myelin in the PNS?"},ops:{es:["Astrocito","Microglía","Oligodendrocito","Célula de Schwann"],ca:["Astrocit","Microglia","Oligodendrocit","Cèl·lula de Schwann"],en:["Astrocyte","Microglia","Oligodendrocyte","Schwann cell"]},correcta:3,sol:{es:"Células de Schwann.",ca:"Cèl·lules de Schwann.",en:"Schwann cells."}},
@@ -353,17 +421,16 @@ const ACTIVIDADES = [
   {tipo:'test',grupo:'indiv',q:{es:"Un PIPS se caracteriza por…",ca:"Un PIPS es caracteritza per…",en:"An IPSP is characterized by…"},ops:{es:["Entrada de Na⁺","Salida de Cl⁻","Entrada de Cl⁻ o salida de K⁺","Ca²⁺"],ca:["Entrada de Na⁺","Sortida de Cl⁻","Entrada de Cl⁻ o sortida de K⁺","Ca²⁺"],en:["Na⁺ entry","Cl⁻ exit","Cl⁻ in or K⁺ out","Ca²⁺"]},correcta:2,sol:{es:"Entrada de Cl⁻ o salida de K⁺.",ca:"Entrada de Cl⁻ o sortida de K⁺.",en:"Cl⁻ in or K⁺ out."}},
   {tipo:'test',grupo:'indiv',q:{es:"¿Dónde se regenera el potencial en un axón mielinizado?",ca:"On es regenera el potencial?",en:"Where is it regenerated?"},ops:{es:["En toda la membrana","En los nodos de Ranvier","En el soma","En las dendritas"],ca:["A tota la membrana","Als nodes de Ranvier","Al soma","A les dendrites"],en:["All along","At nodes of Ranvier","In the soma","In dendrites"]},correcta:1,sol:{es:"En los nodos de Ranvier.",ca:"Als nodes de Ranvier.",en:"At nodes of Ranvier."}},
   {tipo:'abierta',grupo:'pareja',q:{es:"Explicad la diferencia entre conducción continua y saltatoria, y por qué la segunda es más eficiente.",ca:"Expliqueu la diferència entre conducció contínua i saltatòria.",en:"Explain the difference between continuous and saltatory conduction."},keywords:['continua','saltatoria','nodo','ranvier','mielina','velocidad','energía','energia'],sol:{es:"La continua despolariza punto por punto; la saltatoria salta de nodo a nodo, más rápida y con menor gasto energético.",ca:"La contínua punt per punt; la saltatòria salt de node a node.",en:"Continuous point by point; saltatory jumps node to node."}},
-  {tipo:'abierta',grupo:'pareja',q:{es:"¿Por qué la mielina es clave en un salto rápido de danza?",ca:"Per què la mielina és clau en un salt ràpid?",en:"Why is myelin key in a fast dance jump?"},keywords:['mielina','velocidad','milisegundo','orden','músculo','musculo','rápid','rapid'],sol:{es:"Permite que la orden llegue al músculo en milisegundos; sin ella el movimiento sería lento.",ca:"Permet que l'ordre arribi en mil·lisegons.",en:"It allows the order to reach the muscle in milliseconds."}},
+  {tipo:'abierta',grupo:'pareja',q:{es:"¿Por qué la mielina es clave en un salto rápido de danza?",ca:"Per què la mielina és clau en un salt ràpid?",en:"Why is myelin key in a fast dance jump?"},keywords:['mielina','velocidad','milisegundo','orden','músculo','musculo','rápid','rapid'],sol:{es:"Permite que la orden llegue al músculo en milisegundos.",ca:"Permet que l'ordre arribi en mil·lisegons.",en:"It allows the order to reach the muscle in milliseconds."}},
   {tipo:'abierta',grupo:'pareja',q:{es:"Describid qué pasa en la sinapsis desde que llega el impulso hasta que se activa la neurona postsináptica.",ca:"Descriu què passa a la sinapsi.",en:"Describe what happens at the synapse."},keywords:['impulso','neurotransmisor','hendidura','receptor','presináptico','postsináptico','peps','pips'],sol:{es:"Llega el impulso → liberación de neurotransmisores → unión a receptores → PEPS o PIPS.",ca:"Impuls → neurotransmissors → receptors → PEPS/PIPS.",en:"Impulse → neurotransmitters → receptors → EPSP/IPSP."}},
-  {tipo:'abierta',grupo:'grupo',q:{es:"En grupos 2-3, pensad 3 situaciones dancísticas donde la inhibición (PIPS) sea tan importante como la excitación (PEPS).",ca:"Penseu 3 situacions on la inhibició sigui important.",en:"Think of 3 dance situations where inhibition is as important as excitation."},keywords:['inhibición','inibicion','pips','control','equilibrio','precisión','precisio','relajar','opuestos'],sol:{es:"Controlar el brazo que no se mueve, mantener equilibrio sin rigidez, coordinar piernas y brazos opuestos.",ca:"Controlar un braç, equilibri, coordinar.",en:"Control the other arm, balance, coordinate."}},
-  {tipo:'abierta',grupo:'grupo',q:{es:"En grupos 2-3, haced una tabla comparativa de los 4 tipos de células gliales y añadid un ejemplo dancístico.",ca:"Taula comparativa de les 4 cèl·lules glials.",en:"Make a comparison table of the 4 glial cells."},keywords:['astrocito','microglia','oligodendrocito','schwann','nutrición','defensa','mielina','snc','snp'],sol:{es:"Astrocitos (nutrición SNC), microglía (defensa SNC), oligodendrocitos (mielina SNC), Schwann (mielina SNP).",ca:"Astrocits, microglia, oligodendrocits, Schwann.",en:"Astrocytes, microglia, oligodendrocytes, Schwann."}},
-  {tipo:'abierta',grupo:'grupo',q:{es:"En grupos 2-3, simulad con un gesto dancístico la diferencia entre un movimiento 'continuo' y uno 'saltatorio'.",ca:"Simuleu un moviment continu i un de saltatori.",en:"Simulate a continuous and a saltatory movement."},keywords:['continuo','saltatorio','lento','rápido','rapido','salto','posición','posicion'],sol:{es:"Continuo: elevación lenta del brazo. Saltatorio: desplazamiento rápido por saltos entre posiciones.",ca:"Elevació lenta vs. salts.",en:"Slow arm raise vs. fast jumps."}},
-  {tipo:'abierta',grupo:'indiv',q:{es:"Reflexiona: ¿qué pasaría en tu danza si tus neuronas perdieran la mielina? Describe 2 consecuencias.",ca:"Què passaria si perdessis la mielina?",en:"What would happen if you lost myelin?"},keywords:['lent','precisión','precisio','fatiga','coordinación','coordinacio','movimiento','moviment'],sol:{es:"Movimientos lentos, poca precisión, mayor fatiga, dificultad para movimientos rápidos.",ca:"Moviments lents, poca precisió, fatiga.",en:"Slow movements, poor precision, fatigue."}},
-  {tipo:'abierta',grupo:'indiv',q:{es:"Explica con tus palabras: 'la intensidad del estímulo se codifica en la frecuencia de disparo, no en el tamaño del potencial'.",ca:"Explica la frase amb les teves paraules.",en:"Explain: 'stimulus intensity is encoded in firing frequency, not potential size'."},keywords:['frecuencia','tamaño','tamany','disparo','potencial','intensidad','estímulo','estimul'],sol:{es:"Los potenciales son iguales en tamaño; un estímulo más intenso produce más potenciales por segundo, no más grandes.",ca:"Més potencial per segon, no més grans.",en:"More action potentials per second, not bigger."}}
+  {tipo:'abierta',grupo:'grupo',q:{es:"En grupos 2-3, pensad 3 situaciones dancísticas donde la inhibición (PIPS) sea tan importante como la excitación (PEPS).",ca:"Penseu 3 situacions on la inhibició sigui important.",en:"Think of 3 dance situations where inhibition is as important as excitation."},keywords:['inhibición','inibicion','pips','control','equilibrio','precisión','precisio','relajar','opuestos'],sol:{es:"Controlar el brazo que no se mueve, mantener equilibrio, coordinar piernas y brazos opuestos.",ca:"Controlar un braç, equilibri, coordinar.",en:"Control the other arm, balance, coordinate."}},
+  {tipo:'abierta',grupo:'grupo',q:{es:"En grupos 2-3, haced una tabla comparativa de los 4 tipos de células gliales.",ca:"Taula comparativa de les 4 cèl·lules glials.",en:"Make a comparison table of the 4 glial cells."},keywords:['astrocito','microglia','oligodendrocito','schwann','nutrición','defensa','mielina','snc','snp'],sol:{es:"Astrocitos (nutrición SNC), microglía (defensa SNC), oligodendrocitos (mielina SNC), Schwann (mielina SNP).",ca:"Astrocits, microglia, oligodendrocits, Schwann.",en:"Astrocytes, microglia, oligodendrocytes, Schwann."}},
+  {tipo:'abierta',grupo:'grupo',q:{es:"En grupos 2-3, simulad con un gesto dancístico la diferencia entre un movimiento 'continuo' y uno 'saltatorio'.",ca:"Simuleu un moviment continu i un de saltatori.",en:"Simulate a continuous and a saltatory movement."},keywords:['continuo','saltatorio','lento','rápido','rapido','salto','posición','posicion'],sol:{es:"Continuo: elevación lenta del brazo. Saltatorio: desplazamiento rápido por saltos.",ca:"Elevació lenta vs. salts.",en:"Slow arm raise vs. fast jumps."}},
+  {tipo:'abierta',grupo:'indiv',q:{es:"Reflexiona: ¿qué pasaría en tu danza si tus neuronas perdieran la mielina?",ca:"Què passaria si perdessis la mielina?",en:"What would happen if you lost myelin?"},keywords:['lent','precisión','precisio','fatiga','coordinación','coordinacio','movimiento','moviment'],sol:{es:"Movimientos lentos, poca precisión, mayor fatiga.",ca:"Moviments lents, poca precisió, fatiga.",en:"Slow movements, poor precision, fatigue."}},
+  {tipo:'abierta',grupo:'indiv',q:{es:"Explica con tus palabras: 'la intensidad del estímulo se codifica en la frecuencia de disparo, no en el tamaño del potencial'.",ca:"Explica la frase amb les teves paraules.",en:"Explain: 'stimulus intensity is encoded in firing frequency, not potential size'."},keywords:['frecuencia','tamaño','tamany','disparo','potencial','intensidad','estímulo','estimul'],sol:{es:"Los potenciales son iguales en tamaño; un estímulo más intenso produce más potenciales por segundo.",ca:"Més potencial per segon, no més grans.",en:"More action potentials per second, not bigger."}}
 ];
 
-let lang='es';
-function t(k){ return k; }
+/* ============ VALORACIÓN ============ */
 function normalizar(s){ return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\w\s]/g,' '); }
 function valorarAbierta(texto, keywords){
   if(!texto || texto.trim().length<10) return {nota:0,encontradas:[],faltan:keywords||[],ratio:0};
@@ -374,11 +441,13 @@ function valorarAbierta(texto, keywords){
   if(texto.trim().length<30) nota=Math.min(nota,3); else if(texto.trim().length<60) nota=Math.min(nota,6);
   return {nota,encontradas:enc,faltan:fal,ratio};
 }
+
+/* ============ RENDER ACTIVIDADES ============ */
 function renderActividades(){
   const cont=document.getElementById('contenedorActividades'); if(!cont) return;
   const data=JSON.parse(localStorage.getItem(STORAGE)||'{}');
   cont.innerHTML='';
-  const chips={indiv:'Individual',pareja:'Parejas',grupo:'Grupos 2-3'};
+  const chips={indiv:t('chipIndiv'),pareja:t('chipPareja'),grupo:t('chipGrupo')};
   ACTIVIDADES.forEach((a,i)=>{
     const id='a'+(i+1); const wrap=document.createElement('div'); wrap.className='actividad';
     let html=`<h4><span>${i+1}.</span> ${a.q[lang]} <span class="chip ${a.grupo}">${chips[a.grupo]}</span></h4>`;
@@ -386,59 +455,198 @@ function renderActividades(){
       html+=`<div class="opciones">`;
       a.ops[lang].forEach((op,j)=>{ const checked=data[id]===j?'checked':''; html+=`<label><input type="radio" name="${id}" value="${j}" ${checked} onchange="responder('${id}',${j},${a.correcta})"> ${op}</label>`; });
       html+=`</div>`;
-    } else { html+=`<textarea id="${id}" placeholder="..." oninput="guardarAbierta('${id}')">${data[id]||''}</textarea>`; }
+    } else { html+=`<textarea id="${id}" placeholder="${t('placeholder')}" oninput="guardarAbierta('${id}')">${data[id]||''}</textarea>`; }
     html+=`<div class="feedback" id="fb-${id}"></div>`;
-    html+=`<div class="acciones">${a.tipo==='test'?`<button onclick="comprobar('${id}',${a.correcta})">Comprobar</button>`:`<button onclick="valorar('${id}',${i})">Valorar</button>`}<button onclick="verSolucion('${id}','${(a.sol[lang]||'').replace(/'/g,"\\'")}')">Ver solución</button></div>`;
+    html+=`<div class="acciones">${a.tipo==='test'?`<button onclick="comprobar('${id}',${a.correcta})">${t('btnComprobar')}</button>`:`<button onclick="valorar('${id}',${i})">${t('btnValorar')}</button>`}<button onclick="verSolucion('${id}','${(a.sol[lang]||'').replace(/'/g,"\\'")}')">${t('btnVer')}</button></div>`;
     wrap.innerHTML=html; cont.appendChild(wrap);
     if(a.tipo==='abierta' && data[id] && data[id].trim().length>=10){ setTimeout(()=>valorar(id,i),50); }
   });
   actualizarProgreso();
 }
+
 function responder(id,val,c){ const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); data[id]=val; localStorage.setItem(STORAGE,JSON.stringify(data)); comprobar(id,c); actualizarProgreso(); }
-function guardarAbierta(id){ const ta=document.getElementById(id); const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); data[id]=ta.value; localStorage.setItem(STORAGE,JSON.stringify(data)); const fb=document.getElementById('fb-'+id); fb.className='feedback guardado'; fb.textContent='💾 Guardado'; setTimeout(()=>{if(fb.className.includes('guardado'))fb.className='feedback';},1200); actualizarProgreso(); }
-function comprobar(id,c){ const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); const fb=document.getElementById('fb-'+id); if(data[id]===c){fb.className='feedback ok';fb.textContent='✅ ¡Correcto!';}else{fb.className='feedback ko';fb.textContent='❌ Revisa.';} }
-function valorar(id,idx){ const a=ACTIVIDADES[idx]; const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); const texto=data[id]||''; const fb=document.getElementById('fb-'+id); const r=valorarAbierta(texto,a.keywords); fb.className='feedback guardado'; fb.innerHTML=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;"><span style="background:var(--accent2);color:#0f1226;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-weight:900;">${r.nota}</span><span>${r.encontradas.length}/${(a.keywords||[]).length} puntos clave</span></div><div style="height:8px;background:#0f1226;border-radius:4px;overflow:hidden;margin-bottom:6px;"><div style="height:100%;width:${r.nota*10}%;background:${r.nota>=7?'var(--ok)':r.nota>=5?'var(--warn)':'var(--bad)'};"></div></div><div style="font-size:.82rem;"><span style="color:var(--ok);">✓ ${r.encontradas.join(', ')||'—'}</span><br><span style="color:var(--bad);">✗ ${r.faltan.join(', ')||'—'}</span></div>`; data['nota-'+id]=r.nota; localStorage.setItem(STORAGE,JSON.stringify(data)); actualizarMedia(); }
+function guardarAbierta(id){ const ta=document.getElementById(id); const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); data[id]=ta.value; localStorage.setItem(STORAGE,JSON.stringify(data)); const fb=document.getElementById('fb-'+id); fb.className='feedback guardado'; fb.textContent=t('fbGuardado'); setTimeout(()=>{if(fb.className.includes('guardado'))fb.className='feedback';},1200); actualizarProgreso(); }
+function comprobar(id,c){ const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); const fb=document.getElementById('fb-'+id); if(data[id]===c){fb.className='feedback ok';fb.textContent=t('fbOk');}else{fb.className='feedback ko';fb.textContent=t('fbKo');} }
+function valorar(id,idx){ const a=ACTIVIDADES[idx]; const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); const texto=data[id]||''; const fb=document.getElementById('fb-'+id); const r=valorarAbierta(texto,a.keywords); fb.className='feedback guardado'; fb.innerHTML=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;"><span style="background:var(--accent2);color:#0f1226;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-weight:900;">${r.nota}</span><span>${r.encontradas.length}/${(a.keywords||[]).length}</span></div><div style="height:8px;background:#0f1226;border-radius:4px;overflow:hidden;margin-bottom:6px;"><div style="height:100%;width:${r.nota*10}%;background:${r.nota>=7?'var(--ok)':r.nota>=5?'var(--warn)':'var(--bad)'};"></div></div><div style="font-size:.82rem;"><span style="color:var(--ok);">✓ ${r.encontradas.join(', ')||'—'}</span><br><span style="color:var(--bad);">✗ ${r.faltan.join(', ')||'—'}</span></div>`; data['nota-'+id]=r.nota; localStorage.setItem(STORAGE,JSON.stringify(data)); actualizarMedia(); }
 function verSolucion(id,sol){ const fb=document.getElementById('fb-'+id); fb.className='feedback guardado'; fb.textContent='📖 '+sol; }
 function actualizarProgreso(){ const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); let c=0; ACTIVIDADES.forEach((a,i)=>{ const id='a'+(i+1); if(a.tipo==='test'){if(data[id]!==undefined)c++;}else{if((data[id]||'').trim().length>=15)c++;} }); document.getElementById('pCompletadas').textContent=c; document.getElementById('pBar').style.width=(c/ACTIVIDADES.length*100)+'%'; actualizarMedia(); }
 function actualizarMedia(){ const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); let s=0,n=0; ACTIVIDADES.forEach((a,i)=>{ const id='a'+(i+1); if(a.tipo==='test' && data[id]!==undefined){s+=(data[id]===a.correcta)?10:0;n++;} else if(a.tipo==='abierta' && typeof data['nota-'+id]==='number'){s+=data['nota-'+id];n++;} }); document.getElementById('notaMedia').textContent = n?(s/n).toFixed(1):'—'; }
+
+/* ============ NAVEGACIÓN ============ */
 let idx=0; const slides=document.querySelectorAll('.slide');
 function show(i){ slides.forEach(s=>s.classList.remove('active')); slides[i].classList.add('active'); document.getElementById('counter').textContent=`Diapositiva ${i+1} / ${slides.length}`; document.getElementById('progress').style.width=((i+1)/slides.length*100)+'%'; }
 function next(){if(idx<slides.length-1){idx++;show(idx);}}
 function prev(){if(idx>0){idx--;show(idx);}}
 document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')next();if(e.key==='ArrowLeft')prev();});
+
+/* ============ AUTOEVALUACIÓN ============ */
 function cargarAutoeval(){
   const data=JSON.parse(localStorage.getItem(STORAGE)||'{}');
   document.querySelectorAll('[data-autoeval-text]').forEach(ta=>{ if(data['autoeval-text'])ta.value=data['autoeval-text']; ta.oninput=()=>{const d=JSON.parse(localStorage.getItem(STORAGE)||'{}'); d['autoeval-text']=ta.value; localStorage.setItem(STORAGE,JSON.stringify(d));}; });
   document.querySelectorAll('[data-autoeval-nota]').forEach(inp=>{ if(data['autoeval-nota']!==undefined)inp.value=data['autoeval-nota']; inp.oninput=()=>{const d=JSON.parse(localStorage.getItem(STORAGE)||'{}'); d['autoeval-nota']=inp.value; localStorage.setItem(STORAGE,JSON.stringify(d));}; });
   document.querySelectorAll('input[type=radio][name="autoeval-rango"]').forEach(r=>{ if(data['autoeval-rango']===r.value)r.checked=true; r.onchange=()=>{const d=JSON.parse(localStorage.getItem(STORAGE)||'{}'); d['autoeval-rango']=r.value; localStorage.setItem(STORAGE,JSON.stringify(d));}; });
 }
-function exportarInforme(){
-  const data=JSON.parse(localStorage.getItem(STORAGE)||'{}');
-  const nombre=prompt('Tu nombre:')||'alumno';
-  const nl=nombre.trim().replace(/\s+/g,'_').replace(/[^\w\-]/g,'')||'alumno';
-  let txt='=========================================\n'+TITULO_BLOQUE[lang]+'\n=========================================\n';
-  txt+='Alumno/a: '+nombre+'\nFecha: '+new Date().toLocaleString()+'\nBloque: '+NUM_BLOQUE+'\n=========================================\n\n';
-  let corr=0,tot=0,sn=0,nn=0;
+
+/* ============ EXPORTACIÓN MÚLTIPLE ============ */
+function _obtenerDatos(){
+  const data = JSON.parse(localStorage.getItem(STORAGE) || '{}');
+  const nombre = prompt('Tu nombre:') || 'alumno';
+  const nl = nombre.trim().replace(/\s+/g,'_').replace(/[^\w\-]/g,'') || 'alumno';
+  const fecha = new Date();
+  const fechaStr = fecha.toLocaleString();
+  const fechaISO = fecha.toISOString().slice(0,10);
+
+  const filas = [];
+  let corr = 0, tot = 0, sn = 0, nn = 0;
+
   ACTIVIDADES.forEach((a,i)=>{
-    const id='a'+(i+1);
-    txt+=`--- ${i+1}. ${a.q[lang]} ---\n`;
-    if(a.tipo==='test'){ const v=data[id]; txt+=(v!==undefined?a.ops[lang][v]:'(sin respuesta)')+'\n'; if(v===a.correcta){txt+='✅ Correcto\n';corr++;}else if(v!==undefined){txt+='❌ Incorrecto\n';}tot++; }
-    else { txt+=(data[id]||'(sin respuesta)')+'\n'; if(typeof data['nota-'+id]==='number'){txt+=`📊 ${data['nota-'+id]}/10\n`;sn+=data['nota-'+id];nn++;} }
-    txt+=`Solución: ${a.sol[lang]}\n\n`;
+    const id = 'a'+(i+1);
+    const resp = data[id];
+    let puntuacion = '';
+
+    if(a.tipo === 'test'){
+      const correcta = data[id] === a.correcta;
+      puntuacion = correcta ? 10 : (resp !== undefined ? 0 : '');
+      if(resp !== undefined){ tot++; if(correcta) corr++; }
+    } else {
+      puntuacion = typeof data['nota-'+id] === 'number' ? data['nota-'+id] : '';
+      if(typeof data['nota-'+id] === 'number'){ sn += data['nota-'+id]; nn++; }
+    }
+
+    filas.push({
+      num: i+1,
+      tipo: a.tipo === 'test' ? 'Test' : 'Abierta',
+      formato: a.grupo === 'indiv' ? 'Individual' : a.grupo === 'pareja' ? 'Parejas' : 'Grupos 2-3',
+      pregunta: a.q[lang],
+      respuesta: a.tipo === 'test'
+        ? (resp !== undefined ? a.ops[lang][resp] : '')
+        : (resp || ''),
+      solucion: a.sol[lang],
+      puntuacion: puntuacion
+    });
   });
-  txt+='=========================================\nResultado test: '+corr+'/'+tot+'\n';
-  if(nn) txt+='Nota media abiertas: '+(sn/nn).toFixed(1)+'/10\n';
-  if(data['autoeval-rango']||data['autoeval-nota']||data['autoeval-text']){
-    txt+='=========================================\nAUTOEVALUACIÓN\n=========================================\n';
-    txt+='Rango: '+(data['autoeval-rango']||'—')+'\nNota: '+(data['autoeval-nota']||'—')+'/10\nJustificación: '+(data['autoeval-text']||'—')+'\n';
-  }
-  txt+='=========================================\n';
-  const blob=new Blob([txt],{type:'text/plain;charset=utf-8'});
-  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`bloque${NUM_BLOQUE}_${nl}_${new Date().toISOString().slice(0,10)}.txt`; a.click();
+
+  const autoeval = {
+    rango: data['autoeval-rango'] || '',
+    nota: data['autoeval-nota'] || '',
+    justificacion: data['autoeval-text'] || ''
+  };
+
+  const resumen = {
+    correctas: corr,
+    totalTest: tot,
+    mediaAbiertas: nn ? (sn/nn).toFixed(1) : '',
+    nAbiertas: nn
+  };
+
+  return { nombre, nl, fechaStr, fechaISO, filas, autoeval, resumen };
 }
-function reiniciar(){ if(confirm('¿Borrar las respuestas de este bloque?')){ localStorage.removeItem(STORAGE); renderActividades(); cargarAutoeval(); actualizarMedia(); } }
+
+function _descargar(contenido, mime, nombre){
+  const blob = new Blob([contenido], {type:mime});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = nombre;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function exportarTXT(){
+  const d = _obtenerDatos();
+  let txt = '=========================================\n';
+  txt += (TITULO_BLOQUE[lang] || TITULO_BLOQUE.es) + '\n';
+  txt += '=========================================\n';
+  txt += 'Alumno/a: ' + d.nombre + '\n';
+  txt += 'Fecha: ' + d.fechaStr + '\n';
+  txt += 'Bloque: ' + NUM_BLOQUE + '\n';
+  txt += '=========================================\n\n';
+
+  d.filas.forEach(f=>{
+    txt += `--- ${f.num}. ${f.pregunta} ---\n`;
+    txt += `[${f.formato}] [${f.tipo}]\n`;
+    txt += (f.respuesta || '(sin respuesta)') + '\n';
+    if(f.puntuacion !== '') txt += `📊 Puntuación: ${f.puntuacion}/10\n`;
+    txt += `Solución: ${f.solucion}\n\n`;
+  });
+
+  txt += '=========================================\nRESUMEN\n=========================================\n';
+  txt += `Test: ${d.resumen.correctas}/${d.resumen.totalTest}\n`;
+  if(d.resumen.nAbiertas) txt += `Media abiertas: ${d.resumen.mediaAbiertas}/10\n`;
+  if(d.autoeval.rango || d.autoeval.nota){
+    txt += '\nAUTOEVALUACIÓN\n';
+    txt += `Rango: ${d.autoeval.rango || '—'}\nNota: ${d.autoeval.nota || '—'}/10\nJustificación: ${d.autoeval.justificacion || '—'}\n`;
+  }
+  txt += '=========================================\n';
+
+  _descargar(txt, 'text/plain;charset=utf-8', `bloque${NUM_BLOQUE}_${d.nl}_${d.fechaISO}.txt`);
+}
+
+function exportarCSV(){
+  const d = _obtenerDatos();
+  const esc = v => '"' + String(v == null ? '' : v).replace(/"/g,'""') + '"';
+
+  let csv = '';
+  csv += esc('Alumno') + ',' + esc('Fecha') + ',' + esc('Bloque') + ',' + esc('Idioma') + '\n';
+  csv += esc(d.nombre) + ',' + esc(d.fechaStr) + ',' + esc(NUM_BLOQUE) + ',' + esc(lang.toUpperCase()) + '\n\n';
+  csv += ['Nº','Tipo','Formato','Pregunta','Respuesta','Solución','Puntuación'].map(esc).join(',') + '\n';
+  d.filas.forEach(f=>{
+    csv += [f.num, f.tipo, f.formato, f.pregunta, f.respuesta, f.solucion, f.puntuacion].map(esc).join(',') + '\n';
+  });
+
+  csv += '\n' + ['Resumen','','','','','',''].map(esc).join(',') + '\n';
+  csv += ['Correctas test','','','',d.resumen.correctas + '/' + d.resumen.totalTest,'',''].map(esc).join(',') + '\n';
+  if(d.resumen.nAbiertas){
+    csv += ['Media abiertas','','','',d.resumen.mediaAbiertas + '/10','',''].map(esc).join(',') + '\n';
+  }
+  csv += '\n' + ['Autoevaluación','','','','','',''].map(esc).join(',') + '\n';
+  csv += ['Rango','','','',d.autoeval.rango,'',''].map(esc).join(',') + '\n';
+  csv += ['Nota','','','',d.autoeval.nota + '/10','',''].map(esc).join(',') + '\n';
+  csv += ['Justificación','','','',d.autoeval.justificacion,'',''].map(esc).join(',') + '\n';
+
+  const contenido = '\uFEFF' + csv;
+  _descargar(contenido, 'text/csv;charset=utf-8', `bloque${NUM_BLOQUE}_${d.nl}_${d.fechaISO}.csv`);
+}
+
+function exportarExcel(){
+  const d = _obtenerDatos();
+  const esc = v => String(v == null ? '' : v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+  let html = '<html xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="UTF-8">';
+  html += '<style>table{border-collapse:collapse;} th,td{border:1px solid #999;padding:6px 10px;font-family:Arial;font-size:11pt;} th{background:#ddd;font-weight:bold;}</style>';
+  html += '</head><body>';
+  html += `<h2>${esc(TITULO_BLOQUE[lang] || TITULO_BLOQUE.es)}</h2>`;
+  html += `<p><b>Alumno/a:</b> ${esc(d.nombre)}<br><b>Fecha:</b> ${esc(d.fechaStr)}<br><b>Bloque:</b> ${esc(NUM_BLOQUE)}<br><b>Idioma:</b> ${esc(lang.toUpperCase())}</p>`;
+  html += '<table><tr><th>Nº</th><th>Tipo</th><th>Formato</th><th>Pregunta</th><th>Respuesta</th><th>Solución</th><th>Puntuación</th></tr>';
+  d.filas.forEach(f=>{
+    html += `<tr><td>${esc(f.num)}</td><td>${esc(f.tipo)}</td><td>${esc(f.formato)}</td><td>${esc(f.pregunta)}</td><td>${esc(f.respuesta)}</td><td>${esc(f.solucion)}</td><td>${esc(f.puntuacion)}</td></tr>`;
+  });
+  html += '</table>';
+  html += '<h3>Resumen</h3><table>';
+  html += `<tr><th>Test</th><td>${esc(d.resumen.correctas)}/${esc(d.resumen.totalTest)}</td></tr>`;
+  if(d.resumen.nAbiertas) html += `<tr><th>Media abiertas</th><td>${esc(d.resumen.mediaAbiertas)}/10</td></tr>`;
+  html += '</table>';
+  html += '<h3>Autoevaluación</h3><table>';
+  html += `<tr><th>Rango</th><td>${esc(d.autoeval.rango || '—')}</td></tr>`;
+  html += `<tr><th>Nota</th><td>${esc(d.autoeval.nota || '—')}/10</td></tr>`;
+  html += `<tr><th>Justificación</th><td>${esc(d.autoeval.justificacion || '—')}</td></tr>`;
+  html += '</table></body></html>';
+
+  _descargar(html, 'application/vnd.ms-excel;charset=utf-8', `bloque${NUM_BLOQUE}_${d.nl}_${d.fechaISO}.xls`);
+}
+
+/* ============ REINICIAR ============ */
+function reiniciar(){
+  if(confirm('¿Borrar las respuestas de este bloque?')){
+    localStorage.removeItem(STORAGE);
+    renderActividades(); cargarAutoeval(); actualizarMedia();
+  }
+}
 function volverIndice(){ window.location.href='index.html'; }
-renderActividades(); cargarAutoeval(); show(0);
+
+/* ============ INICIO ============ */
+aplicarIdioma();
+show(0);
 </script>
 </body>
 </html>
