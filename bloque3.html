@@ -64,6 +64,7 @@
   table{width:100%;border-collapse:collapse;margin:10px 0;}
   th,td{border:1px solid #3a4170;padding:7px 10px;text-align:left;font-size:.9rem;}
   th{background:#252b52;color:var(--accent2);}
+  .illus{background:#151a33;border-radius:12px;padding:14px;display:flex;justify-content:center;align-items:center;}
   .autoeval-box{background:#3a2f10;border-left:5px solid #ffd166;border-radius:12px;padding:18px 22px;margin:14px 0;}
   .autoeval-box h4{color:#ffd166;margin-bottom:10px;}
   .escala{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0;}
@@ -76,12 +77,12 @@
   .nota-propia span{color:#ffd166;font-weight:700;}
   .media-box{background:#1a2540;border:1px solid var(--accent2);border-radius:10px;padding:12px 18px;margin:14px 0;display:flex;justify-content:space-between;align-items:center;}
   .media-box .nota-grande{font-size:1.8rem;font-weight:900;color:var(--accent2);}
-  .etiqueta-nueva{display:inline-block;background:var(--ok);color:#0f1226;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:.5px;margin-bottom:10px;}
   @media(max-width:700px){.grid2{grid-template-columns:1fr;}.slide{padding:20px;}}
 </style>
 </head>
 <body>
 <div class="progress" id="progress"></div>
+
 <header>
   <div>
     <h1 id="headerTitulo">Bloque 3 · Sistema Nervioso Periférico</h1>
@@ -102,182 +103,183 @@
     <button onclick="reiniciar()" id="btnReset">🔄 Reiniciar</button>
   </div>
 </header>
+
 <main>
 
 <section class="slide active">
-  <h2 data-i18n="s1t">1. Organización general del SNP</h2>
+  <h2 id="s1t">1. Organización general del SNP</h2>
   <div class="grid2">
-    <div class="box"><h3 data-i18n="s1h1">Sistema Somático</h3><p data-i18n="s1l1">Captación sensorial y control voluntario del músculo esquelético.</p></div>
-    <div class="box" style="border-left-color:var(--accent);"><h3 data-i18n="s1h2">Sistema Autónomo</h3><p data-i18n="s1l2">Regulación involuntaria de órganos, vasos y glándulas.</p></div>
+    <div class="box"><h3 id="s1h1">Sistema Somático</h3><p id="s1l1">Captación sensorial y control voluntario del músculo esquelético.</p></div>
+    <div class="box" style="border-left-color:var(--accent);"><h3 id="s1h2">Sistema Autónomo</h3><p id="s1l2">Regulación involuntaria de órganos, vasos y glándulas.</p></div>
   </div>
-  <div class="box danza" data-i18n="s1d"><b>Conexión danza:</b> el somático ejecuta el paso que decides; el autónomo regula tu corazón y respiración mientras bailas.</div>
+  <div class="box danza" id="s1d"><b>Conexión danza:</b> el somático ejecuta el paso que decides; el autónomo regula tu corazón y respiración mientras bailas.</div>
 </section>
 
 <section class="slide">
-  <h2 data-i18n="s2t">2. Vía aferente (sensibilidad)</h2>
-  <p data-i18n="s2i">Recepción sensorial desde la piel (dermatomas), músculos, tendones y articulaciones hacia el SNC.</p>
-  <div class="box danza" data-i18n="s2d"><b>Conexión danza:</b> cuando notas la presión del suelo en los pies, la información viaja por la vía aferente.</div>
+  <h2 id="s2t">2. Vía aferente (sensibilidad)</h2>
+  <p id="s2i">Recepción sensorial desde la piel (dermatomas), músculos, tendones y articulaciones hacia el SNC.</p>
+  <div class="box danza" id="s2d"><b>Conexión danza:</b> cuando notas la presión del suelo en los pies, la información viaja por la vía aferente.</div>
 </section>
 
 <section class="slide">
-  <h2 data-i18n="s3t">3. Mapa de dermatomas</h2>
-  <p data-i18n="s3i">Representación gráfica de los territorios cutáneos asociados a cada raíz espinal.</p>
+  <h2 id="s3t">3. Mapa de dermatomas</h2>
+  <p id="s3i">Representación gráfica de los territorios cutáneos asociados a cada raíz espinal.</p>
 </section>
 
 <section class="slide">
-  <h2 data-i18n="s4t">4. Vía eferente (respuesta motora)</h2>
-  <p data-i18n="s4i">Envío de órdenes desde el SNC a través de nervios motores hacia la musculatura esquelética.</p>
-  <div class="box danza" data-i18n="s4d"><b>Conexión danza:</b> cuando decides mover el brazo, la orden baja por la vía eferente hasta el músculo.</div>
+  <h2 id="s4t">4. Vía eferente (respuesta motora)</h2>
+  <p id="s4i">Envío de órdenes desde el SNC a través de nervios motores hacia la musculatura esquelética.</p>
+  <div class="box danza" id="s4d"><b>Conexión danza:</b> cuando decides mover el brazo, la orden baja por la vía eferente hasta el músculo.</div>
 </section>
 
 <section class="slide">
-  <h2 data-i18n="s5t">5. Sistema autónomo: simpático vs. parasimpático</h2>
+  <h2 id="s5t">5. Sistema autónomo: simpático vs. parasimpático</h2>
   <div class="grid2">
-    <div class="box" style="border-left-color:var(--accent);"><h3 data-i18n="s5h1">Simpático</h3><p data-i18n="s5l1">"Lucha o huida": aumento de pulso, dilatación bronquial, inhibición digestiva.</p></div>
-    <div class="box" style="border-left-color:var(--accent2);"><h3 data-i18n="s5h2">Parasimpático</h3><p data-i18n="s5l2">Reposo y recuperación: disminución del pulso, estimulación digestiva, conservación de energía.</p></div>
+    <div class="box" style="border-left-color:var(--accent);"><h3 id="s5h1">Simpático</h3><p id="s5l1">"Lucha o huida": aumento de pulso, dilatación bronquial, inhibición digestiva.</p></div>
+    <div class="box" style="border-left-color:var(--accent2);"><h3 id="s5h2">Parasimpático</h3><p id="s5l2">Reposo y recuperación: disminución del pulso, estimulación digestiva, conservación de energía.</p></div>
   </div>
-  <div class="box danza" data-i18n="s5d"><b>Conexión danza:</b> el "pánico escénico" (simpático) justo antes de salir a escena; la relajación al "caer el telón" (parasimpático).</div>
+  <div class="box danza" id="s5d"><b>Conexión danza:</b> el "pánico escénico" (simpático) justo antes de salir a escena; la relajación al "caer el telón" (parasimpático).</div>
 </section>
 
 <section class="slide">
   <span class="etiqueta-nueva">NUEVA · 30</span>
-  <h2 data-i18n="s30t">30. Tipos de receptores cutáneos: los cinco sentidos de la piel</h2>
-  <p data-i18n="s30p1"><b>Idea-fuerza:</b> la piel no es un simple "detector de tacto". Tiene <b>varios tipos de receptores</b>, cada uno especializado.</p>
-  <div class="box nota" data-i18n="s30a"><b>Analogía:</b> imagina un aeropuerto con varios mostradores: uno para facturar, otro para pasaportes, otro para información.</div>
+  <h2 id="s30t">30. Tipos de receptores cutáneos: los cinco sentidos de la piel</h2>
+  <p id="s30p1"><b>Idea-fuerza:</b> la piel no es un simple "detector de tacto". Tiene <b>varios tipos de receptores</b>, cada uno especializado.</p>
+  <div class="box nota" id="s30a"><b>Analogía:</b> imagina un aeropuerto con varios mostradores: uno para facturar, otro para pasaportes, otro para información.</div>
   <table>
-    <tr><th data-i18n="s30th1">Receptor</th><th data-i18n="s30th2">Qué detecta</th><th data-i18n="s30th3">En danza</th></tr>
-    <tr><td data-i18n="s30r1a"><b>Meissner</b></td><td data-i18n="s30r1b">Tacto fino y movimiento suave</td><td data-i18n="s30r1c">Notar la textura del suelo</td></tr>
-    <tr><td data-i18n="s30r2a"><b>Merkel</b></td><td data-i18n="s30r2b">Presión sostenida y textura</td><td data-i18n="s30r2c">Notar la presión del pie</td></tr>
-    <tr><td data-i18n="s30r3a"><b>Ruffini</b></td><td data-i18n="s30r3b">Estiramiento de la piel</td><td data-i18n="s30r3c">Notar la tensión al estirar</td></tr>
-    <tr><td data-i18n="s30r4a"><b>Pacini</b></td><td data-i18n="s30r4b">Vibración y presión rápida</td><td data-i18n="s30r4c">Notar impactos al aterrizar</td></tr>
-    <tr><td data-i18n="s30r5a"><b>Nociceptores</b></td><td data-i18n="s30r5b">Dolor</td><td data-i18n="s30r5c">Avisar de una lesión</td></tr>
-    <tr><td data-i18n="s30r6a"><b>Termorreceptores</b></td><td data-i18n="s30r6b">Frío y calor</td><td data-i18n="s30r6c">Notar la temperatura del suelo</td></tr>
+    <tr><th id="s30th1">Receptor</th><th id="s30th2">Qué detecta</th><th id="s30th3">En danza</th></tr>
+    <tr><td id="s30r1a"><b>Meissner</b></td><td id="s30r1b">Tacto fino y movimiento suave</td><td id="s30r1c">Notar la textura del suelo</td></tr>
+    <tr><td id="s30r2a"><b>Merkel</b></td><td id="s30r2b">Presión sostenida y textura</td><td id="s30r2c">Notar la presión del pie</td></tr>
+    <tr><td id="s30r3a"><b>Ruffini</b></td><td id="s30r3b">Estiramiento de la piel</td><td id="s30r3c">Notar la tensión al estirar</td></tr>
+    <tr><td id="s30r4a"><b>Pacini</b></td><td id="s30r4b">Vibración y presión rápida</td><td id="s30r4c">Notar impactos al aterrizar</td></tr>
+    <tr><td id="s30r5a"><b>Nociceptores</b></td><td id="s30r5b">Dolor</td><td id="s30r5c">Avisar de una lesión</td></tr>
+    <tr><td id="s30r6a"><b>Termorreceptores</b></td><td id="s30r6b">Frío y calor</td><td id="s30r6c">Notar la temperatura del suelo</td></tr>
   </table>
-  <div class="box danza" data-i18n="s30d"><b>Conexión danza:</b> bailar descalzo mejora la sensibilidad porque usas más receptores.</div>
+  <div class="box danza" id="s30d"><b>Conexión danza:</b> bailar descalzo mejora la sensibilidad porque usas más receptores.</div>
 </section>
 
 <section class="slide">
   <span class="etiqueta-nueva">NUEVA · 31</span>
-  <h2 data-i18n="s31t">31. Cómo funciona una fibra autónoma: acetilcolina y noradrenalina</h2>
-  <p data-i18n="s31p1"><b>Idea-fuerza:</b> el sistema autónomo no funciona "por magia". Sus mensajes viajan por <b>dos sustancias químicas</b> principales.</p>
-  <div class="box nota" data-i18n="s31a"><b>Analogía:</b> es como un sistema de mensajería con dos tipos de mensajeros: uno que dice "actívate" y otro que dice "relájate".</div>
+  <h2 id="s31t">31. Cómo funciona una fibra autónoma: acetilcolina y noradrenalina</h2>
+  <p id="s31p1"><b>Idea-fuerza:</b> el sistema autónomo no funciona "por magia". Sus mensajes viajan por <b>dos sustancias químicas</b> principales.</p>
+  <div class="box nota" id="s31a"><b>Analogía:</b> es como un sistema de mensajería con dos tipos de mensajeros: uno que dice "actívate" y otro que dice "relájate".</div>
   <table>
-    <tr><th data-i18n="s31th1">Sustancia</th><th data-i18n="s31th2">Quién la libera</th><th data-i18n="s31th3">Qué hace</th></tr>
-    <tr><td data-i18n="s31r1a"><b>Acetilcolina</b></td><td data-i18n="s31r1b">Fibras parasimpáticas y algunas simpáticas</td><td data-i18n="s31r1c">Activa órganos en reposo (baja el pulso)</td></tr>
-    <tr><td data-i18n="s31r2a"><b>Noradrenalina</b></td><td data-i18n="s31r2b">Fibras simpáticas</td><td data-i18n="s31r2c">Activa órganos para el esfuerzo (sube el pulso)</td></tr>
+    <tr><th id="s31th1">Sustancia</th><th id="s31th2">Quién la libera</th><th id="s31th3">Qué hace</th></tr>
+    <tr><td id="s31r1a"><b>Acetilcolina</b></td><td id="s31r1b">Fibras parasimpáticas y algunas simpáticas</td><td id="s31r1c">Activa órganos en reposo (baja el pulso)</td></tr>
+    <tr><td id="s31r2a"><b>Noradrenalina</b></td><td id="s31r2b">Fibras simpáticas</td><td id="s31r2c">Activa órganos para el esfuerzo (sube el pulso)</td></tr>
   </table>
-  <p data-i18n="s31p2"><b>Detalle importante:</b> el simpático usa noradrenalina en casi todos los órganos, pero acetilcolina en las glándulas sudoríparas.</p>
-  <div class="box danza" data-i18n="s31d"><b>Conexión danza:</b> cuando estás en reposo, el parasimpático libera acetilcolina; cuando bailas, el simpático libera noradrenalina.</div>
+  <p id="s31p2"><b>Detalle importante:</b> el simpático usa noradrenalina en casi todos los órganos, pero acetilcolina en las glándulas sudoríparas.</p>
+  <div class="box danza" id="s31d"><b>Conexión danza:</b> cuando estás en reposo, el parasimpático libera acetilcolina; cuando bailas, el simpático libera noradrenalina.</div>
 </section>
 
 <section class="slide">
   <span class="etiqueta-nueva">NUEVA · 32</span>
-  <h2 data-i18n="s32t">32. El barorreflejo: cómo tu cuerpo regula el pulso solo</h2>
-  <p data-i18n="s32p1"><b>Idea-fuerza:</b> tu cuerpo no espera a que tú decidas subir o bajar el pulso. Existe un <b>reflejo automático</b>.</p>
-  <div class="box nota" data-i18n="s32a"><b>Analogía:</b> es como un termostato: si la temperatura sube, apaga la calefacción; si baja, la enciende.</div>
-  <h3 data-i18n="s32h1">Cómo funciona</h3>
+  <h2 id="s32t">32. El barorreflejo: cómo tu cuerpo regula el pulso solo</h2>
+  <p id="s32p1"><b>Idea-fuerza:</b> tu cuerpo no espera a que tú decidas subir o bajar el pulso. Existe un <b>reflejo automático</b>.</p>
+  <div class="box nota" id="s32a"><b>Analogía:</b> es como un termostato: si la temperatura sube, apaga la calefacción; si baja, la enciende.</div>
+  <h3 id="s32h1">Cómo funciona</h3>
   <ol>
-    <li data-i18n="s32l1">Unos receptores llamados <b>barorreceptores</b> detectan la presión en las arterias.</li>
-    <li data-i18n="s32l2">Envían la información al <b>tronco encefálico</b>.</li>
-    <li data-i18n="s32l3">El tronco decide: si la presión es alta, baja el pulso; si es baja, sube el pulso.</li>
+    <li id="s32l1">Unos receptores llamados <b>barorreceptores</b> detectan la presión en las arterias.</li>
+    <li id="s32l2">Envían la información al <b>tronco encefálico</b>.</li>
+    <li id="s32l3">El tronco decide: si la presión es alta, baja el pulso; si es baja, sube el pulso.</li>
   </ol>
-  <div class="box danza" data-i18n="s32d"><b>Conexión danza:</b> cuando te levantas rápido después de un ejercicio en el suelo, la presión baja un momento → el barorreflejo la regula.</div>
+  <div class="box danza" id="s32d"><b>Conexión danza:</b> cuando te levantas rápido después de un ejercicio en el suelo, la presión baja un momento → el barorreflejo la regula.</div>
 </section>
 
 <section class="slide">
   <span class="etiqueta-nueva">NUEVA · 33</span>
-  <h2 data-i18n="s33t">33. Dermatomas: el mapa real con niveles</h2>
-  <p data-i18n="s33p1"><b>Idea-fuerza:</b> cada raíz nerviosa de la médula espinal inerva una <b>zona concreta de la piel</b>.</p>
-  <div class="box nota" data-i18n="s33a"><b>Analogía:</b> es como un mapa postal: cada código postal corresponde a una zona concreta.</div>
+  <h2 id="s33t">33. Dermatomas: el mapa real con niveles</h2>
+  <p id="s33p1"><b>Idea-fuerza:</b> cada raíz nerviosa de la médula espinal inerva una <b>zona concreta de la piel</b>.</p>
+  <div class="box nota" id="s33a"><b>Analogía:</b> es como un mapa postal: cada código postal corresponde a una zona concreta.</div>
   <table>
-    <tr><th data-i18n="s33th1">Zona del cuerpo</th><th data-i18n="s33th2">Raíces espinales</th></tr>
-    <tr><td data-i18n="s33r1a">Cuello</td><td>C1-C8</td></tr>
-    <tr><td data-i18n="s33r2a">Hombros y brazos</td><td>C5-T1</td></tr>
-    <tr><td data-i18n="s33r3a">Tórax</td><td>T1-T12</td></tr>
-    <tr><td data-i18n="s33r4a">Abdomen</td><td>T7-L2</td></tr>
-    <tr><td data-i18n="s33r5a">Piernas</td><td>L1-S5</td></tr>
-    <tr><td data-i18n="s33r6a">Zona genital</td><td>S2-S5</td></tr>
+    <tr><th id="s33th1">Zona del cuerpo</th><th id="s33th2">Raíces espinales</th></tr>
+    <tr><td id="s33r1a">Cuello</td><td>C1-C8</td></tr>
+    <tr><td id="s33r2a">Hombros y brazos</td><td>C5-T1</td></tr>
+    <tr><td id="s33r3a">Tórax</td><td>T1-T12</td></tr>
+    <tr><td id="s33r4a">Abdomen</td><td>T7-L2</td></tr>
+    <tr><td id="s33r5a">Piernas</td><td>L1-S5</td></tr>
+    <tr><td id="s33r6a">Zona genital</td><td>S2-S5</td></tr>
   </table>
-  <div class="box danza" data-i18n="s33d"><b>Conexión danza:</b> los dermatomas L4-S1 inervan los pies y tobillos. Los C5-T1 inervan brazos y manos.</div>
+  <div class="box danza" id="s33d"><b>Conexión danza:</b> los dermatomas L4-S1 inervan los pies y tobillos. Los C5-T1 inervan brazos y manos.</div>
 </section>
 
 <section class="slide">
   <span class="etiqueta-nueva">NUEVA · 34</span>
-  <h2 data-i18n="s34t">34. Plexos nerviosos: qué nervio mueve qué músculo</h2>
-  <p data-i18n="s34p1"><b>Idea-fuerza:</b> los nervios que salen de la médula no van directos a los músculos. Se <b>entrecruzan</b> formando <b>plexos</b>.</p>
-  <div class="box nota" data-i18n="s34a"><b>Analogía:</b> es como una estación de tren: los trenes llegan de distintos lugares, se reorganizan y salen hacia distintos destinos.</div>
+  <h2 id="s34t">34. Plexos nerviosos: qué nervio mueve qué músculo</h2>
+  <p id="s34p1"><b>Idea-fuerza:</b> los nervios que salen de la médula no van directos a los músculos. Se <b>entrecruzan</b> formando <b>plexos</b>.</p>
+  <div class="box nota" id="s34a"><b>Analogía:</b> es como una estación de tren: los trenes llegan de distintos lugares, se reorganizan y salen hacia distintos destinos.</div>
   <table>
-    <tr><th data-i18n="s34th1">Plexo</th><th data-i18n="s34th2">Zona</th><th data-i18n="s34th3">Qué controla</th></tr>
-    <tr><td data-i18n="s34r1a"><b>Cervical</b></td><td data-i18n="s34r1b">Cuello</td><td data-i18n="s34r1c">Cuello, diafragma</td></tr>
-    <tr><td data-i18n="s34r2a"><b>Braquial</b></td><td data-i18n="s34r2b">Hombro y brazo</td><td data-i18n="s34r2c">Brazos, manos, dedos</td></tr>
-    <tr><td data-i18n="s34r3a"><b>Lumbar</b></td><td data-i18n="s34r3b">Zona lumbar</td><td data-i18n="s34r3c">Muslos, parte frontal de la pierna</td></tr>
-    <tr><td data-i18n="s34r4a"><b>Sacro</b></td><td data-i18n="s34r4b">Zona sacra</td><td data-i18n="s34r4c">Parte posterior de la pierna, pies</td></tr>
+    <tr><th id="s34th1">Plexo</th><th id="s34th2">Zona</th><th id="s34th3">Qué controla</th></tr>
+    <tr><td id="s34r1a"><b>Cervical</b></td><td id="s34r1b">Cuello</td><td id="s34r1c">Cuello, diafragma</td></tr>
+    <tr><td id="s34r2a"><b>Braquial</b></td><td id="s34r2b">Hombro y brazo</td><td id="s34r2c">Brazos, manos, dedos</td></tr>
+    <tr><td id="s34r3a"><b>Lumbar</b></td><td id="s34r3b">Zona lumbar</td><td id="s34r3c">Muslos, parte frontal de la pierna</td></tr>
+    <tr><td id="s34r4a"><b>Sacro</b></td><td id="s34r4b">Zona sacra</td><td id="s34r4c">Parte posterior de la pierna, pies</td></tr>
   </table>
-  <p data-i18n="s34p2"><b>Ejemplos importantes:</b> el <b>nervio ciático</b> sale del plexo sacro. El <b>nervio mediano</b> sale del plexo braquial.</p>
-  <div class="box danza" data-i18n="s34d"><b>Conexión danza:</b> las lesiones del nervio ciático son frecuentes en bailarines por sobrecarga.</div>
+  <p id="s34p2"><b>Ejemplos importantes:</b> el <b>nervio ciático</b> sale del plexo sacro. El <b>nervio mediano</b> sale del plexo braquial.</p>
+  <div class="box danza" id="s34d"><b>Conexión danza:</b> las lesiones del nervio ciático son frecuentes en bailarines por sobrecarga.</div>
 </section>
 
 <section class="slide">
   <span class="etiqueta-nueva">NUEVA · 35</span>
-  <h2 data-i18n="s35t">35. Eje HPA: la ansiedad escénica no es solo simpático</h2>
-  <p data-i18n="s35p1"><b>Idea-fuerza:</b> la respuesta al estrés no es solo "simpático encendido". Hay un <b>sistema hormonal</b> que se activa más lentamente pero dura más.</p>
-  <div class="box nota" data-i18n="s35a"><b>Analogía:</b> es como un sistema de alarma en dos fases: primero rápida (simpático) y luego lenta (cortisol).</div>
-  <h3 data-i18n="s35h1">Qué es el eje HPA</h3>
+  <h2 id="s35t">35. Eje HPA: la ansiedad escénica no es solo simpático</h2>
+  <p id="s35p1"><b>Idea-fuerza:</b> la respuesta al estrés no es solo "simpático encendido". Hay un <b>sistema hormonal</b> que se activa más lentamente pero dura más.</p>
+  <div class="box nota" id="s35a"><b>Analogía:</b> es como un sistema de alarma en dos fases: primero rápida (simpático) y luego lenta (cortisol).</div>
+  <h3 id="s35h1">Qué es el eje HPA</h3>
   <ul>
-    <li data-i18n="s35l1"><b>H</b> = Hipotálamo.</li>
-    <li data-i18n="s35l2"><b>P</b> = Pituitaria (hipófisis).</li>
-    <li data-i18n="s35l3"><b>A</b> = Adrenales (suprarrenales).</li>
+    <li id="s35l1"><b>H</b> = Hipotálamo.</li>
+    <li id="s35l2"><b>P</b> = Pituitaria (hipófisis).</li>
+    <li id="s35l3"><b>A</b> = Adrenales (suprarrenales).</li>
   </ul>
-  <h3 data-i18n="s35h2">Cómo funciona</h3>
+  <h3 id="s35h2">Cómo funciona</h3>
   <ol>
-    <li data-i18n="s35l4">El hipotálamo detecta estrés.</li>
-    <li data-i18n="s35l5">Envía señal a la pituitaria.</li>
-    <li data-i18n="s35l6">La pituitaria libera ACTH.</li>
-    <li data-i18n="s35l7">Las adrenales liberan <b>cortisol</b>.</li>
+    <li id="s35l4">El hipotálamo detecta estrés.</li>
+    <li id="s35l5">Envía señal a la pituitaria.</li>
+    <li id="s35l6">La pituitaria libera ACTH.</li>
+    <li id="s35l7">Las adrenales liberan <b>cortisol</b>.</li>
   </ol>
-  <p data-i18n="s35p2"><b>Qué hace el cortisol:</b> sube la glucosa en sangre, modula la respuesta inmune, mantiene la alerta. Si dura mucho: ansiedad, insomnio, fatiga.</p>
-  <div class="box danza" data-i18n="s35d"><b>Conexión danza:</b> si la ansiedad es excesiva, el cortisol sube demasiado → bloqueo, temblor, olvido.</div>
+  <p id="s35p2"><b>Qué hace el cortisol:</b> sube la glucosa en sangre, modula la respuesta inmune, mantiene la alerta. Si dura mucho: ansiedad, insomnio, fatiga.</p>
+  <div class="box danza" id="s35d"><b>Conexión danza:</b> si la ansiedad es excesiva, el cortisol sube demasiado → bloqueo, temblor, olvido.</div>
 </section>
 
 <section class="slide">
   <span class="etiqueta-nueva">NUEVA · 36</span>
-  <h2 data-i18n="s36t">36. Aplicación dancística</h2>
-  <p data-i18n="s36p1"><b>Idea-fuerza:</b> todo lo que has visto en el Bloque 3 tiene traducción práctica.</p>
-  <h3 data-i18n="s36h1">1. Entrena la sensibilidad cutánea</h3>
+  <h2 id="s36t">36. Aplicación dancística</h2>
+  <p id="s36p1"><b>Idea-fuerza:</b> todo lo que has visto en el Bloque 3 tiene traducción práctica.</p>
+  <h3 id="s36h1">1. Entrena la sensibilidad cutánea</h3>
   <ul>
-    <li data-i18n="s36l1">Baila descalzo siempre que puedas.</li>
-    <li data-i18n="s36l2">Nota la textura del suelo con los pies.</li>
-    <li data-i18n="s36l3">Varía las superficies (madera, linóleo, tierra).</li>
+    <li id="s36l1">Baila descalzo siempre que puedas.</li>
+    <li id="s36l2">Nota la textura del suelo con los pies.</li>
+    <li id="s36l3">Varía las superficies (madera, linóleo, tierra).</li>
   </ul>
-  <h3 data-i18n="s36h2">2. Cuida tu sistema autónomo</h3>
+  <h3 id="s36h2">2. Cuida tu sistema autónomo</h3>
   <ul>
-    <li data-i18n="s36l4">Respira diafragmáticamente antes de actuar.</li>
-    <li data-i18n="s36l5">No comas muy poco antes de entrenar.</li>
-    <li data-i18n="s36l6">Respeta los tiempos de recuperación.</li>
+    <li id="s36l4">Respira diafragmáticamente antes de actuar.</li>
+    <li id="s36l5">No comas muy poco antes de entrenar.</li>
+    <li id="s36l6">Respeta los tiempos de recuperación.</li>
   </ul>
-  <h3 data-i18n="s36h3">3. Aprovecha el barorreflejo</h3>
+  <h3 id="s36h3">3. Aprovecha el barorreflejo</h3>
   <ul>
-    <li data-i18n="s36l7">No te levantes bruscamente después de un ejercicio en el suelo.</li>
-    <li data-i18n="s36l8">Haz una transición suave al cambiar de posición.</li>
-    <li data-i18n="s36l9">Si te marea girar, para y respira.</li>
+    <li id="s36l7">No te levantes bruscamente después de un ejercicio en el suelo.</li>
+    <li id="s36l8">Haz una transición suave al cambiar de posición.</li>
+    <li id="s36l9">Si te marea girar, para y respira.</li>
   </ul>
-  <h3 data-i18n="s36h4">4. Conoce tu mapa corporal</h3>
+  <h3 id="s36h4">4. Conoce tu mapa corporal</h3>
   <ul>
-    <li data-i18n="s36l10">Identifica qué zonas de tu piel sientes mejor.</li>
-    <li data-i18n="s36l11">Si notas adormecimiento en una zona, coméntalo.</li>
+    <li id="s36l10">Identifica qué zonas de tu piel sientes mejor.</li>
+    <li id="s36l11">Si notas adormecimiento en una zona, coméntalo.</li>
   </ul>
-  <h3 data-i18n="s36h5">5. Cuida el nervio ciático</h3>
+  <h3 id="s36h5">5. Cuida el nervio ciático</h3>
   <ul>
-    <li data-i18n="s36l12">Evita sobrecargas repetidas en la zona lumbar.</li>
-    <li data-i18n="s36l13">Estira los isquiotibiales con control.</li>
+    <li id="s36l12">Evita sobrecargas repetidas en la zona lumbar.</li>
+    <li id="s36l13">Estira los isquiotibiales con control.</li>
   </ul>
-  <h3 data-i18n="s36h6">6. Gestiona tu estrés</h3>
+  <h3 id="s36h6">6. Gestiona tu estrés</h3>
   <ul>
-    <li data-i18n="s36l14">El cortisol es útil en dosis pequeñas.</li>
-    <li data-i18n="s36l15">Si estás muy nervioso, baja el ritmo antes de actuar.</li>
-    <li data-i18n="s36l16">Duerme bien: el eje HPA se regula en el sueño.</li>
+    <li id="s36l14">El cortisol es útil en dosis pequeñas.</li>
+    <li id="s36l15">Si estás muy nervioso, baja el ritmo antes de actuar.</li>
+    <li id="s36l16">Duerme bien: el eje HPA se regula en el sueño.</li>
   </ul>
-  <div class="box danza" data-i18n="s36d"><b>Analogía final:</b> tu SNP es como una <b>red de carreteras</b>.</div>
+  <div class="box danza" id="s36d"><b>Analogía final:</b> tu SNP es como una <b>red de carreteras</b>.</div>
 </section>
 
 <section class="slide">
@@ -315,6 +317,12 @@
 <div class="nav"><button onclick="prev()" id="navPrev">← Anterior</button><button onclick="next()" id="navNext">Siguiente →</button></div>
 
 <script>
+/* ============ IDIOMA PERSISTENT ============ */
+const CLAU_IDIOMA = 'fisiologia_idioma';
+const IDIOMES = ['es','ca','en'];
+function llegirIdioma(){ const g = localStorage.getItem(CLAU_IDIOMA); return IDIOMES.includes(g) ? g : 'es'; }
+function guardarIdioma(n){ if(IDIOMES.includes(n)) localStorage.setItem(CLAU_IDIOMA, n); }
+
 const NUM_BLOQUE = 3;
 const STORAGE = 'bloque3_respuestas_v2';
 const TITULO_BLOQUE = {es:'BLOQUE 3 · SISTEMA NERVIOSO PERIFÉRICO',ca:'BLOC 3 · SISTEMA NERVIÓS PERIFÈRIC',en:'BLOCK 3 · PERIPHERAL NERVOUS SYSTEM'};
@@ -549,37 +557,8 @@ const I18N = {
   }
 };
 
-let lang='es';
+let lang = llegirIdioma();
 function t(k){ return (I18N[lang] && I18N[lang][k]) || I18N.es[k] || k; }
-function aplicarIdioma(){
-  document.querySelectorAll('[data-i18n]').forEach(el=>{ const k=el.dataset.i18n; const v=t(k); if(v) el.innerHTML = v; });
-  const ht=document.getElementById('headerTitulo'); if(ht) ht.textContent = t('headerTitulo');
-  const hs=document.getElementById('headerSub'); if(hs) hs.textContent = t('headerSub');
-  ['btnVolver','btnReset','navPrev','navNext','txtCompl','txtAuto','txtMedia','autoTitulo','autoP1','aInsuf','aSuf','aNot','aExc','aNotaTxt','aJustTxt','actTitulo','actIntro'].forEach(id=>{ const el=document.getElementById(id); if(el) el.textContent = t(id); });
-  document.documentElement.lang = lang;
-  document.querySelectorAll('.lang-switch button').forEach(b=>{ b.classList.toggle('active', b.dataset.lang === lang); });
-  renderActividades(); cargarAutoeval();
-}
-document.querySelectorAll('.lang-switch button').forEach(btn=>{ btn.addEventListener('click', ()=>{ lang = btn.dataset.lang; aplicarIdioma(); }); });
-
-const ACTIVIDADES = [
-  {tipo:'test',grupo:'indiv',q:{es:"¿Qué sistema controla el músculo esquelético de forma voluntaria?",ca:"Quin sistema controla el múscul voluntàriament?",en:"Which system controls skeletal muscle voluntarily?"},ops:{es:["Somático","Autónomo","Simpático","Parasimpático"],ca:["Somàtic","Autònom","Simpàtic","Parasimpàtic"],en:["Somatic","Autonomic","Sympathetic","Parasympathetic"]},correcta:0,sol:{es:"El somático.",ca:"El somàtic.",en:"Somatic."}},
-  {tipo:'test',grupo:'indiv',q:{es:"La vía aferente lleva información…",ca:"La via aferent porta informació…",en:"The afferent pathway carries information…"},ops:{es:["Del SNC al músculo","De los receptores al SNC","Del músculo al corazón","Del cerebro al cerebelo"],ca:["Del SNC al múscul","Dels receptors al SNC","Del múscul al cor","Del cervell al cerebel"],en:["CNS to muscle","Receptors to CNS","Muscle to heart","Brain to cerebellum"]},correcta:1,sol:{es:"De los receptores al SNC.",ca:"Dels receptors al SNC.",en:"From receptors to CNS."}},
-  {tipo:'test',grupo:'indiv',q:{es:"¿Qué vía lleva la orden motora?",ca:"Quina via porta l'ordre motora?",en:"Which pathway carries the motor command?"},ops:{es:["Aferente","Eferente","Ascendente","Sensitiva"],ca:["Aferent","Eferent","Ascendent","Sensitiva"],en:["Afferent","Efferent","Ascending","Sensory"]},correcta:1,sol:{es:"La eferente.",ca:"L'eferent.",en:"Efferent."}},
-  {tipo:'test',grupo:'indiv',q:{es:"¿Qué sistema se activa en el 'pánico escénico'?",ca:"Quin sistema s'activa al pànic escènic?",en:"Which system activates in stage panic?"},ops:{es:["Parasimpático","Simpático","Somático","Central"],ca:["Parasimpàtic","Simpàtic","Somàtic","Central"],en:["Parasympathetic","Sympathetic","Somatic","Central"]},correcta:1,sol:{es:"El simpático.",ca:"El simpàtic.",en:"Sympathetic."}},
-  {tipo:'test',grupo:'indiv',q:{es:"¿Qué hace el parasimpático?",ca:"Què fa el parasimpàtic?",en:"What does the parasympathetic do?"},ops:{es:["Aumenta el pulso","Dilata los bronquios","Estimula la digestión","Inhibe la digestión"],ca:["Augmenta el pols","Dilata bronquis","Estimula digestió","Inhibeix digestió"],en:["Increases HR","Dilates bronchi","Stimulates digestion","Inhibits digestion"]},correcta:2,sol:{es:"Estimula la digestión.",ca:"Estimula la digestió.",en:"Stimulates digestion."}},
-  {tipo:'test',grupo:'indiv',q:{es:"Un dermatoma es…",ca:"Un dermatoma és…",en:"A dermatome is…"},ops:{es:["Un músculo","Un territorio cutáneo asociado a una raíz espinal","Un tipo de neurona","Una glándula"],ca:["Un múscul","Un territori cutani","Un tipus de neurona","Una glàndula"],en:["A muscle","A skin territory linked to a spinal root","A neuron type","A gland"]},correcta:1,sol:{es:"Territorio cutáneo asociado a una raíz espinal.",ca:"Territori cutani.",en:"Skin territory."}},
-  {tipo:'test',grupo:'indiv',q:{es:"¿Qué sistema regula órganos y glándulas?",ca:"Quin sistema regula òrgans?",en:"Which system regulates organs?"},ops:{es:["Somático","Autónomo","Piramidal","Cerebeloso"],ca:["Somàtic","Autònom","Piramidal","Cerebel·lós"],en:["Somatic","Autonomic","Pyramidal","Cerebellar"]},correcta:1,sol:{es:"El autónomo.",ca:"L'autònom.",en:"Autonomic."}},
-  {tipo:'abierta',grupo:'pareja',q:{es:"Explicad la diferencia entre vía aferente y eferente con un ejemplo dancístico.",ca:"Expliqueu aferent i eferent.",en:"Explain afferent and efferent with a dance example."},keywords:['aferente','eferente','receptor','snc','músculo','musculo','ejemplo','información','informacio'],sol:{es:"Aferente: noto el suelo. Eferente: ajusto el pie.",ca:"Aferent: noto el terra. Eferent: ajusto el peu.",en:"Afferent: I feel the floor. Efferent: I adjust the foot."}},
-  {tipo:'abierta',grupo:'pareja',q:{es:"¿Cómo se activa el simpático antes de una actuación? Describid 3 señales corporales.",ca:"Com s'activa el simpàtic?",en:"How does the sympathetic activate before a show?"},keywords:['pulso','frecuencia','respiración','respiracion','sudor','tensión','tension','corazón','corazon'],sol:{es:"Aumento de pulso, respiración rápida, sudoración, tensión muscular.",ca:"Pols, respiració, suor.",en:"HR, breathing, sweating."}},
-  {tipo:'abierta',grupo:'pareja',q:{es:"¿Qué estrategias parasimpáticas podéis usar antes de salir a escena?",ca:"Estratègies parasimpàtiques?",en:"Parasympathetic strategies before stage?"},keywords:['respiración','respiracion','diafragmática','diafragmatica','visualización','visualitzacio','relajación','relaxacio','estiramiento'],sol:{es:"Respiración diafragmática, visualización, estiramientos suaves.",ca:"Respiració, visualització.",en:"Breathing, imagery."}},
-  {tipo:'abierta',grupo:'grupo',q:{es:"En grupos 2-3, dibujad un mapa simplificado de dermatomas y discutid por qué es útil en la evaluación de lesiones medulares.",ca:"Dibuixeu un mapa de dermatomes.",en:"Draw a dermatome map."},keywords:['dermatoma','raíz','raiz','espinal','territorio','cutáneo','cutani','lesión','lesion','nivel'],sol:{es:"Cada raíz espinal inerva un territorio cutáneo; permite localizar lesiones.",ca:"Cada arrel inerva un territori.",en:"Each spinal root innervates a skin territory."}},
-  {tipo:'abierta',grupo:'grupo',q:{es:"En grupos 2-3, haced una tabla comparativa simpático/parasimpático con 5 respuestas corporales y un ejemplo dancístico de cada.",ca:"Taula simpàtic/parasimpàtic.",en:"Sympathetic/parasympathetic table."},keywords:['pulso','bronquios','digestión','digestio','pupilas','sudoración','sudoracio','simpático','simpatico','parasimpático','parasimpatico'],sol:{es:"Pulso, bronquios, digestión, pupilas, sudoración.",ca:"Pols, bronquis, digestió, pupil·les, suor.",en:"HR, bronchi, digestion, pupils, sweating."}},
-  {tipo:'abierta',grupo:'indiv',q:{es:"Reflexiona: ¿cómo afecta el simpático a tu técnica dancística? ¿Y el parasimpático?",ca:"Com afecta el simpàtic a la tècnica?",en:"How does the sympathetic affect technique?"},keywords:['energía','energia','control','precisión','precisio','activación','activacio','relajación','relaxacio'],sol:{es:"Simpático: más energía pero peor control fino. Parasimpático: mejor control pero menos activación.",ca:"Més energia, pitjor control.",en:"More energy, worse control."}},
-  {tipo:'abierta',grupo:'indiv',q:{es:"Explica con tus palabras qué es un dermatoma y por qué el mapa puede ayudar a un fisioterapeuta de danza.",ca:"Què és un dermatoma?",en:"What is a dermatome?"},keywords:['territorio','territori','cutáneo','cutani','raíz','raiz','espinal','lesión','lesion'],sol:{es:"Territorio cutáneo asociado a una raíz espinal; localiza lesiones neurológicas.",ca:"Territori cutani.",en:"Skin territory."}},
-  {tipo:'abierta',grupo:'indiv',q:{es:"Describe una situación dancística donde el sistema somático y el autónomo trabajen juntos.",ca:"Situació on somàtic i autònom treballen junts.",en:"Situation where somatic and autonomic work together."},keywords:['somático','somatico','autónomo','autonomo','coreografía','coreografia','respiración','respiracion','pulso','ejecuta'],sol:{es:"Durante una coreografía: el somático ejecuta los pasos, el autónomo regula el pulso y la respiración.",ca:"El somàtic executa, l'autònom regula.",en:"Somatic executes, autonomic regulates."}}
-];
-
 function normalizar(s){ return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\w\s]/g,' '); }
 function valorarAbierta(texto, keywords){
   if(!texto || texto.trim().length<10) return {nota:0,encontradas:[],faltan:keywords||[],ratio:0};
@@ -618,6 +597,53 @@ function verSolucion(id,sol){ const fb=document.getElementById('fb-'+id); fb.cla
 function actualizarProgreso(){ const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); let c=0; ACTIVIDADES.forEach((a,i)=>{ const id='a'+(i+1); if(a.tipo==='test'){if(data[id]!==undefined)c++;}else{if((data[id]||'').trim().length>=15)c++;} }); document.getElementById('pCompletadas').textContent=c; document.getElementById('pBar').style.width=(c/ACTIVIDADES.length*100)+'%'; actualizarMedia(); }
 function actualizarMedia(){ const data=JSON.parse(localStorage.getItem(STORAGE)||'{}'); let s=0,n=0; ACTIVIDADES.forEach((a,i)=>{ const id='a'+(i+1); if(a.tipo==='test' && data[id]!==undefined){s+=(data[id]===a.correcta)?10:0;n++;} else if(a.tipo==='abierta' && typeof data['nota-'+id]==='number'){s+=data['nota-'+id];n++;} }); document.getElementById('notaMedia').textContent = n?(s/n).toFixed(1):'—'; }
 
+function aplicarIdioma(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{ const k=el.dataset.i18n; const v=t(k); if(v!==undefined) el.innerHTML = v; });
+  const ht=document.getElementById('headerTitulo'); if(ht) ht.textContent=t('headerTitulo');
+  const hs=document.getElementById('headerSub'); if(hs) hs.textContent=t('headerSub');
+  document.getElementById('btnVolver').textContent=t('btnVolver');
+  document.getElementById('navPrev').textContent=t('navPrev');
+  document.getElementById('navNext').textContent=t('navNext');
+  document.getElementById('btnReset').textContent=t('btnReset');
+  document.getElementById('txtCompl').textContent=t('txtCompl');
+  document.getElementById('txtAuto').textContent=t('txtAuto');
+  document.getElementById('txtMedia').textContent=t('txtMedia');
+  document.getElementById('autoTitulo').textContent=t('autoTitulo');
+  document.getElementById('autoP1').textContent=t('autoP1');
+  document.getElementById('aInsuf').textContent=t('aInsuf');
+  document.getElementById('aSuf').textContent=t('aSuf');
+  document.getElementById('aNot').textContent=t('aNot');
+  document.getElementById('aExc').textContent=t('aExc');
+  document.getElementById('aNotaTxt').textContent=t('aNotaTxt');
+  document.getElementById('aJustTxt').textContent=t('aJustTxt');
+  document.getElementById('actTitulo').textContent=t('actTitulo');
+  document.getElementById('actIntro').textContent=t('actIntro');
+  ['s1t','s1h1','s1l1','s1h2','s1l2','s2t','s2i','s3t','s3i','s4t','s4i','s5t','s5h1','s5l1','s5h2','s5l2',
+   's30t','s30p1','s30a','s30th1','s30th2','s30th3','s30r1a','s30r1b','s30r1c','s30r2a','s30r2b','s30r2c','s30r3a','s30r3b','s30r3c','s30r4a','s30r4b','s30r4c','s30r5a','s30r5b','s30r5c','s30r6a','s30r6b','s30r6c','s30d',
+   's31t','s31p1','s31a','s31th1','s31th2','s31th3','s31r1a','s31r1b','s31r1c','s31r2a','s31r2b','s31r2c','s31p2','s31d',
+   's32t','s32p1','s32a','s32h1','s32l1','s32l2','s32l3','s32d',
+   's33t','s33p1','s33a','s33th1','s33th2','s33r1a','s33r2a','s33r3a','s33r4a','s33r5a','s33r6a','s33d',
+   's34t','s34p1','s34a','s34th1','s34th2','s34th3','s34r1a','s34r1b','s34r1c','s34r2a','s34r2b','s34r2c','s34r3a','s34r3b','s34r3c','s34r4a','s34r4b','s34r4c','s34p2','s34d',
+   's35t','s35p1','s35a','s35h1','s35l1','s35l2','s35l3','s35h2','s35l4','s35l5','s35l6','s35l7','s35p2','s35d',
+   's36t','s36p1','s36h1','s36l1','s36l2','s36l3','s36h2','s36l4','s36l5','s36l6','s36h3','s36l7','s36l8','s36l9','s36h4','s36l10','s36l11','s36h5','s36l12','s36l13','s36h6','s36l14','s36l15','s36l16','s36d']
+  .forEach(id=>{ const el=document.getElementById(id); if(el){ const v=t(id); if(v!==undefined) el.innerHTML = v; } });
+  ['s1d','s2d','s4d','s5d'].forEach(id=>{ const el=document.getElementById(id); if(el){ const v=t(id); if(v!==undefined) el.innerHTML = v; } });
+  document.documentElement.lang = lang;
+  document.querySelectorAll('.lang-switch button').forEach(b=>{
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+  renderActividades();
+  cargarAutoeval();
+}
+
+document.querySelectorAll('.lang-switch button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    lang = btn.dataset.lang;
+    guardarIdioma(lang);
+    aplicarIdioma();
+  });
+});
+
 let idx=0; const slides=document.querySelectorAll('.slide');
 function show(i){ slides.forEach(s=>s.classList.remove('active')); slides[i].classList.add('active'); document.getElementById('counter').textContent=`Diapositiva ${i+1} / ${slides.length}`; document.getElementById('progress').style.width=((i+1)/slides.length*100)+'%'; }
 function next(){if(idx<slides.length-1){idx++;show(idx);}}
@@ -654,7 +680,29 @@ function exportarExcel(){ const d=_obtenerDatos(); const esc=v=>String(v==null?'
 
 function reiniciar(){ if(confirm('¿Borrar las respuestas de este bloque?')){ localStorage.removeItem(STORAGE); renderActividades(); cargarAutoeval(); actualizarMedia(); } }
 function volverIndice(){ window.location.href='index.html'; }
-aplicarIdioma(); show(0);
+
+const ACTIVIDADES = [
+  {tipo:'test',grupo:'indiv',q:{es:"¿Qué sistema controla el músculo esquelético de forma voluntaria?",ca:"Quin sistema controla el múscul voluntàriament?",en:"Which system controls skeletal muscle voluntarily?"},ops:{es:["Somático","Autónomo","Simpático","Parasimpático"],ca:["Somàtic","Autònom","Simpàtic","Parasimpàtic"],en:["Somatic","Autonomic","Sympathetic","Parasympathetic"]},correcta:0,sol:{es:"El somático.",ca:"El somàtic.",en:"Somatic."}},
+  {tipo:'test',grupo:'indiv',q:{es:"La vía aferente lleva información…",ca:"La via aferent porta informació…",en:"The afferent pathway carries information…"},ops:{es:["Del SNC al músculo","De los receptores al SNC","Del músculo al corazón","Del cerebro al cerebelo"],ca:["Del SNC al múscul","Dels receptors al SNC","Del múscul al cor","Del cervell al cerebel"],en:["CNS to muscle","Receptors to CNS","Muscle to heart","Brain to cerebellum"]},correcta:1,sol:{es:"De los receptores al SNC.",ca:"Dels receptors al SNC.",en:"From receptors to CNS."}},
+  {tipo:'test',grupo:'indiv',q:{es:"¿Qué vía lleva la orden motora?",ca:"Quina via porta l'ordre motora?",en:"Which pathway carries the motor command?"},ops:{es:["Aferente","Eferente","Ascendente","Sensitiva"],ca:["Aferent","Eferent","Ascendent","Sensitiva"],en:["Afferent","Efferent","Ascending","Sensory"]},correcta:1,sol:{es:"La eferente.",ca:"L'eferent.",en:"Efferent."}},
+  {tipo:'test',grupo:'indiv',q:{es:"¿Qué sistema se activa en el 'pánico escénico'?",ca:"Quin sistema s'activa al pànic escènic?",en:"Which system activates in stage panic?"},ops:{es:["Parasimpático","Simpático","Somático","Central"],ca:["Parasimpàtic","Simpàtic","Somàtic","Central"],en:["Parasympathetic","Sympathetic","Somatic","Central"]},correcta:1,sol:{es:"El simpático.",ca:"El simpàtic.",en:"Sympathetic."}},
+  {tipo:'test',grupo:'indiv',q:{es:"¿Qué hace el parasimpático?",ca:"Què fa el parasimpàtic?",en:"What does the parasympathetic do?"},ops:{es:["Aumenta el pulso","Dilata los bronquios","Estimula la digestión","Inhibe la digestión"],ca:["Augmenta el pols","Dilata bronquis","Estimula digestió","Inhibeix digestió"],en:["Increases HR","Dilates bronchi","Stimulates digestion","Inhibits digestion"]},correcta:2,sol:{es:"Estimula la digestión.",ca:"Estimula la digestió.",en:"Stimulates digestion."}},
+  {tipo:'test',grupo:'indiv',q:{es:"Un dermatoma es…",ca:"Un dermatoma és…",en:"A dermatome is…"},ops:{es:["Un músculo","Un territorio cutáneo asociado a una raíz espinal","Un tipo de neurona","Una glándula"],ca:["Un múscul","Un territori cutani","Un tipus de neurona","Una glàndula"],en:["A muscle","A skin territory linked to a spinal root","A neuron type","A gland"]},correcta:1,sol:{es:"Territorio cutáneo asociado a una raíz espinal.",ca:"Territori cutani.",en:"Skin territory."}},
+  {tipo:'test',grupo:'indiv',q:{es:"¿Qué sistema regula órganos y glándulas?",ca:"Quin sistema regula òrgans?",en:"Which system regulates organs?"},ops:{es:["Somático","Autónomo","Piramidal","Cerebeloso"],ca:["Somàtic","Autònom","Piramidal","Cerebel·lós"],en:["Somatic","Autonomic","Pyramidal","Cerebellar"]},correcta:1,sol:{es:"El autónomo.",ca:"L'autònom.",en:"Autonomic."}},
+  {tipo:'abierta',grupo:'pareja',q:{es:"Explicad la diferencia entre vía aferente y eferente con un ejemplo dancístico.",ca:"Expliqueu aferent i eferent.",en:"Explain afferent and efferent with a dance example."},keywords:['aferente','eferente','receptor','snc','músculo','musculo','ejemplo','información','informacio'],sol:{es:"Aferente: noto el suelo. Eferente: ajusto el pie.",ca:"Aferent: noto el terra. Eferent: ajusto el peu.",en:"Afferent: I feel the floor. Efferent: I adjust the foot."}},
+  {tipo:'abierta',grupo:'pareja',q:{es:"¿Cómo se activa el simpático antes de una actuación? Describid 3 señales corporales.",ca:"Com s'activa el simpàtic?",en:"How does the sympathetic activate before a show?"},keywords:['pulso','frecuencia','respiración','respiracion','sudor','tensión','tension','corazón','corazon'],sol:{es:"Aumento de pulso, respiración rápida, sudoración, tensión muscular.",ca:"Pols, respiració, suor.",en:"HR, breathing, sweating."}},
+  {tipo:'abierta',grupo:'pareja',q:{es:"¿Qué estrategias parasimpáticas podéis usar antes de salir a escena?",ca:"Estratègies parasimpàtiques?",en:"Parasympathetic strategies before stage?"},keywords:['respiración','respiracion','diafragmática','diafragmatica','visualización','visualitzacio','relajación','relaxacio','estiramiento'],sol:{es:"Respiración diafragmática, visualización, estiramientos suaves.",ca:"Respiració, visualització.",en:"Breathing, imagery."}},
+  {tipo:'abierta',grupo:'grupo',q:{es:"En grupos 2-3, dibujad un mapa simplificado de dermatomas y discutid por qué es útil en la evaluación de lesiones medulares.",ca:"Dibuixeu un mapa de dermatomes.",en:"Draw a dermatome map."},keywords:['dermatoma','raíz','raiz','espinal','territorio','cutáneo','cutani','lesión','lesion','nivel'],sol:{es:"Cada raíz espinal inerva un territorio cutáneo; permite localizar lesiones.",ca:"Cada arrel inerva un territori.",en:"Each spinal root innervates a skin territory."}},
+  {tipo:'abierta',grupo:'grupo',q:{es:"En grupos 2-3, haced una tabla comparativa simpático/parasimpático con 5 respuestas corporales y un ejemplo dancístico de cada.",ca:"Taula simpàtic/parasimpàtic.",en:"Sympathetic/parasympathetic table."},keywords:['pulso','bronquios','digestión','digestio','pupilas','sudoración','sudoracio','simpático','simpatico','parasimpático','parasimpatico'],sol:{es:"Pulso, bronquios, digestión, pupilas, sudoración.",ca:"Pols, bronquis, digestió, pupil·les, suor.",en:"HR, bronchi, digestion, pupils, sweating."}},
+  {tipo:'abierta',grupo:'indiv',q:{es:"Reflexiona: ¿cómo afecta el simpático a tu técnica dancística? ¿Y el parasimpático?",ca:"Com afecta el simpàtic a la tècnica?",en:"How does the sympathetic affect technique?"},keywords:['energía','energia','control','precisión','precisio','activación','activacio','relajación','relaxacio'],sol:{es:"Simpático: más energía pero peor control fino. Parasimpático: mejor control pero menos activación.",ca:"Més energia, pitjor control.",en:"More energy, worse control."}},
+  {tipo:'abierta',grupo:'indiv',q:{es:"Explica con tus palabras qué es un dermatoma y por qué el mapa puede ayudar a un fisioterapeuta de danza.",ca:"Què és un dermatoma?",en:"What is a dermatome?"},keywords:['territorio','territori','cutáneo','cutani','raíz','raiz','espinal','lesión','lesion'],sol:{es:"Territorio cutáneo asociado a una raíz espinal; localiza lesiones neurológicas.",ca:"Territori cutani.",en:"Skin territory."}},
+  {tipo:'abierta',grupo:'indiv',q:{es:"Describe una situación dancística donde el sistema somático y el autónomo trabajen juntos.",ca:"Situació on somàtic i autònom treballen junts.",en:"Situation where somatic and autonomic work together."},keywords:['somático','somatico','autónomo','autonomo','coreografía','coreografia','respiración','respiracion','pulso','ejecuta'],sol:{es:"Durante una coreografía: el somático ejecuta los pasos, el autónomo regula el pulso y la respiración.",ca:"El somàtic executa, l'autònom regula.",en:"Somatic executes, autonomic regulates."}}
+];
+
+renderActividades();
+cargarAutoeval();
+aplicarIdioma();
+show(0);
 </script>
 </body>
 </html>

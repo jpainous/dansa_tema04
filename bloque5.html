@@ -543,18 +543,35 @@ const I18N = {
   }
 };
 
-let lang='es';
+// ===== IDIOMA PERSISTENT (mateix model que blocs 1, 2, 3) =====
+const CLAU_IDIOMA = 'fisiologia_idioma';
+const IDIOMES = ['es','ca','en'];
+function llegirIdioma(){ const g = localStorage.getItem(CLAU_IDIOMA); return IDIOMES.includes(g) ? g : 'es'; }
+function guardarIdioma(n){ if(IDIOMES.includes(n)) localStorage.setItem(CLAU_IDIOMA, n); }
+
+let lang = llegirIdioma();
 function t(k){ return (I18N[lang] && I18N[lang][k]) || I18N.es[k] || k; }
+
 function aplicarIdioma(){
   document.querySelectorAll('[data-i18n]').forEach(el=>{ const k=el.dataset.i18n; const v=t(k); if(v) el.innerHTML = v; });
   const ht=document.getElementById('headerTitulo'); if(ht) ht.textContent = t('headerTitulo');
   const hs=document.getElementById('headerSub'); if(hs) hs.textContent = t('headerSub');
   ['btnVolver','btnReset','navPrev','navNext','txtCompl','txtAuto','txtMedia','autoTitulo','autoP1','aInsuf','aSuf','aNot','aExc','aNotaTxt','aJustTxt','actTitulo','actIntro'].forEach(id=>{ const el=document.getElementById(id); if(el) el.textContent = t(id); });
   document.documentElement.lang = lang;
-  document.querySelectorAll('.lang-switch button').forEach(b=>{ b.classList.toggle('active', b.dataset.lang === lang); });
-  renderActividades(); cargarAutoeval();
+  document.querySelectorAll('.lang-switch button').forEach(b=>{
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+  renderActividades();
+  cargarAutoeval();
 }
-document.querySelectorAll('.lang-switch button').forEach(btn=>{ btn.addEventListener('click', ()=>{ lang = btn.dataset.lang; aplicarIdioma(); }); });
+
+document.querySelectorAll('.lang-switch button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    lang = btn.dataset.lang;
+    guardarIdioma(lang);
+    aplicarIdioma();
+  });
+});
 
 const ACTIVIDADES = [
   {tipo:'test',grupo:'indiv',q:{es:"¿Qué porcentaje de la energía del cuerpo consume el cerebro?",ca:"Quin percentatge d'energia consumeix el cervell?",en:"What percentage of body energy does the brain consume?"},ops:{es:["2%","10%","20%","50%"],ca:["2%","10%","20%","50%"],en:["2%","10%","20%","50%"]},correcta:2,sol:{es:"El 20% de la energía, aunque solo pesa el 2%.",ca:"El 20%.",en:"20%."}},
@@ -657,7 +674,12 @@ function exportarExcel(){ const d=_obtenerDatos(); const esc=v=>String(v==null?'
 
 function reiniciar(){ if(confirm('¿Borrar las respuestas de este bloque?')){ localStorage.removeItem(STORAGE); renderActividades(); cargarAutoeval(); actualizarMedia(); } }
 function volverIndice(){ window.location.href='index.html'; }
-aplicarIdioma(); show(0);
+
+// ===== INICI =====
+renderActividades();
+cargarAutoeval();
+aplicarIdioma();
+show(0);
 </script>
 </body>
 </html>

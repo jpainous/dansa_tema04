@@ -169,7 +169,18 @@
 </div>
 
 <script>
-/* ====================== IDIOMA ====================== */
+/* ====================== IDIOMA PERSISTENT ====================== */
+const CLAU_IDIOMA = 'fisiologia_idioma';
+const IDIOMES = ['es','ca','en'];
+
+function llegirIdioma(){
+  const guardat = localStorage.getItem(CLAU_IDIOMA);
+  return IDIOMES.includes(guardat) ? guardat : 'es';
+}
+function guardarIdioma(nou){
+  if(IDIOMES.includes(nou)) localStorage.setItem(CLAU_IDIOMA, nou);
+}
+
 const I18N = {
   es:{
     titulo:"Fisiología del Sistema Nervioso",
@@ -305,7 +316,7 @@ const I18N = {
   }
 };
 
-let lang = 'es';
+let lang = llegirIdioma();
 function t(k){ return (I18N[lang] && I18N[lang][k]) || I18N.es[k] || k; }
 
 function aplicarIdioma(){
@@ -324,6 +335,7 @@ function aplicarIdioma(){
 document.querySelectorAll('.lang-switch button').forEach(btn=>{
   btn.addEventListener('click', ()=>{
     lang = btn.dataset.lang;
+    guardarIdioma(lang);
     aplicarIdioma();
     actualizarProgreso();
   });
@@ -475,7 +487,7 @@ function resetGlobal(){
   }
 }
 
-/* ====================== INICIO ====================== */
+/* ====================== INICI ====================== */
 aplicarIdioma();
 actualizarProgreso();
 renderTablaProfesor();
